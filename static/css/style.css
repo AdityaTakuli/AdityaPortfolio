@@ -236,11 +236,11 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: clamp(1.5rem, 4vw, 3.5rem);
-  align-items: center;
+  align-items: start;
   max-width: var(--max);
   margin: 0 auto;
-  padding: clamp(1.25rem, 4vh, 2.5rem) var(--pad) clamp(1.5rem, 4vh, 2.75rem);
-  min-height: calc(100vh - 3.5rem);
+  padding: clamp(1.5rem, 4vh, 2.5rem) var(--pad) clamp(2.5rem, 6vh, 4rem);
+  min-height: 0;
   border-bottom: 1px solid var(--ink);
 }
 
