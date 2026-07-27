@@ -41,11 +41,6 @@ EDUCATION = [
         "degree": "B.Tech — Electronics and Communication Engineering",
         "meta": "Aug 2023 – Jul 2027 (Expected) · CGPA 8.34 / 10",
     },
-    {
-        "school": "St. Theresa Sr. Sec. School (CBSE)",
-        "degree": "Class 12: 85% · Class 10: 89.4%",
-        "meta": "",
-    },
 ]
 
 SKILLS = {

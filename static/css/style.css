@@ -9,11 +9,25 @@
   --grid-major: rgba(10, 10, 10, 0.16);
   --line: #0a0a0a;
   --fill: #0a0a0a;
-  --white: #fafaf7;
+  --fill-text: #fafaf7;
+  --surface: #fafaf7;
   --font-display: "Syne", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --pad: clamp(1.25rem, 4vw, 3rem);
   --max: 1120px;
+}
+
+[data-theme="dark"] {
+  --ink: #ecece8;
+  --ink-soft: #c4c4be;
+  --mute: #8a8a84;
+  --paper: #0c0c0c;
+  --grid: rgba(236, 236, 232, 0.07);
+  --grid-major: rgba(236, 236, 232, 0.14);
+  --line: #ecece8;
+  --fill: #ecece8;
+  --fill-text: #0c0c0c;
+  --surface: #141414;
 }
 
 *,
@@ -26,6 +40,11 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 body {
@@ -36,6 +55,7 @@ body {
   background: var(--paper);
   min-height: 100vh;
   position: relative;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Graph paper background */
@@ -66,7 +86,7 @@ a {
 a:hover {
   text-decoration: none;
   background: var(--ink);
-  color: var(--white);
+  color: var(--fill-text);
 }
 
 img {
@@ -131,7 +151,84 @@ ul {
 
 .nav-resume:hover {
   background: var(--ink);
-  color: var(--white);
+  color: var(--fill-text);
+}
+
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  padding: 0.15rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.theme-toggle:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.theme-icon {
+  display: inline-block;
+  width: 1.05rem;
+  height: 1.05rem;
+  background-color: var(--ink);
+  opacity: 0.35;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.theme-icon-sun {
+  -webkit-mask: url("../img/icons/sun.png") center / contain no-repeat;
+  mask: url("../img/icons/sun.png") center / contain no-repeat;
+}
+
+.theme-icon-moon {
+  -webkit-mask: url("../img/icons/moon.png") center / contain no-repeat;
+  mask: url("../img/icons/moon.png") center / contain no-repeat;
+}
+
+[data-theme="light"] .theme-icon-sun,
+html:not([data-theme="dark"]) .theme-icon-sun {
+  opacity: 1;
+}
+
+[data-theme="dark"] .theme-icon-moon {
+  opacity: 1;
+}
+
+.theme-track {
+  position: relative;
+  width: 2.6rem;
+  height: 1.35rem;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  flex-shrink: 0;
+}
+
+.theme-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0.15rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  background: var(--ink);
+  transform: translateY(-50%);
+  transition: left 0.2s ease;
+}
+
+[data-theme="dark"] .theme-thumb {
+  left: calc(100% - 1.05rem);
 }
 
 /* Hero — one composition */
@@ -199,7 +296,7 @@ ul {
 
 .btn-fill {
   background: var(--ink);
-  color: var(--white);
+  color: var(--fill-text);
 }
 
 .btn-fill:hover {
@@ -209,18 +306,18 @@ ul {
 
 .btn-line:hover {
   background: var(--ink);
-  color: var(--white);
+  color: var(--fill-text);
 }
 
 .hero-photo {
   position: relative;
   border: 1px solid var(--ink);
-  background: var(--white);
+  background: var(--surface);
 }
 
 .hero-photo img {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 8 / 9;
   object-fit: cover;
   filter: grayscale(1) contrast(1.05);
 }
@@ -448,7 +545,7 @@ ul {
 
 .contact-email:hover {
   background: var(--ink);
-  color: var(--white);
+  color: var(--fill-text);
   border-color: var(--ink);
 }
 
