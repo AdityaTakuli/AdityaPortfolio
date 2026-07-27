@@ -231,16 +231,17 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   left: calc(100% - 1.05rem);
 }
 
-/* Hero — one composition */
+/* Hero — one composition (full first viewport) */
 .hero {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: clamp(1.5rem, 4vw, 3.5rem);
-  align-items: start;
+  align-items: center;
   max-width: var(--max);
   margin: 0 auto;
-  padding: clamp(4rem, 20vh, 7rem) var(--pad) clamp(2.5rem, 6vh, 4rem);
-  min-height: 0;
+  padding: clamp(1.5rem, 4vh, 3rem) var(--pad);
+  min-height: calc(100svh - 3.5rem);
+  box-sizing: border-box;
   border-bottom: 1px solid var(--ink);
 }
 
@@ -588,13 +589,29 @@ html:not([data-theme="dark"]) .theme-icon-sun {
 
   .hero {
     grid-template-columns: 1fr;
-    min-height: auto;
+    min-height: calc(100svh - 3.5rem);
+    align-content: center;
     align-items: start;
+    gap: 1.5rem;
   }
 
   .hero-photo {
     order: -1;
-    max-width: 280px;
+    max-width: min(220px, 42vw);
+  }
+
+  .hero-photo img {
+    max-height: 38svh;
+    width: auto;
+    aspect-ratio: auto;
+  }
+
+  .hero-name {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .hero-tagline {
+    margin-bottom: 1.25rem;
   }
 
   .job {
