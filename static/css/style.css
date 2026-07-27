@@ -335,7 +335,7 @@ html:not([data-theme="dark"]) .theme-icon-sun {
 .section {
   max-width: var(--max);
   margin: 0 auto;
-  padding: clamp(3rem, 7vh, 5rem) var(--pad);
+  padding: clamp(2rem, 5vh, 2.5rem) var(--pad);
   border-bottom: 1px solid var(--ink);
 }
 
