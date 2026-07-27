@@ -1,16 +1,22 @@
-# Portfolio — Aditya Pratap Singh Takuli
+# AdityaPortfolio
 
-Black-and-white portfolio site with a graph-paper background, built with Flask (Python).
+Black-and-white portfolio with a graph-paper background. Static **HTML / CSS / JS** — ready for GitHub Pages.
+
+## Host on GitHub Pages
+
+1. Push this repo to GitHub (already: `AdityaTakuli/AdityaPortfolio`)
+2. Repo → **Settings** → **Pages**
+3. Under **Build and deployment**, set Source to **Deploy from a branch**
+4. Branch: **main** / folder: **/ (root)** → Save
+
+Site URL will be:
+
+**https://adityatakuli.github.io/AdityaPortfolio/**
 
 ## Structure
 
-- `app.py` — Flask app + resume content
-- `templates/index.html` — page markup
-- `static/css/style.css` — graph-sheet B&W theme
-- `static/img/profile.jpg` — profile photo
-- `static/Aditya_Pratap_Singh_Takuli_Resume.pdf` — downloadable resume
-
-## Notes
-
-- Social links in `app.py` (`PROFILE["links"]`) may need your exact URLs.
-- Animations can be added later without changing the layout.
+- `index.html` — page
+- `static/css/style.css` — graph-sheet theme + dark/light mode
+- `static/js/theme.js` — theme toggle
+- `static/img/` — photo + icons
+- `static/Aditya_Pratap_Singh_Takuli_Resume.pdf` — resume download

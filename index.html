@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aditya Pratap Singh Takuli — Portfolio</title>
+    <meta
+      name="description"
+      content="Building backend systems, data-driven models, and agentic AI — from research to production."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="static/css/style.css" />
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = saved || (prefersDark ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="graph-bg" aria-hidden="true"></div>
+
+    <header class="site-nav">
+      <a class="nav-brand" href="#top">Aditya</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle"
+          role="switch"
+          aria-checked="false"
+          aria-label="Toggle color theme"
+        >
+          <span class="theme-icon theme-icon-sun" aria-hidden="true"></span>
+          <span class="theme-track" aria-hidden="true">
+            <span class="theme-thumb"></span>
+          </span>
+          <span class="theme-icon theme-icon-moon" aria-hidden="true"></span>
+        </button>
+        <a class="nav-resume" href="static/Aditya_Pratap_Singh_Takuli_Resume.pdf" download>Resume ↓</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="hero-label">Portfolio / Uttarakhand, India</p>
+          <h1 class="hero-name">Aditya Pratap Singh Takuli</h1>
+          <p class="hero-title">Software Engineer</p>
+          <p class="hero-tagline">
+            Building backend systems, data-driven models, and agentic AI — from
+            research to production.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-fill" href="#contact">Get in touch</a>
+            <a class="btn btn-line" href="static/Aditya_Pratap_Singh_Takuli_Resume.pdf" download>Download resume</a>
+          </div>
+        </div>
+        <figure class="hero-photo">
+          <img
+            src="static/img/profile.jpg"
+            alt="Portrait of Aditya Pratap Singh Takuli"
+            width="900"
+            height="1011"
+          />
+          <figcaption class="photo-caption">fig. 01 — Aditya</figcaption>
+        </figure>
+      </section>
+
+      <section id="about" class="section about">
+        <div class="section-head">
+          <span class="section-index">01</span>
+          <h2>About</h2>
+        </div>
+        <p class="about-text">
+          Software Engineer with hands-on experience building backend systems,
+          REST APIs, and data-driven models in Python, C++, and SQL. Strong
+          foundation in DSA, OOP, DBMS, and Operating Systems, with a proven
+          record of shipping tested, production-grade software. Experienced in
+          agile delivery, CI/CD, and open-source contribution, with exposure to
+          AI/ML, agentic systems, and workflow automation.
+        </p>
+        <div class="edu-grid">
+          <article class="edu-item">
+            <h3>Vellore Institute of Technology, Chennai</h3>
+            <p>B.Tech — Electronics and Communication Engineering</p>
+            <p class="muted">Aug 2023 – Jul 2027 (Expected) · CGPA 8.34 / 10</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="experience" class="section">
+        <div class="section-head">
+          <span class="section-index">02</span>
+          <h2>Experience</h2>
+        </div>
+        <div class="timeline">
+          <article class="job">
+            <div class="job-meta">
+              <time>Jan 2026 – Present</time>
+            </div>
+            <div class="job-body">
+              <h3>Software Engineer Intern</h3>
+              <p class="job-org">Staunch Technologies Pvt. Ltd.</p>
+              <ul>
+                <li>
+                  Designed and trained detection models on embedded datasets; built
+                  scalable data pipelines for generation, preprocessing, and
+                  class-imbalance mitigation (mAP@50: 85%).
+                </li>
+                <li>
+                  Delivered a production-ready, hardware-software integrated
+                  embedded system with an enterprise banking partner (Indian Bank).
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="job">
+            <div class="job-meta">
+              <time>June 2025 – Nov 2025</time>
+            </div>
+            <div class="job-body">
+              <h3>Samsung PRISM Project Intern</h3>
+              <p class="job-org">Samsung R&amp;D</p>
+              <ul>
+                <li>
+                  Built a multi-output XGBoost model forecasting nine microservice
+                  performance metrics across 3,042 samples (R² ≈ 0.77).
+                </li>
+                <li>
+                  Quantified a ~3.9× throughput gain (17,522 vs 4,487 req/s) and
+                  converted benchmarks into architecture recommendations across 10+
+                  microservices.
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="job">
+            <div class="job-meta">
+              <time>June 2025 – Feb 2026</time>
+            </div>
+            <div class="job-body">
+              <h3>Technical Product Lead</h3>
+              <p class="job-org">Checkinly (Smart Hospitality Platform)</p>
+              <ul>
+                <li>
+                  Led end-to-end development; integrated Onfido identity
+                  verification and Tuya/TTLock IoT SDKs, cutting manual check-in
+                  time by 85–90%.
+                </li>
+                <li>
+                  Ran market and feasibility research that shaped product
+                  architecture and go-to-market decisions.
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="job">
+            <div class="job-meta">
+              <time>May 2025 – Aug 2025</time>
+            </div>
+            <div class="job-body">
+              <h3>HPC / Research Intern</h3>
+              <p class="job-org">CSIR Fourth Paradigm Institute (CSIR-4PI), Bengaluru</p>
+              <ul>
+                <li>
+                  Designed a hybrid HTTP (REST) + WebSocket network with FastAPI for
+                  real-time WLAN data synchronisation (sub-second propagation).
+                </li>
+                <li>
+                  Optimised deep learning models for resource-constrained edge
+                  hardware.
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="section-head">
+          <span class="section-index">03</span>
+          <h2>Projects</h2>
+        </div>
+        <div class="project-list">
+          <article class="project">
+            <div class="project-top">
+              <h3>LAMDA Analytics</h3>
+              <p class="project-tags">Python · Temporal Graph Networks · Multi-Agent Systems</p>
+            </div>
+            <p>
+              Real-time supply-chain analytics using Temporal Graph Networks and a
+              multi-agent architecture for scraping, normalisation, and analysis.
+              Winner — NOKIA CERONIX National Hackathon (top 5% of 878 teams).
+            </p>
+          </article>
+
+          <article class="project">
+            <div class="project-top">
+              <h3>HSF/prmon — CERN Open Source</h3>
+              <p class="project-tags">C++ · CLI Tooling · Code Review</p>
+            </div>
+            <p>
+              Merged PR #302: replaced the legacy CLI parser in CERN/HSF
+              process-monitoring tooling, preserving all 12 CLI options and
+              passing all 14 tests. Official project contributor.
+            </p>
+          </article>
+
+          <article class="project">
+            <div class="project-top">
+              <h3>Gold Detection &amp; Segmentation</h3>
+              <p class="project-tags">Python · YOLO · OpenCV · SQLite · OCR</p>
+            </div>
+            <p>
+              Real-time detection pipeline with custom YOLO, person-segmentation
+              for false-positive suppression, OCR weight extraction, and a
+              SQLite-backed logging GUI.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <div class="section-head">
+          <span class="section-index">04</span>
+          <h2>Skills</h2>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-group">
+            <h3>Languages</h3>
+            <ul>
+              <li>Python</li>
+              <li>C++</li>
+              <li>C</li>
+              <li>SQL</li>
+              <li>Bash/Shell</li>
+              <li>Git</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Core CS</h3>
+            <ul>
+              <li>DSA</li>
+              <li>OOP</li>
+              <li>DBMS</li>
+              <li>Operating Systems</li>
+              <li>Networking</li>
+              <li>Distributed Systems</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Data &amp; Databases</h3>
+            <ul>
+              <li>PostgreSQL</li>
+              <li>SQLite</li>
+              <li>MongoDB</li>
+              <li>Pandas</li>
+              <li>NumPy</li>
+              <li>XGBoost</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Backend &amp; Platforms</h3>
+            <ul>
+              <li>FastAPI</li>
+              <li>REST &amp; WebSocket</li>
+              <li>Docker</li>
+              <li>CI/CD</li>
+              <li>AWS</li>
+              <li>Linux</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>AI/ML &amp; Automation</h3>
+            <ul>
+              <li>PyTorch</li>
+              <li>Scikit-learn</li>
+              <li>YOLO</li>
+              <li>RAG</li>
+              <li>LangChain</li>
+              <li>LangGraph</li>
+              <li>Agentic AI</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="achievements" class="section">
+        <div class="section-head">
+          <span class="section-index">05</span>
+          <h2>Achievements</h2>
+        </div>
+        <ul class="achieve-list">
+          <li>Winner, NOKIA CERONIX National Hackathon (top 5% of 878 teams)</li>
+          <li>2nd Place, CodeInit Hackathon (ACM)</li>
+          <li>Represented VIT Chennai at UK Innovate ’25</li>
+          <li>Official Contributor, CERN HSF/prmon</li>
+          <li>
+            Research paper published
+            (<a
+              href="https://doi.org/10.1134/S1063782625604522"
+              target="_blank"
+              rel="noopener noreferrer"
+              >DOI: 10.1134/S1063782625604522</a
+            >)
+          </li>
+          <li>Indian Patent filed (App. No. 202641053086)</li>
+          <li>
+            Certified: Python, C, C++ (IIT Bombay); Generative AI Applications (IBM)
+          </li>
+        </ul>
+      </section>
+
+      <section id="contact" class="section contact">
+        <div class="section-head">
+          <span class="section-index">06</span>
+          <h2>Contact</h2>
+        </div>
+        <p class="contact-lead">Open to roles, collaborations, and interesting problems.</p>
+        <a class="contact-email" href="mailto:adityapstakuli@gmail.com"
+          >adityapstakuli@gmail.com</a
+        >
+        <p class="contact-phone">+91 8791327956</p>
+        <ul class="socials">
+          <li>
+            <a href="https://github.com/adityapstakuli" target="_blank" rel="noopener"
+              >GitHub</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/in/adityapstakuli"
+              target="_blank"
+              rel="noopener"
+              >LinkedIn</a
+            >
+          </li>
+          <li>
+            <a href="https://leetcode.com/u/adityapstakuli" target="_blank" rel="noopener"
+              >LeetCode</a
+            >
+          </li>
+          <li>
+            <a href="https://x.com/adityapstakuli" target="_blank" rel="noopener">X</a>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© Aditya Pratap Singh Takuli</p>
+      <p class="muted">Drawn on graph paper · HTML / CSS / JS</p>
+    </footer>
+    <script src="static/js/theme.js"></script>
+  </body>
+</html>
