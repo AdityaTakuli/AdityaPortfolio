@@ -239,7 +239,7 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   align-items: start;
   max-width: var(--max);
   margin: 0 auto;
-  padding: clamp(1.5rem, 4vh, 2.5rem) var(--pad) clamp(2.5rem, 6vh, 4rem);
+  padding: clamp(4rem, 20vh, 7rem) var(--pad) clamp(2.5rem, 6vh, 4rem);
   min-height: 0;
   border-bottom: 1px solid var(--ink);
 }
