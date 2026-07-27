@@ -1,15 +1,6 @@
 # AdityaPortfolio
 
-Black-and-white portfolio with a graph-paper background. Static **HTML / CSS / JS** — ready for GitHub Pages.
-
-## Host on GitHub Pages
-
-1. Push this repo to GitHub (already: `AdityaTakuli/AdityaPortfolio`)
-2. Repo → **Settings** → **Pages**
-3. Under **Build and deployment**, set Source to **Deploy from a branch**
-4. Branch: **main** / folder: **/ (root)** → Save
-
-Site URL will be:
+Site URL:
 
 **https://adityatakuli.github.io/AdityaPortfolio/**
 
