@@ -13,6 +13,8 @@
   --surface: #fafaf7;
   --font-display: "Syne", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-pixel: "Press Start 2P", ui-monospace, monospace;
+  --panel: #fafaf7;
   --pad: clamp(1.25rem, 4vw, 3rem);
   --max: 1120px;
   --max-wide: 1460px;
@@ -35,6 +37,7 @@
   --fill: #ecece8;
   --fill-text: #0c0c0c;
   --surface: #141414;
+  --panel: #000000;
   --brand: #6f9fff;
   --brand-soft: #8ccdff;
   --brand-deep: #4c6fe0;
@@ -939,7 +942,7 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   justify-content: space-between;
   padding: 1.4rem;
   border-radius: 14px;
-  background: var(--surface);
+  background: var(--panel);
   overflow: hidden;
 }
 
@@ -1059,10 +1062,10 @@ html:not([data-theme="dark"]) .theme-icon-sun {
 
 .th-base,
 .th-reveal {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 62px;
-  letter-spacing: -0.03em;
+  font-family: var(--font-pixel);
+  font-weight: 400;
+  font-size: 68px;
+  letter-spacing: normal;
 }
 
 .th-base {
@@ -1192,7 +1195,7 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   flex-direction: column;
   border-radius: 14px;
   overflow: hidden;
-  background: var(--surface);
+  background: var(--panel);
 }
 
 [data-theme="dark"] .bento-frame {
