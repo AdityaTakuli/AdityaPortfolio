@@ -15,6 +15,111 @@
   });
 
   /* ----------------------------------------------------------------------
+     Glowing border — rotates a masked conic gradient toward the cursor.
+     Vanilla port of the Aceternity GlowingEffect component.
+     ---------------------------------------------------------------------- */
+  var rings = [].map.call(
+    document.querySelectorAll(".glow-ring"),
+    function (el) {
+      return { el: el, angle: 0, from: 0, to: 0, start: 0, moving: false };
+    }
+  );
+
+  if (rings.length) {
+    var PROXIMITY = 70;
+    var INACTIVE_ZONE = 0.06;
+    var DURATION = 1200;
+    var pointer = { x: -9999, y: -9999 };
+    var scanQueued = false;
+    var glowFrame = null;
+
+    function easeOutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
+
+    function paint(now) {
+      var busy = false;
+
+      rings.forEach(function (ring) {
+        if (!ring.moving) return;
+        var progress = Math.min(1, (now - ring.start) / DURATION);
+        ring.angle = ring.from + (ring.to - ring.from) * easeOutExpo(progress);
+        ring.el.style.setProperty("--start", String(ring.angle));
+        if (progress < 1) busy = true;
+        else ring.moving = false;
+      });
+
+      glowFrame = busy ? requestAnimationFrame(paint) : null;
+    }
+
+    function scan() {
+      scanQueued = false;
+
+      rings.forEach(function (ring) {
+        var box = ring.el.getBoundingClientRect();
+        if (!box.width || !box.height) return;
+
+        var cx = box.left + box.width / 2;
+        var cy = box.top + box.height / 2;
+        var distance = Math.hypot(pointer.x - cx, pointer.y - cy);
+        var deadZone = 0.5 * Math.min(box.width, box.height) * INACTIVE_ZONE;
+
+        if (distance < deadZone) {
+          ring.el.style.setProperty("--active", "0");
+          return;
+        }
+
+        var active =
+          pointer.x > box.left - PROXIMITY &&
+          pointer.x < box.right + PROXIMITY &&
+          pointer.y > box.top - PROXIMITY &&
+          pointer.y < box.bottom + PROXIMITY;
+
+        ring.el.style.setProperty("--active", active ? "1" : "0");
+        if (!active) return;
+
+        var target =
+          (180 * Math.atan2(pointer.y - cy, pointer.x - cx)) / Math.PI + 90;
+        // Rotate whichever way is shorter, so the sweep never spins the long way.
+        var delta = ((((target - ring.angle + 180) % 360) + 360) % 360) - 180;
+
+        if (reduceMotion) {
+          ring.angle += delta;
+          ring.el.style.setProperty("--start", String(ring.angle));
+          return;
+        }
+
+        ring.from = ring.angle;
+        ring.to = ring.angle + delta;
+        ring.start = performance.now();
+        ring.moving = true;
+      });
+
+      if (!reduceMotion && !glowFrame) {
+        glowFrame = requestAnimationFrame(paint);
+      }
+    }
+
+    function queueScan() {
+      if (scanQueued) return;
+      scanQueued = true;
+      requestAnimationFrame(scan);
+    }
+
+    document.addEventListener(
+      "pointermove",
+      function (event) {
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+        queueScan();
+      },
+      { passive: true }
+    );
+
+    window.addEventListener("scroll", queueScan, { passive: true });
+  }
+
+  /* ----------------------------------------------------------------------
      Text hover effect — cursor-tracked radial mask over outlined type.
      Vanilla port of the Aceternity/framer-motion behaviour.
      ---------------------------------------------------------------------- */
