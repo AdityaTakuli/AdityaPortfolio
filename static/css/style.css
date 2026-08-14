@@ -24,6 +24,12 @@
   --brand-soft: #7cc4ff;
   --brand-deep: #4c6fe0;
   --brand-violet: #8f8cff;
+
+  /* Glowing border sweep — each surface overrides these four stops */
+  --glow-1: var(--brand);
+  --glow-2: var(--brand-soft);
+  --glow-3: var(--brand-violet);
+  --glow-4: var(--brand-deep);
 }
 
 [data-theme="dark"] {
@@ -668,6 +674,13 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
+
+  /* The home grid holds every project at once, so its glow spans the spectrum
+     rather than committing to any single project's accent */
+  --glow-1: #dd7bbb;
+  --glow-2: #d79f1e;
+  --glow-3: #5a922c;
+  --glow-4: #4c7894;
 }
 
 .project-card {
@@ -882,17 +895,17 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   opacity: var(--active);
   transition: opacity 0.3s ease;
   background-attachment: fixed;
-  background-image: radial-gradient(circle, var(--brand) 10%, transparent 20%),
-    radial-gradient(circle at 40% 40%, var(--brand-soft) 5%, transparent 15%),
-    radial-gradient(circle at 60% 60%, var(--brand-violet) 10%, transparent 20%),
-    radial-gradient(circle at 40% 60%, var(--brand-deep) 10%, transparent 20%),
+  background-image: radial-gradient(circle, var(--glow-1) 10%, transparent 20%),
+    radial-gradient(circle at 40% 40%, var(--glow-2) 5%, transparent 15%),
+    radial-gradient(circle at 60% 60%, var(--glow-3) 10%, transparent 20%),
+    radial-gradient(circle at 40% 60%, var(--glow-4) 10%, transparent 20%),
     repeating-conic-gradient(
       from 236.84deg at 50% 50%,
-      var(--brand) 0%,
-      var(--brand-soft) 5%,
-      var(--brand-violet) 10%,
-      var(--brand-deep) 15%,
-      var(--brand) 20%
+      var(--glow-1) 0%,
+      var(--glow-2) 5%,
+      var(--glow-3) 10%,
+      var(--glow-4) 15%,
+      var(--glow-1) 20%
     );
   -webkit-mask-image: linear-gradient(#0000, #0000),
     conic-gradient(
@@ -1024,6 +1037,15 @@ html:not([data-theme="dark"]) .theme-icon-sun {
 /* ==========================================================================
    Case study page
    ========================================================================== */
+
+/* A case study belongs to one project, so its glow stays on that project's
+   accent. TrialMatch's is the blue sampled from its wordmark. */
+.case-page {
+  --glow-1: var(--brand-deep);
+  --glow-2: var(--brand);
+  --glow-3: var(--brand-soft);
+  --glow-4: var(--brand);
+}
 
 .case-page .section,
 .case-page .case-banner,
