@@ -7,6 +7,10 @@
   --paper: #f4f4f0;
   --grid: rgba(10, 10, 10, 0.08);
   --grid-major: rgba(10, 10, 10, 0.16);
+  /* The page grid sits under body copy, so it runs fainter than the same
+     lines used for card borders and diagram frames. */
+  --grid-bg: rgba(10, 10, 10, 0.04);
+  --grid-bg-major: rgba(10, 10, 10, 0.075);
   --line: #0a0a0a;
   --fill: #0a0a0a;
   --fill-text: #fafaf7;
@@ -39,6 +43,8 @@
   --paper: #0c0c0c;
   --grid: rgba(236, 236, 232, 0.07);
   --grid-major: rgba(236, 236, 232, 0.14);
+  --grid-bg: rgba(236, 236, 232, 0.035);
+  --grid-bg-major: rgba(236, 236, 232, 0.065);
   --line: #ecece8;
   --fill: #ecece8;
   --fill-text: #0c0c0c;
@@ -86,10 +92,10 @@ body {
   pointer-events: none;
   background-color: var(--paper);
   background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-    linear-gradient(var(--grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px);
+    linear-gradient(var(--grid-bg) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-bg) 1px, transparent 1px),
+    linear-gradient(var(--grid-bg-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-bg-major) 1px, transparent 1px);
   background-size:
     20px 20px,
     20px 20px,
