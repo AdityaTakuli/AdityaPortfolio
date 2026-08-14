@@ -1149,23 +1149,11 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   max-width: var(--max-wide);
   margin: 0 auto;
   padding: 0 var(--pad) clamp(1.5rem, 4vh, 2.5rem);
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  border-bottom: 1px solid var(--ink);
-}
-
-/* A panel this wide lifting on hover reads as a glitch rather than an affordance */
-.lede-card:hover {
-  transform: none;
-}
-
-.lede-inner {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  gap: clamp(1.25rem, 4vw, 3rem);
   align-items: start;
-  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-bottom: 1px solid var(--ink);
 }
 
 .lede-copy p {
@@ -1198,12 +1186,8 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-}
-
-.lede-inner .case-cta {
   grid-column: 1 / -1;
-  padding-top: 1.6rem;
-  border-top: 1px solid var(--grid-major);
+  margin-top: 0.5rem;
 }
 
 /* Bento grid */
@@ -1590,7 +1574,7 @@ html:not([data-theme="dark"]) .theme-icon-sun {
 }
 
 @media (max-width: 860px) {
-  .lede-inner {
+  .case-lede {
     grid-template-columns: 1fr;
   }
 
