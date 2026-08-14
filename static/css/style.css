@@ -29,6 +29,10 @@
   --brand-deep: #4c6fe0;
   --brand-violet: #8f8cff;
 
+  /* Travelling data packet in the diagrams — the deeper blue holds up
+     against light paper, dark mode swaps in the brighter one. */
+  --pulse: var(--brand);
+
   /* Glowing border sweep — each surface overrides these four stops */
   --glow-1: var(--brand);
   --glow-2: var(--brand-soft);
@@ -54,6 +58,7 @@
   --brand-soft: #8ccdff;
   --brand-deep: #4c6fe0;
   --brand-violet: #9a97ff;
+  --pulse: var(--brand-soft);
 }
 
 *,
@@ -1467,16 +1472,15 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   stroke-linecap: round;
 }
 
+/* Every wired connector shares the neutral colour above — blue is reserved
+   for the packet travelling along it. The pipeline spine is still solid
+   rather than dashed, so the route reads even when the animation is off. */
 .nd-edge-flow {
-  stroke: var(--brand);
   stroke-dasharray: none;
   stroke-width: 1.75;
 }
 
-.nd-edge-state {
-  stroke: color-mix(in srgb, var(--brand) 45%, transparent);
-}
-
+/* The disabled path stays fainter: nothing ever travels it. */
 .nd-edge-off {
   stroke: color-mix(in srgb, var(--ink) 20%, transparent);
   stroke-dasharray: 3 6;
@@ -1510,34 +1514,31 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   opacity: 0;
 }
 
-.nd-pulse-flow {
-  stroke: var(--brand-soft);
-}
-
-.nd-pulse-svc {
-  stroke: var(--ink);
-}
-
+/* One packet, one colour, whichever kind of connector it is crossing. */
+.nd-pulse-flow,
+.nd-pulse-svc,
 .nd-pulse-state {
-  stroke: var(--brand);
+  stroke: var(--pulse);
 }
 
 .nd-live .nd-pulse {
   animation: nd-flow var(--cycle, 8s) linear infinite backwards;
 }
 
+/* The hop occupies the first 12% of the cycle; the rest is the packet waiting
+   its turn again. Both diagrams size their step spacing against this. */
 @keyframes nd-flow {
   0% {
     stroke-dashoffset: var(--dash);
     opacity: 0;
   }
-  6% {
+  2% {
     opacity: 1;
   }
-  25% {
+  10% {
     opacity: 1;
   }
-  30% {
+  12% {
     stroke-dashoffset: calc(-1 * var(--len));
     opacity: 0;
   }
@@ -1555,16 +1556,16 @@ html:not([data-theme="dark"]) .theme-icon-sun {
 
 @keyframes nd-beat {
   0%,
-  22% {
+  6% {
     stroke-opacity: 0.55;
   }
-  29% {
+  12% {
     stroke-opacity: 1;
   }
-  46% {
+  24% {
     stroke-opacity: 1;
   }
-  56%,
+  32%,
   100% {
     stroke-opacity: 0.55;
   }
@@ -1575,20 +1576,16 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   animation: nd-field-write var(--cycle, 8s) linear infinite backwards;
 }
 
+/* A written field stays lit for the rest of the run, so the state panel fills
+   up as the packet descends and only resets when the loop restarts. */
 @keyframes nd-field-write {
   0%,
-  24% {
+  7% {
     opacity: 0.4;
   }
-  30% {
-    opacity: 1;
-  }
-  48% {
-    opacity: 1;
-  }
-  58%,
+  13%,
   100% {
-    opacity: 0.4;
+    opacity: 1;
   }
 }
 

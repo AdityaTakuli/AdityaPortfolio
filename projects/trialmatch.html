@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&family=Syne:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../static/css/style.css?v=15" />
+    <link rel="stylesheet" href="../static/css/style.css?v=17" />
     <script>
       (function () {
         document.documentElement.classList.add("js");
@@ -257,7 +257,7 @@
     role="img"
     aria-label="TrialMatch agent dataflow: inputs and services feed six LangGraph agents that each write one field of the shared TrialMatchState"
     preserveAspectRatio="xMidYMid meet"
-    style="--cycle: 8.0s"
+    style="--cycle: 9.0s"
   >
     <title>TrialMatch agent dataflow: inputs and services feed six LangGraph agents that each write one field of the shared TrialMatchState</title>
     <defs>
@@ -291,12 +291,12 @@
       <text class="nd-title" x="916" y="108">TrialMatchState</text>
     </g>
     <line class="nd-rule" x1="916" y1="118" x2="1164" y2="118" />
-    <text class="nd-field" x="926" y="187.0" style="animation-delay: 0.34s">condition · location · age</text>
-    <text class="nd-field" x="926" y="355.0" style="animation-delay: 1.36s">patient_profile</text>
-    <text class="nd-field" x="926" y="523.0" style="animation-delay: 2.38s">condition_matches</text>
-    <text class="nd-field" x="926" y="691.0" style="animation-delay: 3.4s">raw_trials</text>
-    <text class="nd-field" x="926" y="859.0" style="animation-delay: 4.42s">ranked_trials</text>
-    <text class="nd-field" x="926" y="1027.0" style="animation-delay: 5.44s">final_results</text>
+    <text class="nd-field" x="926" y="187.0" style="animation-delay: 0.48s">condition · location · age</text>
+    <text class="nd-field" x="926" y="355.0" style="animation-delay: 1.92s">patient_profile</text>
+    <text class="nd-field" x="926" y="523.0" style="animation-delay: 3.36s">condition_matches</text>
+    <text class="nd-field" x="926" y="691.0" style="animation-delay: 4.8s">raw_trials</text>
+    <text class="nd-field" x="926" y="859.0" style="animation-delay: 6.24s">ranked_trials</text>
+    <text class="nd-field" x="926" y="1027.0" style="animation-delay: 7.68s">final_results</text>
     <text class="nd-line" x="916" y="1092">returned as the API response</text>
     <g class="nd-node">
       <rect class="nd-card nd-input" x="40" y="130" width="280" height="80" rx="12" />
@@ -342,35 +342,35 @@
       <text class="nd-line" x="476" y="212">free text → query object</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 1.02s" x="460" y="298" width="300" height="104" rx="12" />
+      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 1.44s" x="460" y="298" width="300" height="104" rx="12" />
       <text class="nd-head" x="476" y="320">agent 02</text>
       <text class="nd-title" x="476" y="346">patient_profile</text>
       <line class="nd-rule" x1="476" y1="356" x2="744" y2="356" />
       <text class="nd-line" x="476" y="380">age · sex · meds · labs</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 2.04s" x="460" y="466" width="300" height="104" rx="12" />
+      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 2.88s" x="460" y="466" width="300" height="104" rx="12" />
       <text class="nd-head" x="476" y="488">agent 03</text>
       <text class="nd-title" x="476" y="514">semantic_match</text>
       <line class="nd-rule" x1="476" y1="524" x2="744" y2="524" />
       <text class="nd-line" x="476" y="548">cosine vs 500 conditions</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 3.06s" x="460" y="634" width="300" height="104" rx="12" />
+      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 4.32s" x="460" y="634" width="300" height="104" rx="12" />
       <text class="nd-head" x="476" y="656">agent 04</text>
       <text class="nd-title" x="476" y="682">fetch_trials</text>
       <line class="nd-rule" x1="476" y1="692" x2="744" y2="692" />
       <text class="nd-line" x="476" y="716">one API call per match</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 4.08s" x="460" y="802" width="300" height="104" rx="12" />
+      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 5.76s" x="460" y="802" width="300" height="104" rx="12" />
       <text class="nd-head" x="476" y="824">agent 05</text>
       <text class="nd-title" x="476" y="850">filter_rank</text>
       <line class="nd-rule" x1="476" y1="860" x2="744" y2="860" />
       <text class="nd-line" x="476" y="884">dedupe · eligibility · score</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 5.1s" x="460" y="970" width="300" height="104" rx="12" />
+      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 7.2s" x="460" y="970" width="300" height="104" rx="12" />
       <text class="nd-head" x="476" y="992">agent 06</text>
       <text class="nd-title" x="476" y="1018">explain_eligibility</text>
       <line class="nd-rule" x1="476" y1="1028" x2="744" y2="1028" />
@@ -412,21 +412,21 @@
     <circle class="nd-port" cx="900" cy="1022.0" r="5" />
     <g class="nd-pulses">
     <path class="nd-pulse nd-pulse-flow" d="M 320 170.0 C 397.0 170.0, 383.0 182.0, 460 182.0" style="animation-delay: 0.0s" />
-    <path class="nd-pulse nd-pulse-svc" d="M 320 330.0 C 397.0 330.0, 383.0 350.0, 460 350.0" style="animation-delay: 1.02s" />
-    <path class="nd-pulse nd-pulse-svc" d="M 320 507.0 C 397.0 507.0, 383.0 518.0, 460 518.0" style="animation-delay: 2.04s" />
-    <path class="nd-pulse nd-pulse-svc" d="M 320 684.0 C 397.0 684.0, 383.0 686.0, 460 686.0" style="animation-delay: 3.06s" />
-    <path class="nd-pulse nd-pulse-svc" d="M 180.0 380 C 392 420, 392 902.0, 460 1022.0" style="animation-delay: 5.1s" />
-    <path class="nd-pulse nd-pulse-flow" d="M 610.0 234 C 610.0 269.2, 610.0 262.8, 610.0 298" style="animation-delay: 0.68s" />
-    <path class="nd-pulse nd-pulse-flow" d="M 610.0 402 C 610.0 437.2, 610.0 430.8, 610.0 466" style="animation-delay: 1.7s" />
-    <path class="nd-pulse nd-pulse-flow" d="M 610.0 570 C 610.0 605.2, 610.0 598.8, 610.0 634" style="animation-delay: 2.72s" />
-    <path class="nd-pulse nd-pulse-flow" d="M 610.0 738 C 610.0 773.2, 610.0 766.8, 610.0 802" style="animation-delay: 3.74s" />
-    <path class="nd-pulse nd-pulse-flow" d="M 610.0 906 C 610.0 941.2, 610.0 934.8, 610.0 970" style="animation-delay: 4.76s" />
-    <path class="nd-pulse nd-pulse-state" d="M 760 182.0 C 837.0 182.0, 823.0 182.0, 900 182.0" style="animation-delay: 0.34s" />
-    <path class="nd-pulse nd-pulse-state" d="M 760 350.0 C 837.0 350.0, 823.0 350.0, 900 350.0" style="animation-delay: 1.36s" />
-    <path class="nd-pulse nd-pulse-state" d="M 760 518.0 C 837.0 518.0, 823.0 518.0, 900 518.0" style="animation-delay: 2.38s" />
-    <path class="nd-pulse nd-pulse-state" d="M 760 686.0 C 837.0 686.0, 823.0 686.0, 900 686.0" style="animation-delay: 3.4s" />
-    <path class="nd-pulse nd-pulse-state" d="M 760 854.0 C 837.0 854.0, 823.0 854.0, 900 854.0" style="animation-delay: 4.42s" />
-    <path class="nd-pulse nd-pulse-state" d="M 760 1022.0 C 837.0 1022.0, 823.0 1022.0, 900 1022.0" style="animation-delay: 5.44s" />
+    <path class="nd-pulse nd-pulse-svc" d="M 320 330.0 C 397.0 330.0, 383.0 350.0, 460 350.0" style="animation-delay: 1.44s" />
+    <path class="nd-pulse nd-pulse-svc" d="M 320 507.0 C 397.0 507.0, 383.0 518.0, 460 518.0" style="animation-delay: 2.88s" />
+    <path class="nd-pulse nd-pulse-svc" d="M 320 684.0 C 397.0 684.0, 383.0 686.0, 460 686.0" style="animation-delay: 4.32s" />
+    <path class="nd-pulse nd-pulse-svc" d="M 180.0 380 C 392 420, 392 902.0, 460 1022.0" style="animation-delay: 7.2s" />
+    <path class="nd-pulse nd-pulse-flow" d="M 610.0 234 C 610.0 269.2, 610.0 262.8, 610.0 298" style="animation-delay: 0.96s" />
+    <path class="nd-pulse nd-pulse-flow" d="M 610.0 402 C 610.0 437.2, 610.0 430.8, 610.0 466" style="animation-delay: 2.4s" />
+    <path class="nd-pulse nd-pulse-flow" d="M 610.0 570 C 610.0 605.2, 610.0 598.8, 610.0 634" style="animation-delay: 3.84s" />
+    <path class="nd-pulse nd-pulse-flow" d="M 610.0 738 C 610.0 773.2, 610.0 766.8, 610.0 802" style="animation-delay: 5.28s" />
+    <path class="nd-pulse nd-pulse-flow" d="M 610.0 906 C 610.0 941.2, 610.0 934.8, 610.0 970" style="animation-delay: 6.72s" />
+    <path class="nd-pulse nd-pulse-state" d="M 760 182.0 C 837.0 182.0, 823.0 182.0, 900 182.0" style="animation-delay: 0.48s" />
+    <path class="nd-pulse nd-pulse-state" d="M 760 350.0 C 837.0 350.0, 823.0 350.0, 900 350.0" style="animation-delay: 1.92s" />
+    <path class="nd-pulse nd-pulse-state" d="M 760 518.0 C 837.0 518.0, 823.0 518.0, 900 518.0" style="animation-delay: 3.36s" />
+    <path class="nd-pulse nd-pulse-state" d="M 760 686.0 C 837.0 686.0, 823.0 686.0, 900 686.0" style="animation-delay: 4.8s" />
+    <path class="nd-pulse nd-pulse-state" d="M 760 854.0 C 837.0 854.0, 823.0 854.0, 900 854.0" style="animation-delay: 6.24s" />
+    <path class="nd-pulse nd-pulse-state" d="M 760 1022.0 C 837.0 1022.0, 823.0 1022.0, 900 1022.0" style="animation-delay: 7.68s" />
     </g>
   </svg>
           </div>
@@ -592,7 +592,7 @@
     role="img"
     aria-label="TrialMatch system architecture: browser to Next.js to FastAPI modules to the data layer"
     preserveAspectRatio="xMidYMid meet"
-    style="--cycle: 5.0s"
+    style="--cycle: 4.5s"
   >
     <title>TrialMatch system architecture: browser to Next.js to FastAPI modules to the data layer</title>
     <defs>
@@ -644,60 +644,60 @@
       <text class="nd-line" x="280" y="320">/api/* → :8000</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 0.42s" x="534" y="232" width="130" height="76" rx="12" />
+      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 0.5s" x="534" y="232" width="130" height="76" rx="12" />
       <text class="nd-head" x="550" y="254">entry</text>
       <text class="nd-title" x="550" y="280">main.py</text>
       <line class="nd-rule" x1="550" y1="290" x2="648" y2="290" />
       <text class="nd-line" x="550" y="314">routes</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-beat" style="animation-delay: 0.84s" x="700" y="104" width="186" height="72" rx="12" />
+      <rect class="nd-card nd-beat" style="animation-delay: 1.0s" x="700" y="104" width="186" height="72" rx="12" />
       <text class="nd-title" x="716" y="130">auth/</text>
       <line class="nd-rule" x1="716" y1="142" x2="870" y2="142" />
       <text class="nd-line" x="716" y="166">register · login</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-beat" style="animation-delay: 0.966s" x="700" y="194" width="186" height="72" rx="12" />
+      <rect class="nd-card nd-beat" style="animation-delay: 1.15s" x="700" y="194" width="186" height="72" rx="12" />
       <text class="nd-title" x="716" y="220">users/</text>
       <line class="nd-rule" x1="716" y1="232" x2="870" y2="232" />
       <text class="nd-line" x="716" y="256">history · saved</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-beat" style="animation-delay: 1.092s" x="700" y="284" width="186" height="72" rx="12" />
+      <rect class="nd-card nd-beat" style="animation-delay: 1.3s" x="700" y="284" width="186" height="72" rx="12" />
       <text class="nd-title" x="716" y="310">cache/</text>
       <line class="nd-rule" x1="716" y1="322" x2="870" y2="322" />
       <text class="nd-line" x="716" y="346">cache · rate limit</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 1.218s" x="700" y="374" width="186" height="72" rx="12" />
+      <rect class="nd-card nd-agent nd-beat" style="animation-delay: 1.45s" x="700" y="374" width="186" height="72" rx="12" />
       <text class="nd-title" x="716" y="400">LangGraph</text>
       <line class="nd-rule" x1="716" y1="412" x2="870" y2="412" />
       <text class="nd-line" x="716" y="436">6-agent pipeline</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-store nd-beat" style="animation-delay: 1.428s" x="964" y="96" width="242" height="76" rx="12" />
+      <rect class="nd-card nd-store nd-beat" style="animation-delay: 1.7s" x="964" y="96" width="242" height="76" rx="12" />
       <text class="nd-title" x="980" y="122">PostgreSQL</text>
       <line class="nd-rule" x1="980" y1="134" x2="1190" y2="134" />
       <text class="nd-line" x="980" y="158">users · history · saved</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-store nd-beat" style="animation-delay: 1.68s" x="964" y="190" width="242" height="76" rx="12" />
+      <rect class="nd-card nd-store nd-beat" style="animation-delay: 2.0s" x="964" y="190" width="242" height="76" rx="12" />
       <text class="nd-title" x="980" y="216">Redis</text>
       <line class="nd-rule" x1="980" y1="228" x2="1190" y2="228" />
       <text class="nd-line" x="980" y="252">cache 1h · 30 req/min</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-store nd-beat" style="animation-delay: 1.806s" x="964" y="284" width="242" height="76" rx="12" />
+      <rect class="nd-card nd-store nd-beat" style="animation-delay: 2.15s" x="964" y="284" width="242" height="76" rx="12" />
       <text class="nd-title" x="980" y="310">corpus + embeddings</text>
       <line class="nd-rule" x1="980" y1="322" x2="1190" y2="322" />
       <text class="nd-line" x="980" y="346">500 conditions</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-ext nd-beat" style="animation-delay: 1.932s" x="964" y="378" width="242" height="60" rx="12" />
+      <rect class="nd-card nd-ext nd-beat" style="animation-delay: 2.3s" x="964" y="378" width="242" height="60" rx="12" />
       <text class="nd-title" x="980" y="404">ClinicalTrials.gov</text>
     </g>
     <g class="nd-node">
-      <rect class="nd-card nd-ext nd-beat" style="animation-delay: 2.058s" x="964" y="456" width="242" height="60" rx="12" />
+      <rect class="nd-card nd-ext nd-beat" style="animation-delay: 2.45s" x="964" y="456" width="242" height="60" rx="12" />
       <text class="nd-title" x="980" y="482">Groq LLM</text>
     </g>
     <circle class="nd-port" cx="200" cy="270.0" r="5" />
@@ -721,17 +721,17 @@
     <circle class="nd-port" cx="964" cy="486.0" r="5" />
     <g class="nd-pulses">
     <path class="nd-pulse nd-pulse-flow" d="M 200 270.0 C 235.2 270.0, 228.8 270.0, 264 270.0" style="animation-delay: 0.0s" />
-    <path class="nd-pulse nd-pulse-flow" d="M 456 270.0 C 498.9 270.0, 491.1 270.0, 534 270.0" style="animation-delay: 0.42s" />
-    <path class="nd-pulse nd-pulse-svc" d="M 664 270.0 C 683.8 270.0, 680.2 140.0, 700 140.0" style="animation-delay: 0.84s" />
-    <path class="nd-pulse nd-pulse-svc" d="M 664 270.0 C 683.8 270.0, 680.2 230.0, 700 230.0" style="animation-delay: 0.966s" />
-    <path class="nd-pulse nd-pulse-svc" d="M 664 270.0 C 683.8 270.0, 680.2 320.0, 700 320.0" style="animation-delay: 1.092s" />
-    <path class="nd-pulse nd-pulse-flow" d="M 664 270.0 C 683.8 270.0, 680.2 410.0, 700 410.0" style="animation-delay: 1.218s" />
-    <path class="nd-pulse nd-pulse-svc" d="M 886 140.0 C 928.9 140.0, 921.1 122, 964 122" style="animation-delay: 1.428s" />
-    <path class="nd-pulse nd-pulse-svc" d="M 886 230.0 C 928.9 230.0, 921.1 148, 964 148" style="animation-delay: 1.554s" />
-    <path class="nd-pulse nd-pulse-svc" d="M 886 320.0 C 928.9 320.0, 921.1 228.0, 964 228.0" style="animation-delay: 1.68s" />
-    <path class="nd-pulse nd-pulse-state" d="M 886 410.0 C 928.9 410.0, 921.1 322.0, 964 322.0" style="animation-delay: 1.806s" />
-    <path class="nd-pulse nd-pulse-state" d="M 886 410.0 C 928.9 410.0, 921.1 408.0, 964 408.0" style="animation-delay: 1.932s" />
-    <path class="nd-pulse nd-pulse-state" d="M 886 410.0 C 928.9 410.0, 921.1 486.0, 964 486.0" style="animation-delay: 2.058s" />
+    <path class="nd-pulse nd-pulse-flow" d="M 456 270.0 C 498.9 270.0, 491.1 270.0, 534 270.0" style="animation-delay: 0.5s" />
+    <path class="nd-pulse nd-pulse-svc" d="M 664 270.0 C 683.8 270.0, 680.2 140.0, 700 140.0" style="animation-delay: 1.0s" />
+    <path class="nd-pulse nd-pulse-svc" d="M 664 270.0 C 683.8 270.0, 680.2 230.0, 700 230.0" style="animation-delay: 1.15s" />
+    <path class="nd-pulse nd-pulse-svc" d="M 664 270.0 C 683.8 270.0, 680.2 320.0, 700 320.0" style="animation-delay: 1.3s" />
+    <path class="nd-pulse nd-pulse-flow" d="M 664 270.0 C 683.8 270.0, 680.2 410.0, 700 410.0" style="animation-delay: 1.45s" />
+    <path class="nd-pulse nd-pulse-svc" d="M 886 140.0 C 928.9 140.0, 921.1 122, 964 122" style="animation-delay: 1.7s" />
+    <path class="nd-pulse nd-pulse-svc" d="M 886 230.0 C 928.9 230.0, 921.1 148, 964 148" style="animation-delay: 1.85s" />
+    <path class="nd-pulse nd-pulse-svc" d="M 886 320.0 C 928.9 320.0, 921.1 228.0, 964 228.0" style="animation-delay: 2.0s" />
+    <path class="nd-pulse nd-pulse-state" d="M 886 410.0 C 928.9 410.0, 921.1 322.0, 964 322.0" style="animation-delay: 2.15s" />
+    <path class="nd-pulse nd-pulse-state" d="M 886 410.0 C 928.9 410.0, 921.1 408.0, 964 408.0" style="animation-delay: 2.3s" />
+    <path class="nd-pulse nd-pulse-state" d="M 886 410.0 C 928.9 410.0, 921.1 486.0, 964 486.0" style="animation-delay: 2.45s" />
     </g>
   </svg>
           </div>
