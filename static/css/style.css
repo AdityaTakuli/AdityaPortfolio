@@ -1489,6 +1489,121 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   stroke-dasharray: 4 5;
 }
 
+/* Flow animation -----------------------------------------------------------
+   A single dash slides the length of each connector. --len is measured per
+   path at runtime and --dash is a fixed size, so the packet looks identical
+   on a short hand-off and a long service call. A per-edge animation-delay
+   walks it through the pipeline in order, and the loops only run while the
+   diagram is on screen (.nd-live). */
+.nd-pulse {
+  --dash: 32px;
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dashoffset: var(--dash);
+  opacity: 0;
+}
+
+.nd-pulse-flow {
+  stroke: var(--brand-soft);
+}
+
+.nd-pulse-svc {
+  stroke: var(--ink);
+}
+
+.nd-pulse-state {
+  stroke: var(--brand);
+}
+
+.nd-live .nd-pulse {
+  animation: nd-flow var(--cycle, 8s) linear infinite backwards;
+}
+
+@keyframes nd-flow {
+  0% {
+    stroke-dashoffset: var(--dash);
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 1;
+  }
+  30% {
+    stroke-dashoffset: calc(-1 * var(--len));
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: calc(-1 * var(--len));
+    opacity: 0;
+  }
+}
+
+/* Nodes brighten as the packet reaches them. backwards fill-mode matters:
+   without it every node sits lit until its own delay elapses. */
+.nd-live .nd-beat {
+  animation: nd-beat var(--cycle, 8s) linear infinite backwards;
+}
+
+@keyframes nd-beat {
+  0%,
+  22% {
+    stroke-opacity: 0.55;
+  }
+  29% {
+    stroke-opacity: 1;
+  }
+  46% {
+    stroke-opacity: 1;
+  }
+  56%,
+  100% {
+    stroke-opacity: 0.55;
+  }
+}
+
+/* State rows light up when their field is written */
+.nd-live .nd-field {
+  animation: nd-field-write var(--cycle, 8s) linear infinite backwards;
+}
+
+@keyframes nd-field-write {
+  0%,
+  24% {
+    opacity: 0.4;
+  }
+  30% {
+    opacity: 1;
+  }
+  48% {
+    opacity: 1;
+  }
+  58%,
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.nd-idle .nd-pulse,
+.nd-idle .nd-beat,
+.nd-idle .nd-field {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nd-live .nd-pulse,
+  .nd-live .nd-beat,
+  .nd-live .nd-field {
+    animation: none;
+  }
+
+  .nd-field {
+    opacity: 1;
+  }
+}
+
 /* Agent cards */
 .agent-grid {
   display: grid;

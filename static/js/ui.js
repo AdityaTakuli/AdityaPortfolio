@@ -206,6 +206,46 @@
   });
 
   /* ----------------------------------------------------------------------
+     Diagram flow — a packet travels every connector, sequenced so it walks
+     the pipeline agent by agent. The motion itself is CSS; this measures the
+     connectors and parks the loops while the diagram is off screen.
+     ---------------------------------------------------------------------- */
+  var diagrams = document.querySelectorAll(".nd-svg");
+
+  if (diagrams.length && !reduceMotion) {
+    // Each pulse slides one fixed-size dash along its path, so the packet
+    // looks the same on a short hand-off and a long service call.
+    document.querySelectorAll(".nd-pulse").forEach(function (path) {
+      var length = path.getTotalLength();
+      var dash = parseFloat(getComputedStyle(path).getPropertyValue("--dash")) || 32;
+      path.style.setProperty("--len", length + "px");
+      // A gap longer than the path keeps exactly one dash on the wire.
+      path.style.strokeDasharray = dash + "px " + (length + dash) + "px";
+    });
+
+    diagrams.forEach(function (svg) {
+      svg.classList.add("nd-live");
+    });
+
+    // Pausing is the optimisation, not the trigger — if the observer never
+    // reports, the diagrams simply keep animating.
+    if ("IntersectionObserver" in window) {
+      var flowObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            entry.target.classList.toggle("nd-idle", !entry.isIntersecting);
+          });
+        },
+        { rootMargin: "120px 0px", threshold: 0 }
+      );
+
+      diagrams.forEach(function (svg) {
+        flowObserver.observe(svg);
+      });
+    }
+  }
+
+  /* ----------------------------------------------------------------------
      Reveal sections on scroll
      ---------------------------------------------------------------------- */
   var revealables = document.querySelectorAll(".reveal");
