@@ -887,15 +887,16 @@ html:not([data-theme="dark"]) .theme-icon-sun {
 .th-base {
   fill: transparent;
   stroke: color-mix(in srgb, var(--ink) 34%, transparent);
-  stroke-width: 0.7;
-  stroke-dasharray: 1200;
-  stroke-dashoffset: 1200;
-  animation: th-draw 2.4s ease forwards;
+  stroke-width: 0.9;
+  animation: th-fade 1.1s ease both;
 }
 
-@keyframes th-draw {
+@keyframes th-fade {
+  from {
+    opacity: 0;
+  }
   to {
-    stroke-dashoffset: 0;
+    opacity: 1;
   }
 }
 
@@ -1183,17 +1184,11 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   .b-stat {
     grid-column: span 1;
   }
-
-  .th-base,
-  .th-reveal {
-    font-size: 58px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .th-base {
     animation: none;
-    stroke-dashoffset: 0;
   }
 
   .js .reveal {

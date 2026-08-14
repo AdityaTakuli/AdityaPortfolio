@@ -28,6 +28,7 @@
     var current = { x: view.width / 2, y: view.height / 2, r: 0 };
     var target = { x: view.width / 2, y: view.height / 2, r: 0 };
     var frame = null;
+    var safety = null;
 
     function apply() {
       gradient.setAttribute("cx", current.x);
@@ -47,16 +48,28 @@
         Math.abs(target.y - current.y) < 0.4 &&
         Math.abs(target.r - current.r) < 0.4;
 
+      if (settled && safety) {
+        clearTimeout(safety);
+        safety = null;
+      }
+
       frame = settled ? null : requestAnimationFrame(tick);
+    }
+
+    function snap() {
+      current = { x: target.x, y: target.y, r: target.r };
+      apply();
     }
 
     function run() {
       if (reduceMotion) {
-        current = { x: target.x, y: target.y, r: target.r };
-        apply();
+        snap();
         return;
       }
       if (!frame) frame = requestAnimationFrame(tick);
+      // If frames are throttled (background/occluded tab), still honour the pointer.
+      if (safety) clearTimeout(safety);
+      safety = setTimeout(snap, 150);
     }
 
     function toLocal(event) {
