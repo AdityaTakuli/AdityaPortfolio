@@ -1359,6 +1359,205 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   color: var(--ink-soft);
 }
 
+/* Node-graph diagrams -----------------------------------------------------
+   Everything lives in one SVG coordinate system so the connectors can never
+   drift out of alignment with the nodes. */
+.diagram {
+  margin: 2rem 0 0;
+}
+
+.diagram-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--grid-major);
+  border-radius: 20px;
+  background: var(--panel);
+  padding: 0.75rem;
+}
+
+[data-theme="dark"] .diagram-scroll {
+  box-shadow: 0 0 27px 0 rgba(45, 45, 45, 0.55);
+}
+
+.nd-svg {
+  display: block;
+  width: 100%;
+  /* Below this the labels stop being legible, so scroll rather than shrink */
+  min-width: 760px;
+  height: auto;
+}
+
+.diagram figcaption {
+  margin-top: 0.85rem;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--mute);
+}
+
+.diagram figcaption code,
+.agent-card code {
+  font-family: var(--font-mono);
+  color: var(--brand);
+}
+
+.nd-dot {
+  fill: var(--grid-major);
+}
+
+.nd-card {
+  fill: var(--panel);
+  stroke: color-mix(in srgb, var(--ink) 24%, transparent);
+  stroke-width: 1;
+}
+
+.nd-agent {
+  stroke: color-mix(in srgb, var(--brand) 55%, transparent);
+}
+
+.nd-state {
+  stroke: color-mix(in srgb, var(--brand) 35%, transparent);
+  fill: color-mix(in srgb, var(--brand) 6%, var(--panel));
+}
+
+.nd-input {
+  stroke: color-mix(in srgb, var(--ink) 45%, transparent);
+}
+
+.nd-off {
+  stroke: color-mix(in srgb, var(--ink) 18%, transparent);
+  stroke-dasharray: 5 4;
+}
+
+.nd-store {
+  stroke: color-mix(in srgb, var(--ink) 30%, transparent);
+}
+
+.nd-head,
+.nd-group-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: var(--mute);
+}
+
+.nd-title {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
+  fill: var(--ink);
+}
+
+.nd-agent + .nd-title,
+.nd-node .nd-title {
+  fill: var(--ink);
+}
+
+.nd-line {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  fill: var(--ink-soft);
+}
+
+.nd-field {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  fill: var(--brand);
+}
+
+.nd-rule {
+  stroke: var(--grid-major);
+  stroke-width: 1;
+}
+
+.nd-edge {
+  fill: none;
+  stroke: color-mix(in srgb, var(--ink) 38%, transparent);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 6;
+  stroke-linecap: round;
+}
+
+.nd-edge-flow {
+  stroke: var(--brand);
+  stroke-dasharray: none;
+  stroke-width: 1.75;
+}
+
+.nd-edge-state {
+  stroke: color-mix(in srgb, var(--brand) 45%, transparent);
+}
+
+.nd-edge-off {
+  stroke: color-mix(in srgb, var(--ink) 20%, transparent);
+  stroke-dasharray: 3 6;
+}
+
+.nd-port {
+  fill: var(--panel);
+  stroke: color-mix(in srgb, var(--ink) 45%, transparent);
+  stroke-width: 1.5;
+}
+
+.nd-frame {
+  fill: none;
+  stroke: var(--grid-major);
+  stroke-width: 1;
+  stroke-dasharray: 4 5;
+}
+
+/* Agent cards */
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin-top: 1.25rem;
+}
+
+.agent-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.agent-spec {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand);
+  border: 1px solid color-mix(in srgb, var(--brand) 45%, transparent);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+
+.agent-card h3 {
+  font-family: var(--font-mono);
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+}
+
+.agent-io {
+  display: grid;
+  gap: 0.7rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--grid-major);
+}
+
+.agent-io dt {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mute);
+  margin-bottom: 0.2rem;
+}
+
+.agent-io dd {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  word-break: break-word;
+}
+
 .case-outro {
   max-width: var(--max);
   margin: 0 auto;

@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&family=Syne:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../static/css/style.css?v=9" />
+    <link rel="stylesheet" href="../static/css/style.css?v=10" />
     <script>
       (function () {
         document.documentElement.classList.add("js");
@@ -36,7 +36,7 @@
       <a class="nav-brand" href="../index.html">Aditya</a>
       <nav class="nav-links" aria-label="Primary">
         <a href="../index.html#projects">Projects</a>
-        <a href="#build">How I built it</a>
+        <a href="#build">The agents</a>
         <a href="#stack">Stack</a>
       </nav>
       <div class="nav-actions">
@@ -245,84 +245,318 @@
       <section class="section reveal" id="build">
         <div class="section-head">
           <span class="section-index">02</span>
-          <h2>How I built it</h2>
+          <h2>The agents</h2>
         </div>
         <p class="about-text">
-          The matching logic runs as a LangGraph state machine — six nodes, one shared
-          state object. Splitting it this way meant every stage could be tested,
-          swapped and debugged in isolation instead of living inside one prompt.
+          The matching logic runs as a LangGraph state machine — six agents, one
+          shared state object. Each agent owns a single decision and writes exactly
+          one part of that state, which is what made every stage testable and
+          swappable instead of buried inside one prompt.
         </p>
-        <ul class="flow-grid">
-          <li class="bold-card">
+
+        <figure class="diagram">
+          <div class="diagram-scroll">
+            <svg
+    class="nd-svg"
+    viewBox="0 0 1220 1030"
+    role="img"
+    aria-label="TrialMatch agent dataflow: inputs and services feed six LangGraph agents that each write one field of the shared TrialMatchState"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <title>TrialMatch agent dataflow: inputs and services feed six LangGraph agents that each write one field of the shared TrialMatchState</title>
+    <defs>
+      <pattern id="ndDots1220" width="26" height="26" patternUnits="userSpaceOnUse">
+        <circle class="nd-dot" cx="1.5" cy="1.5" r="1.2" />
+      </pattern>
+    </defs>
+    <rect x="0" y="0" width="1220" height="1030" fill="url(#ndDots1220)" />
+    <path class="nd-edge nd-edge-flow" d="M 610.0 234 C 610.0 256.0, 610.0 252.0, 610.0 274" />
+    <path class="nd-edge nd-edge-flow" d="M 610.0 378 C 610.0 400.0, 610.0 396.0, 610.0 418" />
+    <path class="nd-edge nd-edge-flow" d="M 610.0 522 C 610.0 544.0, 610.0 540.0, 610.0 562" />
+    <path class="nd-edge nd-edge-flow" d="M 610.0 666 C 610.0 688.0, 610.0 684.0, 610.0 706" />
+    <path class="nd-edge nd-edge-flow" d="M 610.0 810 C 610.0 832.0, 610.0 828.0, 610.0 850" />
+    <path class="nd-edge nd-edge-flow" d="M 320 170.0 C 397.0 170.0, 383.0 182.0, 460 182.0" />
+    <path class="nd-edge" d="M 320 306.0 C 397.0 306.0, 383.0 326.0, 460 326.0" />
+    <path class="nd-edge" d="M 180.0 356 C 392 396, 392 782.0, 460 902.0" />
+    <path class="nd-edge" d="M 320 459.0 C 397.0 459.0, 383.0 470.0, 460 470.0" />
+    <path class="nd-edge" d="M 320 612.0 C 397.0 612.0, 383.0 614.0, 460 614.0" />
+    <path class="nd-edge nd-edge-off" d="M 320 756.0 C 397.0 756.0, 383.0 758.0, 460 758.0" />
+    <path class="nd-edge nd-edge-state" d="M 760 182.0 C 837.0 182.0, 823.0 182.0, 900 182.0" />
+    <path class="nd-edge nd-edge-state" d="M 760 326.0 C 837.0 326.0, 823.0 326.0, 900 326.0" />
+    <path class="nd-edge nd-edge-state" d="M 760 470.0 C 837.0 470.0, 823.0 470.0, 900 470.0" />
+    <path class="nd-edge nd-edge-state" d="M 760 614.0 C 837.0 614.0, 823.0 614.0, 900 614.0" />
+    <path class="nd-edge nd-edge-state" d="M 760 758.0 C 837.0 758.0, 823.0 758.0, 900 758.0" />
+    <path class="nd-edge nd-edge-state" d="M 760 902.0 C 837.0 902.0, 823.0 902.0, 900 902.0" />
+    <g class="nd-node">
+      <rect class="nd-card nd-state" x="900" y="60" width="280" height="930" rx="12" />
+      <text class="nd-head" x="916" y="82">shared state</text>
+      <text class="nd-title" x="916" y="108">TrialMatchState</text>
+    </g>
+    <line class="nd-rule" x1="916" y1="118" x2="1164" y2="118" />
+    <text class="nd-field" x="926" y="187.0">condition · location · age</text>
+    <text class="nd-field" x="926" y="331.0">patient_profile</text>
+    <text class="nd-field" x="926" y="475.0">condition_matches</text>
+    <text class="nd-field" x="926" y="619.0">raw_trials</text>
+    <text class="nd-field" x="926" y="763.0">ranked_trials</text>
+    <text class="nd-field" x="926" y="907.0">final_results</text>
+    <text class="nd-line" x="916" y="972">returned as the API response</text>
+    <g class="nd-node">
+      <rect class="nd-card nd-input" x="40" y="130" width="280" height="80" rx="12" />
+      <text class="nd-head" x="56" y="152">input</text>
+      <text class="nd-title" x="56" y="178">patient query</text>
+      <line class="nd-rule" x1="56" y1="188" x2="304" y2="188" />
+      <text class="nd-line" x="56" y="212">"high sugar, always thirsty"</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-ext" x="40" y="256" width="280" height="100" rx="12" />
+      <text class="nd-head" x="56" y="278">external</text>
+      <text class="nd-title" x="56" y="304">Groq LLM</text>
+      <line class="nd-rule" x1="56" y1="314" x2="304" y2="314" />
+      <text class="nd-line" x="56" y="338">extraction · explanation</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-ext" x="40" y="400" width="280" height="118" rx="12" />
+      <text class="nd-head" x="56" y="422">local model</text>
+      <text class="nd-title" x="56" y="448">MiniLM + corpus</text>
+      <line class="nd-rule" x1="56" y1="458" x2="304" y2="458" />
+      <text class="nd-line" x="56" y="482">all-MiniLM-L6-v2</text>
+      <text class="nd-line" x="56" y="504">500 conditions, .npz</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-ext" x="40" y="562" width="280" height="100" rx="12" />
+      <text class="nd-head" x="56" y="584">external API</text>
+      <text class="nd-title" x="56" y="610">ClinicalTrials.gov</text>
+      <line class="nd-rule" x1="56" y1="620" x2="304" y2="620" />
+      <text class="nd-line" x="56" y="644">live trials, not persisted</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-off" x="40" y="706" width="280" height="100" rx="12" />
+      <text class="nd-head" x="56" y="728">flagged off</text>
+      <text class="nd-title" x="56" y="754">cross-encoder rerank</text>
+      <line class="nd-rule" x1="56" y1="764" x2="304" y2="764" />
+      <text class="nd-line" x="56" y="788">ms-marco-MiniLM-L6-v2</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-agent" x="460" y="130" width="300" height="104" rx="12" />
+      <text class="nd-head" x="476" y="152">agent 01</text>
+      <text class="nd-title" x="476" y="178">extract_query</text>
+      <line class="nd-rule" x1="476" y1="188" x2="744" y2="188" />
+      <text class="nd-line" x="476" y="212">free text → query object</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-agent" x="460" y="274" width="300" height="104" rx="12" />
+      <text class="nd-head" x="476" y="296">agent 02</text>
+      <text class="nd-title" x="476" y="322">patient_profile</text>
+      <line class="nd-rule" x1="476" y1="332" x2="744" y2="332" />
+      <text class="nd-line" x="476" y="356">age · sex · meds · labs</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-agent" x="460" y="418" width="300" height="104" rx="12" />
+      <text class="nd-head" x="476" y="440">agent 03</text>
+      <text class="nd-title" x="476" y="466">semantic_match</text>
+      <line class="nd-rule" x1="476" y1="476" x2="744" y2="476" />
+      <text class="nd-line" x="476" y="500">cosine vs 500 conditions</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-agent" x="460" y="562" width="300" height="104" rx="12" />
+      <text class="nd-head" x="476" y="584">agent 04</text>
+      <text class="nd-title" x="476" y="610">fetch_trials</text>
+      <line class="nd-rule" x1="476" y1="620" x2="744" y2="620" />
+      <text class="nd-line" x="476" y="644">one API call per match</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-agent" x="460" y="706" width="300" height="104" rx="12" />
+      <text class="nd-head" x="476" y="728">agent 05</text>
+      <text class="nd-title" x="476" y="754">filter_rank</text>
+      <line class="nd-rule" x1="476" y1="764" x2="744" y2="764" />
+      <text class="nd-line" x="476" y="788">dedupe · eligibility · score</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-agent" x="460" y="850" width="300" height="104" rx="12" />
+      <text class="nd-head" x="476" y="872">agent 06</text>
+      <text class="nd-title" x="476" y="898">explain_eligibility</text>
+      <line class="nd-rule" x1="476" y1="908" x2="744" y2="908" />
+      <text class="nd-line" x="476" y="932">criteria → plain language</text>
+    </g>
+    <circle class="nd-port" cx="320" cy="170.0" r="5" />
+    <circle class="nd-port" cx="320" cy="306.0" r="5" />
+    <circle class="nd-port" cx="180.0" cy="356" r="5" />
+    <circle class="nd-port" cx="320" cy="459.0" r="5" />
+    <circle class="nd-port" cx="320" cy="612.0" r="5" />
+    <circle class="nd-port" cx="320" cy="756.0" r="5" />
+    <circle class="nd-port" cx="460" cy="182.0" r="5" />
+    <circle class="nd-port" cx="760" cy="182.0" r="5" />
+    <circle class="nd-port" cx="610.0" cy="234" r="5" />
+    <circle class="nd-port" cx="460" cy="326.0" r="5" />
+    <circle class="nd-port" cx="760" cy="326.0" r="5" />
+    <circle class="nd-port" cx="610.0" cy="274" r="5" />
+    <circle class="nd-port" cx="610.0" cy="378" r="5" />
+    <circle class="nd-port" cx="460" cy="470.0" r="5" />
+    <circle class="nd-port" cx="760" cy="470.0" r="5" />
+    <circle class="nd-port" cx="610.0" cy="418" r="5" />
+    <circle class="nd-port" cx="610.0" cy="522" r="5" />
+    <circle class="nd-port" cx="460" cy="614.0" r="5" />
+    <circle class="nd-port" cx="760" cy="614.0" r="5" />
+    <circle class="nd-port" cx="610.0" cy="562" r="5" />
+    <circle class="nd-port" cx="610.0" cy="666" r="5" />
+    <circle class="nd-port" cx="460" cy="758.0" r="5" />
+    <circle class="nd-port" cx="760" cy="758.0" r="5" />
+    <circle class="nd-port" cx="610.0" cy="706" r="5" />
+    <circle class="nd-port" cx="610.0" cy="810" r="5" />
+    <circle class="nd-port" cx="460" cy="902.0" r="5" />
+    <circle class="nd-port" cx="760" cy="902.0" r="5" />
+    <circle class="nd-port" cx="610.0" cy="850" r="5" />
+    <circle class="nd-port" cx="900" cy="182.0" r="5" />
+    <circle class="nd-port" cx="900" cy="326.0" r="5" />
+    <circle class="nd-port" cx="900" cy="470.0" r="5" />
+    <circle class="nd-port" cx="900" cy="614.0" r="5" />
+    <circle class="nd-port" cx="900" cy="758.0" r="5" />
+    <circle class="nd-port" cx="900" cy="902.0" r="5" />
+  </svg>
+          </div>
+          <figcaption>
+            Dataflow — inputs and services on the left, the six agents in sequence,
+            and the field each one writes into <code>TrialMatchState</code>.
+          </figcaption>
+        </figure>
+
+        <ul class="agent-grid">
+          <li class="bold-card agent-card">
             <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
-              <span class="bold-badge"><span class="step-num">01</span></span>
-              <div class="bold-body">
-                <h3>Extract query</h3>
-                <p>Parse the raw free-text input into a normalised query object.</p>
+              <div class="agent-head">
+                <span class="step-num">01</span>
+                <span class="agent-spec">Normalisation</span>
               </div>
+              <div class="bold-body">
+                <h3><code>extract_query</code></h3>
+                <p>Turns whatever the user typed into a predictable query object. Free text is messy — “sugar problem since 2019” has to become a condition, a location and an age before anything downstream can reason about it.</p>
+              </div>
+              <dl class="agent-io">
+                <div>
+                  <dt>Uses</dt>
+                  <dd>Groq LLM</dd>
+                </div>
+                <div>
+                  <dt>Writes</dt>
+                  <dd><code>condition · location · age</code></dd>
+                </div>
+              </dl>
             </div>
           </li>
-          <li class="bold-card">
+          <li class="bold-card agent-card">
             <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
-              <span class="bold-badge"><span class="step-num">02</span></span>
-              <div class="bold-body">
-                <h3>Patient profile</h3>
-                <p>
-                  Pull out age, sex, location, medications, lab values and symptoms as
-                  structured fields.
-                </p>
+              <div class="agent-head">
+                <span class="step-num">02</span>
+                <span class="agent-spec">Structured extraction</span>
               </div>
+              <div class="bold-body">
+                <h3><code>patient_profile</code></h3>
+                <p>Pulls a full clinical picture out of the same sentence: age, sex, location, current medications, lab values and symptoms, each as its own field. Trials filter on these individually, so they cannot stay buried in prose.</p>
+              </div>
+              <dl class="agent-io">
+                <div>
+                  <dt>Uses</dt>
+                  <dd>Groq LLM</dd>
+                </div>
+                <div>
+                  <dt>Writes</dt>
+                  <dd><code>patient_profile</code></dd>
+                </div>
+              </dl>
             </div>
           </li>
-          <li class="bold-card">
+          <li class="bold-card agent-card">
             <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
-              <span class="bold-badge"><span class="step-num">03</span></span>
-              <div class="bold-body">
-                <h3>Semantic match</h3>
-                <p>
-                  Embed the query and cosine-match it against a 500-condition corpus,
-                  so informal phrasing still lands on the right condition.
-                </p>
+              <div class="agent-head">
+                <span class="step-num">03</span>
+                <span class="agent-spec">Vocabulary bridging</span>
               </div>
+              <div class="bold-body">
+                <h3><code>semantic_match</code></h3>
+                <p>Embeds the query and cosine-matches it against a 500-condition corpus with precomputed embeddings. This is what lets “high sugar and frequently urinate” land on Type 2 Diabetes, where a keyword search returns nothing.</p>
+              </div>
+              <dl class="agent-io">
+                <div>
+                  <dt>Uses</dt>
+                  <dd>all-MiniLM-L6-v2 · condition_embeddings.npz</dd>
+                </div>
+                <div>
+                  <dt>Writes</dt>
+                  <dd><code>condition_matches</code></dd>
+                </div>
+              </dl>
             </div>
           </li>
-          <li class="bold-card">
+          <li class="bold-card agent-card">
             <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
-              <span class="bold-badge"><span class="step-num">04</span></span>
-              <div class="bold-body">
-                <h3>Fetch trials</h3>
-                <p>Query the ClinicalTrials.gov API per matched condition.</p>
+              <div class="agent-head">
+                <span class="step-num">04</span>
+                <span class="agent-spec">Live retrieval</span>
               </div>
+              <div class="bold-body">
+                <h3><code>fetch_trials</code></h3>
+                <p>Queries the ClinicalTrials.gov REST API once per matched condition. Trial records are fetched on demand and never persisted, so results reflect what is actually recruiting today rather than a stale snapshot.</p>
+              </div>
+              <dl class="agent-io">
+                <div>
+                  <dt>Uses</dt>
+                  <dd>ClinicalTrials.gov API</dd>
+                </div>
+                <div>
+                  <dt>Writes</dt>
+                  <dd><code>raw_trials</code></dd>
+                </div>
+              </dl>
             </div>
           </li>
-          <li class="bold-card">
+          <li class="bold-card agent-card">
             <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
-              <span class="bold-badge"><span class="step-num">05</span></span>
-              <div class="bold-body">
-                <h3>Filter &amp; rank</h3>
-                <p>
-                  Deduplicate, check eligibility, then score on similarity, age/sex
-                  criteria, proximity, recruitment status and recency.
-                </p>
+              <div class="agent-head">
+                <span class="step-num">05</span>
+                <span class="agent-spec">Scoring</span>
               </div>
+              <div class="bold-body">
+                <h3><code>filter_rank</code></h3>
+                <p>Deduplicates across conditions, checks hard eligibility against age, sex and stated criteria, then scores on semantic similarity, location proximity, recruitment status and recency. A cross-encoder reranker sharpens the top slice but ships disabled — a second model does not fit in free-tier memory, and the weighted score is the graceful fallback.</p>
+              </div>
+              <dl class="agent-io">
+                <div>
+                  <dt>Uses</dt>
+                  <dd>weighted scoring · optional cross-encoder</dd>
+                </div>
+                <div>
+                  <dt>Writes</dt>
+                  <dd><code>ranked_trials</code></dd>
+                </div>
+              </dl>
             </div>
           </li>
-          <li class="bold-card">
+          <li class="bold-card agent-card">
             <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
-              <span class="bold-badge"><span class="step-num">06</span></span>
-              <div class="bold-body">
-                <h3>Explain eligibility</h3>
-                <p>
-                  Rewrite dense inclusion/exclusion criteria into plain language the
-                  patient can act on.
-                </p>
+              <div class="agent-head">
+                <span class="step-num">06</span>
+                <span class="agent-spec">Plain language</span>
               </div>
+              <div class="bold-body">
+                <h3><code>explain_eligibility</code></h3>
+                <p>Rewrites dense inclusion and exclusion criteria into sentences a patient can act on. A ranked list is not much use if you cannot tell why you might not qualify for the trial at the top of it.</p>
+              </div>
+              <dl class="agent-io">
+                <div>
+                  <dt>Uses</dt>
+                  <dd>Groq LLM</dd>
+                </div>
+                <div>
+                  <dt>Writes</dt>
+                  <dd><code>final_results</code></dd>
+                </div>
+              </dl>
             </div>
           </li>
         </ul>
@@ -333,6 +567,147 @@
           <span class="section-index">03</span>
           <h2>Architecture</h2>
         </div>
+        <figure class="diagram">
+          <div class="diagram-scroll">
+            <svg
+    class="nd-svg"
+    viewBox="0 0 1250 560"
+    role="img"
+    aria-label="TrialMatch system architecture: browser to Next.js to FastAPI modules to the data layer"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <title>TrialMatch system architecture: browser to Next.js to FastAPI modules to the data layer</title>
+    <defs>
+      <pattern id="ndDots1250" width="26" height="26" patternUnits="userSpaceOnUse">
+        <circle class="nd-dot" cx="1.5" cy="1.5" r="1.2" />
+      </pattern>
+    </defs>
+    <rect x="0" y="0" width="1250" height="560" fill="url(#ndDots1250)" />
+    <g class="nd-group">
+      <rect class="nd-frame" x="250" y="164" width="220" height="212" rx="16" />
+      <text class="nd-group-label" x="254" y="152">frontend-next/</text>
+    </g>
+    <g class="nd-group">
+      <rect class="nd-frame" x="520" y="74" width="380" height="386" rx="16" />
+      <text class="nd-group-label" x="524" y="62">backend/ — FastAPI :8000</text>
+    </g>
+    <g class="nd-group">
+      <rect class="nd-frame" x="950" y="66" width="270" height="464" rx="16" />
+      <text class="nd-group-label" x="954" y="54">data layer</text>
+    </g>
+    <path class="nd-edge nd-edge-flow" d="M 200 270.0 C 235.2 270.0, 228.8 270.0, 264 270.0" />
+    <path class="nd-edge nd-edge-flow" d="M 456 270.0 C 498.9 270.0, 491.1 270.0, 534 270.0" />
+    <path class="nd-edge" d="M 664 270.0 C 683.8 270.0, 680.2 140.0, 700 140.0" />
+    <path class="nd-edge" d="M 664 270.0 C 683.8 270.0, 680.2 230.0, 700 230.0" />
+    <path class="nd-edge" d="M 664 270.0 C 683.8 270.0, 680.2 320.0, 700 320.0" />
+    <path class="nd-edge nd-edge-flow" d="M 664 270.0 C 683.8 270.0, 680.2 410.0, 700 410.0" />
+    <path class="nd-edge" d="M 886 140.0 C 928.9 140.0, 921.1 122, 964 122" />
+    <path class="nd-edge" d="M 886 230.0 C 928.9 230.0, 921.1 148, 964 148" />
+    <path class="nd-edge" d="M 886 320.0 C 928.9 320.0, 921.1 228.0, 964 228.0" />
+    <path class="nd-edge" d="M 886 410.0 C 928.9 410.0, 921.1 322.0, 964 322.0" />
+    <path class="nd-edge" d="M 886 410.0 C 928.9 410.0, 921.1 408.0, 964 408.0" />
+    <path class="nd-edge" d="M 886 410.0 C 928.9 410.0, 921.1 486.0, 964 486.0" />
+    <g class="nd-node">
+      <rect class="nd-card nd-input" x="30" y="232" width="170" height="76" rx="12" />
+      <text class="nd-head" x="46" y="254">client</text>
+      <text class="nd-title" x="46" y="280">Browser</text>
+      <line class="nd-rule" x1="46" y1="290" x2="184" y2="290" />
+      <text class="nd-line" x="46" y="314">:3000</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card" x="264" y="194" width="192" height="152" rx="12" />
+      <text class="nd-head" x="280" y="216">next.js 16</text>
+      <text class="nd-title" x="280" y="242">Next.js app</text>
+      <line class="nd-rule" x1="280" y1="252" x2="440" y2="252" />
+      <text class="nd-line" x="280" y="276">/ · /search · /login</text>
+      <text class="nd-line" x="280" y="298">JWT in localStorage</text>
+      <text class="nd-line" x="280" y="320">/api/* → :8000</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-agent" x="534" y="232" width="130" height="76" rx="12" />
+      <text class="nd-head" x="550" y="254">entry</text>
+      <text class="nd-title" x="550" y="280">main.py</text>
+      <line class="nd-rule" x1="550" y1="290" x2="648" y2="290" />
+      <text class="nd-line" x="550" y="314">routes</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card" x="700" y="104" width="186" height="72" rx="12" />
+      <text class="nd-title" x="716" y="130">auth/</text>
+      <line class="nd-rule" x1="716" y1="142" x2="870" y2="142" />
+      <text class="nd-line" x="716" y="166">register · login</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card" x="700" y="194" width="186" height="72" rx="12" />
+      <text class="nd-title" x="716" y="220">users/</text>
+      <line class="nd-rule" x1="716" y1="232" x2="870" y2="232" />
+      <text class="nd-line" x="716" y="256">history · saved</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card" x="700" y="284" width="186" height="72" rx="12" />
+      <text class="nd-title" x="716" y="310">cache/</text>
+      <line class="nd-rule" x1="716" y1="322" x2="870" y2="322" />
+      <text class="nd-line" x="716" y="346">cache · rate limit</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-agent" x="700" y="374" width="186" height="72" rx="12" />
+      <text class="nd-title" x="716" y="400">LangGraph</text>
+      <line class="nd-rule" x1="716" y1="412" x2="870" y2="412" />
+      <text class="nd-line" x="716" y="436">6-agent pipeline</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-store" x="964" y="96" width="242" height="76" rx="12" />
+      <text class="nd-title" x="980" y="122">PostgreSQL</text>
+      <line class="nd-rule" x1="980" y1="134" x2="1190" y2="134" />
+      <text class="nd-line" x="980" y="158">users · history · saved</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-store" x="964" y="190" width="242" height="76" rx="12" />
+      <text class="nd-title" x="980" y="216">Redis</text>
+      <line class="nd-rule" x1="980" y1="228" x2="1190" y2="228" />
+      <text class="nd-line" x="980" y="252">cache 1h · 30 req/min</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-store" x="964" y="284" width="242" height="76" rx="12" />
+      <text class="nd-title" x="980" y="310">corpus + embeddings</text>
+      <line class="nd-rule" x1="980" y1="322" x2="1190" y2="322" />
+      <text class="nd-line" x="980" y="346">500 conditions</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-ext" x="964" y="378" width="242" height="60" rx="12" />
+      <text class="nd-title" x="980" y="404">ClinicalTrials.gov</text>
+    </g>
+    <g class="nd-node">
+      <rect class="nd-card nd-ext" x="964" y="456" width="242" height="60" rx="12" />
+      <text class="nd-title" x="980" y="482">Groq LLM</text>
+    </g>
+    <circle class="nd-port" cx="200" cy="270.0" r="5" />
+    <circle class="nd-port" cx="264" cy="270.0" r="5" />
+    <circle class="nd-port" cx="456" cy="270.0" r="5" />
+    <circle class="nd-port" cx="534" cy="270.0" r="5" />
+    <circle class="nd-port" cx="664" cy="270.0" r="5" />
+    <circle class="nd-port" cx="700" cy="140.0" r="5" />
+    <circle class="nd-port" cx="886" cy="140.0" r="5" />
+    <circle class="nd-port" cx="700" cy="230.0" r="5" />
+    <circle class="nd-port" cx="886" cy="230.0" r="5" />
+    <circle class="nd-port" cx="700" cy="320.0" r="5" />
+    <circle class="nd-port" cx="886" cy="320.0" r="5" />
+    <circle class="nd-port" cx="700" cy="410.0" r="5" />
+    <circle class="nd-port" cx="886" cy="410.0" r="5" />
+    <circle class="nd-port" cx="964" cy="122" r="5" />
+    <circle class="nd-port" cx="964" cy="148" r="5" />
+    <circle class="nd-port" cx="964" cy="228.0" r="5" />
+    <circle class="nd-port" cx="964" cy="322.0" r="5" />
+    <circle class="nd-port" cx="964" cy="408.0" r="5" />
+    <circle class="nd-port" cx="964" cy="486.0" r="5" />
+  </svg>
+          </div>
+          <figcaption>
+            Two deployed services. The browser only ever talks to the Next.js app,
+            which rewrites <code>/api/*</code> to FastAPI; only the pipeline and the
+            cache layer reach outside.
+          </figcaption>
+        </figure>
+
         <ul class="arch-grid">
           <li class="bold-card">
             <span class="glow-ring" aria-hidden="true"></span>
