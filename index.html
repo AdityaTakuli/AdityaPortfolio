@@ -14,9 +14,10 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Syne:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="static/css/style.css?v=2" />
+    <link rel="stylesheet" href="static/css/style.css?v=3" />
     <script>
       (function () {
+        document.documentElement.classList.add("js");
         try {
           var saved = localStorage.getItem("theme");
           var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -85,7 +86,7 @@
         </figure>
       </section>
 
-      <section id="about" class="section about">
+      <section id="about" class="section about reveal">
         <div class="section-head">
           <span class="section-index">01</span>
           <h2>About</h2>
@@ -107,7 +108,7 @@
         </div>
       </section>
 
-      <section id="experience" class="section">
+      <section id="experience" class="section reveal">
         <div class="section-head">
           <span class="section-index">02</span>
           <h2>Experience</h2>
@@ -198,51 +199,154 @@
         </div>
       </section>
 
-      <section id="projects" class="section">
+      <section id="projects" class="section reveal">
         <div class="section-head">
           <span class="section-index">03</span>
           <h2>Projects</h2>
         </div>
-        <div class="project-list">
-          <article class="project">
-            <div class="project-top">
+        <div class="project-grid">
+          <article class="project-card is-featured">
+            <a
+              class="pc-link"
+              href="projects/trialmatch.html"
+              aria-label="Open the TrialMatch case study"
+            ></a>
+            <div class="pc-media">
+              <img
+                src="static/img/projects/trialmatch/landing.jpg"
+                alt="TrialMatch landing page with an interactive globe of live trial locations"
+                loading="lazy"
+                width="1024"
+                height="590"
+              />
+            </div>
+            <div class="pc-body">
+              <p class="pc-kicker">
+                Case study <span class="pc-badge">Live</span>
+              </p>
+              <h3>TrialMatch — Clinical Trial Matching</h3>
+              <p class="project-tags">
+                Next.js · FastAPI · LangGraph · PostgreSQL · Redis
+              </p>
+              <p class="pc-blurb">
+                Describe a condition in plain language and get ranked, recruiting
+                clinical trials back. A six-node LangGraph pipeline extracts a patient
+                profile, semantically matches a 500-condition corpus, and explains
+                every eligibility decision.
+              </p>
+              <div class="pc-actions">
+                <a
+                  class="pc-chip"
+                  href="https://clinical-trial-matching-pied.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Live app ↗</a
+                >
+                <a
+                  class="pc-chip"
+                  href="https://github.com/AdityaTakuli/Clinical-Trial-Matching"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Code ↗</a
+                >
+              </div>
+              <span class="pc-cta">Read the case study →</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <a
+              class="pc-link"
+              href="https://github.com/AdityaTakuli/LAMDAAnalytics"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open the LAMDA Analytics repository"
+            ></a>
+            <div class="pc-body">
+              <p class="pc-kicker">
+                Project <span class="pc-badge">Hackathon winner</span>
+              </p>
               <h3>LAMDA Analytics</h3>
-              <p class="project-tags">Python · Temporal Graph Networks · Multi-Agent Systems</p>
+              <p class="project-tags">
+                Python · Temporal Graph Networks · Multi-Agent Systems
+              </p>
+              <p class="pc-blurb">
+                Real-time supply-chain analytics using Temporal Graph Networks and a
+                multi-agent architecture for scraping, normalisation, and analysis.
+                Winner — NOKIA CERONIX National Hackathon (top 5% of 878 teams).
+              </p>
+              <span class="pc-cta">View on GitHub ↗</span>
             </div>
-            <p>
-              Real-time supply-chain analytics using Temporal Graph Networks and a
-              multi-agent architecture for scraping, normalisation, and analysis.
-              Winner — NOKIA CERONIX National Hackathon (top 5% of 878 teams).
-            </p>
           </article>
 
-          <article class="project">
-            <div class="project-top">
-              <h3>HSF/prmon — CERN Open Source</h3>
+          <article class="project-card">
+            <a
+              class="pc-link"
+              href="https://github.com/AdityaTakuli/prmon"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open the prmon repository"
+            ></a>
+            <div class="pc-body">
+              <p class="pc-kicker">
+                Open source <span class="pc-badge">Merged at CERN</span>
+              </p>
+              <h3>HSF/prmon — CERN</h3>
               <p class="project-tags">C++ · CLI Tooling · Code Review</p>
+              <p class="pc-blurb">
+                Merged PR #302: replaced the legacy CLI parser in CERN/HSF
+                process-monitoring tooling, preserving all 12 CLI options and passing
+                all 14 tests. Official project contributor.
+              </p>
+              <span class="pc-cta">View on GitHub ↗</span>
             </div>
-            <p>
-              Merged PR #302: replaced the legacy CLI parser in CERN/HSF
-              process-monitoring tooling, preserving all 12 CLI options and
-              passing all 14 tests. Official project contributor.
-            </p>
           </article>
 
-          <article class="project">
-            <div class="project-top">
+          <article class="project-card">
+            <a
+              class="pc-link"
+              href="https://github.com/AdityaTakuli/Gold-Segmentation-Model"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open the gold detection repository"
+            ></a>
+            <div class="pc-body">
+              <p class="pc-kicker">Project <span class="pc-badge">Edge AI</span></p>
               <h3>Gold Detection &amp; Segmentation</h3>
               <p class="project-tags">Python · YOLO · OpenCV · SQLite · OCR</p>
+              <p class="pc-blurb">
+                Real-time detection pipeline with custom YOLO, person-segmentation for
+                false-positive suppression, OCR weight extraction, and a SQLite-backed
+                logging GUI.
+              </p>
+              <span class="pc-cta">View on GitHub ↗</span>
             </div>
-            <p>
-              Real-time detection pipeline with custom YOLO, person-segmentation
-              for false-positive suppression, OCR weight extraction, and a
-              SQLite-backed logging GUI.
-            </p>
+          </article>
+
+          <article class="project-card">
+            <a
+              class="pc-link"
+              href="https://goodbookies.co.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open Good Bookies"
+            ></a>
+            <div class="pc-body">
+              <p class="pc-kicker">Product <span class="pc-badge">Live</span></p>
+              <h3>Good Bookies</h3>
+              <p class="project-tags">Full stack · Payments · Marketplace</p>
+              <p class="pc-blurb">
+                Real-time sports-venue booking marketplace for floodlit turfs, cricket
+                nets and indoor courts — built end to end with Razorpay payments and
+                four launch venues onboarded.
+              </p>
+              <span class="pc-cta">Visit site ↗</span>
+            </div>
           </article>
         </div>
       </section>
 
-      <section id="skills" class="section">
+      <section id="skills" class="section reveal">
         <div class="section-head">
           <span class="section-index">04</span>
           <h2>Skills</h2>
@@ -307,7 +411,7 @@
         </div>
       </section>
 
-      <section id="achievements" class="section">
+      <section id="achievements" class="section reveal">
         <div class="section-head">
           <span class="section-index">05</span>
           <h2>Achievements</h2>
@@ -333,7 +437,7 @@
         </ul>
       </section>
 
-      <section id="contact" class="section contact">
+      <section id="contact" class="section contact reveal">
         <div class="section-head">
           <span class="section-index">06</span>
           <h2>Contact</h2>
@@ -374,5 +478,6 @@
       <p class="muted">Drawn on graph paper · HTML / CSS / JS</p>
     </footer>
     <script src="static/js/theme.js"></script>
+    <script src="static/js/ui.js"></script>
   </body>
 </html>

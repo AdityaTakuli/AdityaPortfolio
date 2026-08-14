@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrialMatch — Case Study · Aditya Pratap Singh Takuli</title>
+    <meta
+      name="description"
+      content="TrialMatch: AI-powered clinical trial discovery built with Next.js, FastAPI, LangGraph, PostgreSQL and Redis."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/style.css?v=3" />
+    <script>
+      (function () {
+        document.documentElement.classList.add("js");
+        try {
+          var saved = localStorage.getItem("theme");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = saved || (prefersDark ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="graph-bg" aria-hidden="true"></div>
+
+    <header class="site-nav">
+      <a class="nav-brand" href="../index.html">Aditya</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html#projects">Projects</a>
+        <a href="#build">How I built it</a>
+        <a href="#stack">Stack</a>
+      </nav>
+      <div class="nav-actions">
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle"
+          role="switch"
+          aria-checked="false"
+          aria-label="Toggle color theme"
+        >
+          <span class="theme-icon theme-icon-sun" aria-hidden="true"></span>
+          <span class="theme-track" aria-hidden="true">
+            <span class="theme-thumb"></span>
+          </span>
+          <span class="theme-icon theme-icon-moon" aria-hidden="true"></span>
+        </button>
+        <a class="case-back" href="../index.html#projects">← Back</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="case-banner">
+        <h1 class="visually-hidden">TrialMatch</h1>
+        <svg
+          class="text-hover"
+          data-text-hover
+          viewBox="0 0 420 96"
+          preserveAspectRatio="xMidYMid meet"
+          role="img"
+          aria-label="TrialMatch"
+        >
+          <defs>
+            <radialGradient
+              class="th-gradient"
+              id="thGradient"
+              gradientUnits="userSpaceOnUse"
+              cx="210"
+              cy="48"
+              r="0"
+            >
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="100%" stop-color="#000000" />
+            </radialGradient>
+            <mask id="thMask">
+              <rect x="0" y="0" width="420" height="96" fill="url(#thGradient)" />
+            </mask>
+          </defs>
+          <text
+            class="th-base"
+            x="210"
+            y="52"
+            text-anchor="middle"
+            dominant-baseline="middle"
+          >
+            TRIALMATCH
+          </text>
+          <text
+            class="th-reveal"
+            x="210"
+            y="52"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            mask="url(#thMask)"
+          >
+            TRIALMATCH
+          </text>
+        </svg>
+      </section>
+
+      <section class="case-lede">
+        <div>
+          <p>
+            AI-powered clinical trial discovery. Patients describe their situation in
+            plain language; TrialMatch extracts a structured patient profile,
+            semantically matches it against a 500-condition corpus, pulls live trials
+            from ClinicalTrials.gov, ranks them for relevance and eligibility, and
+            explains every match in patient-friendly words.
+          </p>
+        </div>
+        <dl class="case-meta">
+          <div>
+            <dt>Role</dt>
+            <dd>Solo — full stack &amp; AI pipeline</dd>
+          </div>
+          <div>
+            <dt>Type</dt>
+            <dd>Production web app</dd>
+          </div>
+          <div>
+            <dt>Core stack</dt>
+            <dd>Next.js · FastAPI · LangGraph</dd>
+          </div>
+          <div>
+            <dt>Data layer</dt>
+            <dd>PostgreSQL · Redis</dd>
+          </div>
+        </dl>
+        <div class="case-cta">
+          <a
+            class="btn btn-fill"
+            href="https://clinical-trial-matching-pied.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Open live app ↗</a
+          >
+          <a
+            class="btn btn-line"
+            href="https://github.com/AdityaTakuli/Clinical-Trial-Matching"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Source code ↗</a
+          >
+        </div>
+      </section>
+
+      <section class="section reveal" id="interface">
+        <div class="section-head">
+          <span class="section-index">01</span>
+          <h2>Interface</h2>
+        </div>
+        <div class="bento">
+          <figure class="bento-item bento-shot b-wide">
+            <img
+              src="../static/img/projects/trialmatch/landing.jpg"
+              alt="TrialMatch landing page with an interactive WebGL globe of live trial locations"
+              loading="lazy"
+            />
+            <figcaption class="bento-cap">Landing — WebGL globe, live trial locations</figcaption>
+          </figure>
+
+          <figure class="bento-item bento-shot b-tall">
+            <img
+              src="../static/img/projects/trialmatch/mobile.jpg"
+              alt="TrialMatch search screen on mobile with natural-language prompt examples"
+              loading="lazy"
+            />
+            <figcaption class="bento-cap">Responsive search on mobile</figcaption>
+          </figure>
+
+          <figure class="bento-item bento-shot b-half">
+            <img
+              src="../static/img/projects/trialmatch/results.jpg"
+              alt="Matched trials with match scores, condition tags and score comparison charts"
+              loading="lazy"
+            />
+            <figcaption class="bento-cap">Ranked results + score breakdown</figcaption>
+          </figure>
+
+          <figure class="bento-item bento-shot b-half">
+            <img
+              src="../static/img/projects/trialmatch/pipeline.jpg"
+              alt="Matching pipeline explainer section listing the AI stages"
+              loading="lazy"
+            />
+            <figcaption class="bento-cap">Pipeline explainer</figcaption>
+          </figure>
+
+          <div class="bento-item b-stat">
+            <strong>500</strong>
+            <span>Condition corpus, embedded</span>
+          </div>
+          <div class="bento-item b-stat">
+            <strong>6</strong>
+            <span>LangGraph pipeline nodes</span>
+          </div>
+          <div class="bento-item b-stat">
+            <strong>195+</strong>
+            <span>Countries of trial coverage</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" id="build">
+        <div class="section-head">
+          <span class="section-index">02</span>
+          <h2>How I built it</h2>
+        </div>
+        <p class="about-text">
+          The matching logic runs as a LangGraph state machine — six nodes, one shared
+          state object. Splitting it this way meant every stage could be tested,
+          swapped and debugged in isolation instead of living inside one prompt.
+        </p>
+        <div class="flow-grid">
+          <article class="flow-step">
+            <span>01</span>
+            <h3>Extract query</h3>
+            <p>Parse the raw free-text input into a normalised query object.</p>
+          </article>
+          <article class="flow-step">
+            <span>02</span>
+            <h3>Patient profile</h3>
+            <p>
+              Pull out age, sex, location, medications, lab values and symptoms as
+              structured fields.
+            </p>
+          </article>
+          <article class="flow-step">
+            <span>03</span>
+            <h3>Semantic match</h3>
+            <p>
+              Embed the query and cosine-match it against a 500-condition corpus, so
+              informal phrasing still lands on the right condition.
+            </p>
+          </article>
+          <article class="flow-step">
+            <span>04</span>
+            <h3>Fetch trials</h3>
+            <p>Query the ClinicalTrials.gov API per matched condition.</p>
+          </article>
+          <article class="flow-step">
+            <span>05</span>
+            <h3>Filter &amp; rank</h3>
+            <p>
+              Deduplicate, check eligibility, then score on similarity, age/sex
+              criteria, proximity, recruitment status and recency.
+            </p>
+          </article>
+          <article class="flow-step">
+            <span>06</span>
+            <h3>Explain eligibility</h3>
+            <p>
+              Rewrite dense inclusion/exclusion criteria into plain language the
+              patient can act on.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="architecture">
+        <div class="section-head">
+          <span class="section-index">03</span>
+          <h2>Architecture</h2>
+        </div>
+        <div class="arch-grid">
+          <div class="arch-col">
+            <h3>Frontend — Next.js</h3>
+            <ul>
+              <li><b>Pages</b> — /, /search, /login, /register</li>
+              <li><b>Auth</b> — JWT held client-side, authFetch wrapper</li>
+              <li><b>Proxy</b> — /api/* rewritten to FastAPI</li>
+              <li><b>Visuals</b> — Framer Motion, Recharts, three.js globe</li>
+            </ul>
+          </div>
+          <div class="arch-col">
+            <h3>Backend — FastAPI</h3>
+            <ul>
+              <li><b>API only</b> — no static files served</li>
+              <li><b>Auth</b> — Argon2 hashing, HS256 JWT, OAuth2 Bearer</li>
+              <li><b>Users</b> — search history, saved trials</li>
+              <li><b>Guards</b> — 30 req/min per user, per-user data isolation</li>
+            </ul>
+          </div>
+          <div class="arch-col">
+            <h3>Data layer</h3>
+            <ul>
+              <li><b>PostgreSQL</b> — users, search_history, saved_trials</li>
+              <li><b>Redis</b> — query-keyed result cache, 1h TTL</li>
+              <li><b>ClinicalTrials.gov</b> — fetched live, never persisted</li>
+              <li><b>Groq LLM</b> — extraction and explanation calls</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" id="decisions">
+        <div class="section-head">
+          <span class="section-index">04</span>
+          <h2>Engineering decisions</h2>
+        </div>
+        <ul class="decision-list">
+          <li>
+            <h3>Model loading was the real bottleneck, not inference</h3>
+            <p>
+              Requests were timing out and OOM-ing mid-flight on a 512 MB host because
+              the embedding model was being pulled from Hugging Face on the request
+              path. I baked MiniLM into the Docker image, forced offline mode, and
+              loaded it once per process — cold start pays the cost, requests don't.
+            </p>
+          </li>
+          <li>
+            <h3>The neural reranker ships disabled</h3>
+            <p>
+              A cross-encoder reranker measurably sharpens the top results, but a
+              second model doesn't fit in free-tier memory. It is feature-flagged off
+              by default and the pipeline falls back to weighted scoring, so the app
+              degrades gracefully instead of crashing.
+            </p>
+          </li>
+          <li>
+            <h3>Cache and rate limit share one Redis, with clear key ownership</h3>
+            <p>
+              Search results are cached by normalised query hash for an hour; rate
+              counters are namespaced per user and window. Redis failing is treated as
+              a soft error — the pipeline still answers, just slower.
+            </p>
+          </li>
+          <li>
+            <h3>Two services, deployed independently</h3>
+            <p>
+              Next.js on Vercel, Dockerised FastAPI on Render, Postgres on Supabase's
+              session pooler, Redis on Upstash. The frontend only ever talks to
+              <code>/api/*</code>, so the backend URL is a single env var away from
+              changing.
+            </p>
+          </li>
+          <li>
+            <h3>Medical data means strict boundaries</h3>
+            <p>
+              Passwords are Argon2-hashed, tokens expire in 30 minutes, every
+              user-data endpoint is scoped to the authenticated user id, and CORS
+              origins are explicit rather than wildcarded.
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section reveal" id="stack">
+        <div class="section-head">
+          <span class="section-index">05</span>
+          <h2>Stack</h2>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-group">
+            <h3>Frontend</h3>
+            <ul>
+              <li>Next.js 16</li>
+              <li>React 19</li>
+              <li>TypeScript</li>
+              <li>Tailwind CSS 4</li>
+              <li>Framer Motion</li>
+              <li>Recharts</li>
+              <li>three.js</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Backend</h3>
+            <ul>
+              <li>FastAPI</li>
+              <li>Uvicorn</li>
+              <li>Pydantic v2</li>
+              <li>SQLAlchemy 2.0</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>AI pipeline</h3>
+            <ul>
+              <li>LangGraph</li>
+              <li>sentence-transformers</li>
+              <li>Groq LLM</li>
+              <li>Cross-encoder rerank</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Data &amp; infra</h3>
+            <ul>
+              <li>PostgreSQL 16</li>
+              <li>Redis 8</li>
+              <li>Docker</li>
+              <li>Vercel · Render</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Auth</h3>
+            <ul>
+              <li>Argon2 (pwdlib)</li>
+              <li>JWT (python-jose)</li>
+              <li>OAuth2 Bearer</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-outro reveal">
+        <h2>Try the matcher</h2>
+        <div class="hero-cta">
+          <a
+            class="btn btn-fill"
+            href="https://clinical-trial-matching-pied.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Open live app ↗</a
+          >
+          <a
+            class="btn btn-line"
+            href="https://github.com/AdityaTakuli/Clinical-Trial-Matching"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Read the code ↗</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© Aditya Pratap Singh Takuli</p>
+      <p class="muted"><a href="../index.html">Back to portfolio</a></p>
+    </footer>
+
+    <script src="../static/js/theme.js"></script>
+    <script src="../static/js/ui.js"></script>
+  </body>
+</html>
