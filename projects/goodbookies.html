@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Good Bookies — Case Study · Aditya Pratap Singh Takuli</title>
+    <meta
+      name="description"
+      content="Good Bookies: a production sports-turf booking marketplace built with TanStack Start, React, Supabase, MySQL and Razorpay."
+    />
+    <link rel="icon" href="../static/img/icons/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../static/img/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../static/img/icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/style.css?v=21" />
+    <script>
+      (function () {
+        document.documentElement.classList.add("js");
+        try {
+          var saved = localStorage.getItem("theme");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.setAttribute(
+            "data-theme",
+            saved || (prefersDark ? "dark" : "light")
+          );
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+  </head>
+  <body class="case-page goodbookies-page">
+    <div class="graph-bg" aria-hidden="true"></div>
+
+    <header class="site-nav">
+      <a class="nav-brand" href="../index.html">Aditya</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html#projects">Projects</a>
+        <a href="#booking">Booking engine</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#stack">Stack</a>
+      </nav>
+      <div class="nav-actions">
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle"
+          role="switch"
+          aria-checked="false"
+          aria-label="Toggle color theme"
+        >
+          <span class="theme-icon theme-icon-sun" aria-hidden="true"></span>
+          <span class="theme-track" aria-hidden="true">
+            <span class="theme-thumb"></span>
+          </span>
+          <span class="theme-icon theme-icon-moon" aria-hidden="true"></span>
+        </button>
+        <a class="case-back" href="../index.html#projects">← Back</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="case-banner">
+        <h1 class="visually-hidden">Good Bookies</h1>
+        <svg
+          class="text-hover"
+          data-text-hover
+          viewBox="0 0 900 80"
+          preserveAspectRatio="xMidYMid meet"
+          role="img"
+          aria-label="Good Bookies"
+        >
+          <defs>
+            <radialGradient
+              class="th-gradient"
+              id="gbGradient"
+              gradientUnits="userSpaceOnUse"
+              cx="450"
+              cy="40"
+              r="0"
+            >
+              <stop offset="0%" stop-color="#000000" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </radialGradient>
+            <mask id="gbMask">
+              <rect x="0" y="0" width="100%" height="100%" fill="url(#gbGradient)" />
+            </mask>
+          </defs>
+          <text
+            class="th-base"
+            x="450"
+            y="49"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            textLength="850"
+            lengthAdjust="spacingAndGlyphs"
+          ><tspan class="th-good">GOOD</tspan><tspan class="th-bookies" dx="24">BOOKIES</tspan></text>
+          <text
+            class="th-fill"
+            x="450"
+            y="49"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            textLength="850"
+            lengthAdjust="spacingAndGlyphs"
+            mask="url(#gbMask)"
+          ><tspan class="th-good">GOOD</tspan><tspan class="th-bookies" dx="24">BOOKIES</tspan></text>
+        </svg>
+        <p class="banner-tag">
+          <span>Case study / <b>Sports booking marketplace</b></span>
+          <span>TanStack Start · React · Supabase · MySQL · Razorpay</span>
+        </p>
+      </section>
+
+      <section class="case-lede">
+        <div class="lede-copy">
+          <p>
+            A production marketplace where players discover venues, see live
+            availability, reserve an individual spot or an entire turf, split the
+            cost, and pay securely. Venue partners get a self-service dashboard for
+            inventory, pricing, bookings, analytics, and payouts.
+          </p>
+        </div>
+        <dl class="case-meta">
+          <div>
+            <dt>Role</dt>
+            <dd>Product &amp; full-stack engineering</dd>
+          </div>
+          <div>
+            <dt>Type</dt>
+            <dd>Production two-sided marketplace</dd>
+          </div>
+          <div>
+            <dt>Core stack</dt>
+            <dd>TanStack Start · React 19 · TypeScript</dd>
+          </div>
+          <div>
+            <dt>Data &amp; payments</dt>
+            <dd>Supabase · MySQL · Razorpay</dd>
+          </div>
+        </dl>
+        <div class="case-cta">
+          <a
+            class="btn btn-fill"
+            href="https://goodbookies.co.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Open live marketplace ↗</a
+          >
+        </div>
+      </section>
+
+      <section class="section reveal" id="interface">
+        <div class="section-head">
+          <span class="section-index">01</span>
+          <h2>Interface</h2>
+        </div>
+        <ul class="bento gb-bento">
+          <li class="bento-item bento-shot b-wide">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <figure class="bento-frame">
+              <img
+                src="../portfolio/screenshots/01-landing-hero.png"
+                alt="Good Bookies landing page with sport discovery"
+                loading="lazy"
+              />
+              <figcaption class="bento-cap">Landing — discover venues by sport</figcaption>
+            </figure>
+          </li>
+          <li class="bento-item bento-shot b-tall">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <figure class="bento-frame">
+              <img
+                src="../portfolio/screenshots/06-player-card-builder.png"
+                alt="Mobile multi-sport player card builder"
+                loading="lazy"
+              />
+              <figcaption class="bento-cap">Turf-verified multi-sport player card</figcaption>
+            </figure>
+          </li>
+          <li class="bento-item bento-shot b-half">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <figure class="bento-frame">
+              <img
+                src="../portfolio/screenshots/02-venues-list.png"
+                alt="Venue discovery and filtering interface"
+                loading="lazy"
+              />
+              <figcaption class="bento-cap">Venue discovery, filters and ratings</figcaption>
+            </figure>
+          </li>
+          <li class="bento-item bento-shot b-half">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <figure class="bento-frame">
+              <img
+                src="../portfolio/screenshots/03-venue-detail.png"
+                alt="Venue detail with availability and reviews"
+                loading="lazy"
+              />
+              <figcaption class="bento-cap">Venue detail, live slots and reviews</figcaption>
+            </figure>
+          </li>
+          <li class="bento-item bento-shot b-half">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <figure class="bento-frame">
+              <img
+                src="../portfolio/screenshots/05-slot-picker-payment.png"
+                alt="Minute-precise slot selection and Razorpay payment portal"
+                loading="lazy"
+              />
+              <figcaption class="bento-cap">Slot picker + live payment total</figcaption>
+            </figure>
+          </li>
+          <li class="bento-item bento-shot b-wide">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <figure class="bento-frame">
+              <img
+                src="../portfolio/screenshots/07-partner-dashboard.png"
+                alt="Venue partner dashboard with bookings and revenue analytics"
+                loading="lazy"
+              />
+              <figcaption class="bento-cap">Partner dashboard — inventory, revenue and payouts</figcaption>
+            </figure>
+          </li>
+          <li class="bento-item b-stat">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bento-frame">
+              <strong>3</strong>
+              <span>Player, partner and admin roles</span>
+            </div>
+          </li>
+          <li class="bento-item b-stat">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bento-frame">
+              <strong>15m</strong>
+              <span>Race-safe pending booking hold</span>
+            </div>
+          </li>
+          <li class="bento-item b-stat">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bento-frame">
+              <strong>22</strong>
+              <span>Production database migrations</span>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section reveal" id="booking">
+        <div class="section-head">
+          <span class="section-index">02</span>
+          <h2>The booking engine</h2>
+        </div>
+        <p class="about-text">
+          Booking is not a calendar form. Availability, capacity, pricing, payment,
+          and abandoned checkouts all have to agree on the same time window. Good
+          Bookies keeps that flow server-authoritative from the first tap to the
+          confirmed slot.
+        </p>
+        <ol class="gb-flow" aria-label="Booking and payment flow">
+          <li class="glass panel">
+            <span>01</span>
+            <h3>Choose a window</h3>
+            <p>
+              Two taps define a start and an exclusive end time. Every slot is stored
+              as minutes from midnight, supporting both 30- and 60-minute venues.
+            </p>
+          </li>
+          <li class="glass panel">
+            <span>02</span>
+            <h3>Resolve the price</h3>
+            <p>
+              Date override, day rule, peak surcharge, duration discount, coupon,
+              and individual-vs-full-turf split resolve in one shared pricing engine.
+            </p>
+          </li>
+          <li class="glass panel">
+            <span>03</span>
+            <h3>Hold inventory</h3>
+            <p>
+              A pending booking locks the window for 15 minutes. Stale holds expire
+              whenever availability is read, so abandoned checkout never blocks play.
+            </p>
+          </li>
+          <li class="glass panel">
+            <span>04</span>
+            <h3>Verify payment</h3>
+            <p>
+              Razorpay creates the order, but only a server-side signature check
+              confirms the booking. Dismissal or failure releases the hold explicitly.
+            </p>
+          </li>
+        </ol>
+        <figure class="gb-feature-shot">
+          <img
+            src="../portfolio/screenshots/08-slot-board.png"
+            alt="Live Good Bookies slot board showing minute-precise availability"
+            loading="lazy"
+          />
+          <figcaption>
+            The live slot board exposes the same availability and pricing state used by
+            checkout—there is no separate client-side approximation.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="section reveal" id="architecture">
+        <div class="section-head">
+          <span class="section-index">03</span>
+          <h2>Architecture</h2>
+        </div>
+        <div class="gb-system" role="img" aria-label="Good Bookies system architecture">
+          <article class="gb-system-node">
+            <span>Client</span>
+            <h3>React 19 + TanStack Start</h3>
+            <p>SSR, file-based routing, hydration, TanStack Query</p>
+          </article>
+          <span class="gb-system-arrow" aria-hidden="true">→</span>
+          <article class="gb-system-node gb-system-core">
+            <span>Application host</span>
+            <h3>Hostinger Node.js</h3>
+            <p>SSR · typed server functions · mobile API · SEO · media endpoint</p>
+          </article>
+          <span class="gb-system-arrow" aria-hidden="true">→</span>
+          <div class="gb-system-data">
+            <article class="gb-system-node">
+              <span>Transactional truth</span>
+              <h3>Supabase PostgreSQL</h3>
+              <p>Users, venues, bookings, pricing, lobbies and reviews</p>
+            </article>
+            <article class="gb-system-node">
+              <span>Binary media</span>
+              <h3>Hostinger MySQL</h3>
+              <p>Dedicated avatar and venue-media blob stores</p>
+            </article>
+            <article class="gb-system-node">
+              <span>Payments</span>
+              <h3>Razorpay</h3>
+              <p>Orders, signature verification and refunds</p>
+            </article>
+          </div>
+        </div>
+        <ul class="arch-grid gb-architecture-cards">
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">DB</span>
+              <div class="bold-body">
+                <h3>Split storage by responsibility</h3>
+                <p>
+                  Postgres owns relational and transactional truth. Two MySQL stores
+                  isolate user avatars from venue photo/video blobs, avoiding bloated
+                  Postgres backups and expensive media egress.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">API</span>
+              <div class="bold-body">
+                <h3>One media boundary</h3>
+                <p>
+                  <code>/api/media/:scope/:id</code> selects the correct database,
+                  streams bytes with MIME and cache headers, and keeps storage details
+                  invisible to every image and video component.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">SSR</span>
+              <div class="bold-body">
+                <h3>SSR without serverless lock-in</h3>
+                <p>
+                  A hardened custom Node server runs TanStack Start on commodity
+                  hosting, serves static assets and API routes, and boots from a
+                  verified committed production build.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section reveal" id="decisions">
+        <div class="section-head">
+          <span class="section-index">04</span>
+          <h2>Engineering decisions</h2>
+        </div>
+        <ul class="decision-grid">
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">₹</span>
+              <div class="bold-body">
+                <h3>One source of price truth</h3>
+                <p>
+                  Preview and checkout call the same pricing engine, eliminating the
+                  class of bugs where the number shown in the UI differs from the
+                  amount charged by Razorpay.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">↻</span>
+              <div class="bold-body">
+                <h3>Inventory heals itself</h3>
+                <p>
+                  Reading a schedule first expires stale pending bookings and their
+                  payments. Availability therefore recovers even if a browser closes
+                  midway through checkout.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">%</span>
+              <div class="bold-body">
+                <h3>Refund rules are code, not copy</h3>
+                <p>
+                  Cancellation tiers compute exact paise values: full refund at 24+
+                  hours, half at 12–24 hours, none below 12 hours, less the defined
+                  convenience fee.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">@</span>
+              <div class="bold-body">
+                <h3>Phone identity claimed after confirmation</h3>
+                <p>
+                  Profiles do not claim a unique phone number until email confirmation,
+                  preventing failed sign-ups from permanently locking a player's number.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">+</span>
+              <div class="bold-body">
+                <h3>Open spots become community inventory</h3>
+                <p>
+                  Partial bookings can open a lobby and optionally publish remaining
+                  capacity through a community webhook, helping players fill a match.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section reveal" id="stack">
+        <div class="section-head">
+          <span class="section-index">05</span>
+          <h2>Stack</h2>
+        </div>
+        <ul class="stack-grid">
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">UI</span>
+              <div class="bold-body">
+                <h3>Application</h3>
+                <ul class="stack-chips">
+                  <li>TanStack Start</li>
+                  <li>React 19</li>
+                  <li>TypeScript 5.8</li>
+                  <li>Tailwind CSS 4</li>
+                  <li>shadcn/ui</li>
+                  <li>Framer Motion</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">RPC</span>
+              <div class="bold-body">
+                <h3>Server &amp; data</h3>
+                <ul class="stack-chips">
+                  <li>TanStack Query</li>
+                  <li>createServerFn</li>
+                  <li>Zod</li>
+                  <li>Supabase</li>
+                  <li>PostgreSQL</li>
+                  <li>MySQL</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">₹</span>
+              <div class="bold-body">
+                <h3>Commerce &amp; identity</h3>
+                <ul class="stack-chips">
+                  <li>Razorpay</li>
+                  <li>Supabase Auth</li>
+                  <li>Row Level Security</li>
+                  <li>Role-based access</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card">
+            <span class="glow-ring" aria-hidden="true"></span>
+            <div class="bold-inner">
+              <span class="bold-badge">CI</span>
+              <div class="bold-body">
+                <h3>Build &amp; hosting</h3>
+                <ul class="stack-chips">
+                  <li>Vite 7</li>
+                  <li>Node.js</li>
+                  <li>GitHub Actions</li>
+                  <li>Hostinger</li>
+                  <li>SSR</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="case-outro reveal">
+        <h2>Book the pitch. Play the match.</h2>
+        <div class="hero-cta">
+          <a
+            class="btn btn-fill"
+            href="https://goodbookies.co.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Visit Good Bookies ↗</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© Aditya Pratap Singh Takuli</p>
+      <p class="muted"><a href="../index.html">Back to portfolio</a></p>
+    </footer>
+
+    <script src="../static/js/theme.js"></script>
+    <script src="../static/js/ui.js?v=7"></script>
+  </body>
+</html>

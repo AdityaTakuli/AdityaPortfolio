@@ -784,6 +784,16 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   padding: clamp(1.25rem, 2.4vw, 1.85rem);
 }
 
+.goodbookies-card {
+  --brand: #38d85a;
+  --brand-soft: #83f292;
+  --brand-deep: #128c39;
+  --glow-1: #0f8f3b;
+  --glow-2: #4be66a;
+  --glow-3: #b3f7a5;
+  --glow-4: #28c861;
+}
+
 .pc-media {
   position: relative;
   border: 1px solid var(--grid-major);
@@ -1741,6 +1751,195 @@ html:not([data-theme="dark"]) .theme-icon-sun {
   justify-content: center;
 }
 
+/* ==========================================================================
+   Good Bookies case study
+   ========================================================================== */
+
+.goodbookies-page {
+  --brand: #4be66a;
+  --brand-soft: #83f292;
+  --brand-deep: #16a344;
+  --brand-violet: #79d98a;
+  --pulse: var(--brand);
+  --glow-1: #0f8f3b;
+  --glow-2: #4be66a;
+  --glow-3: #b3f7a5;
+  --glow-4: #28c861;
+}
+
+.goodbookies-page .th-base .th-good {
+  stroke: color-mix(in srgb, var(--ink) 34%, transparent);
+}
+
+.goodbookies-page .th-base .th-bookies {
+  stroke: color-mix(in srgb, var(--brand) 56%, transparent);
+}
+
+.goodbookies-page .th-fill .th-good {
+  fill: var(--ink);
+  stroke: var(--ink);
+}
+
+.goodbookies-page .th-fill .th-bookies {
+  fill: var(--brand);
+  stroke: var(--brand);
+}
+
+.goodbookies-page .btn-fill {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #071009;
+}
+
+.goodbookies-page .btn-fill:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.gb-bento .bento-shot img {
+  filter: none;
+}
+
+.gb-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+  list-style: none;
+  counter-reset: booking-flow;
+}
+
+.gb-flow li {
+  position: relative;
+  min-height: 100%;
+}
+
+.gb-flow li:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: -0.82rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--brand) 50%, transparent);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--brand);
+  transform: translateY(-50%);
+}
+
+.gb-flow span {
+  display: block;
+  margin-bottom: 1rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+.gb-flow h3,
+.gb-system h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.25;
+  margin-bottom: 0.55rem;
+}
+
+.gb-flow p,
+.gb-system p {
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.gb-feature-shot {
+  width: min(920px, 100%);
+  margin: 1.25rem auto 0;
+  padding: 0.5rem;
+  border: 1px solid var(--grid-major);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+}
+
+.gb-feature-shot img {
+  display: block;
+  width: 100%;
+  max-height: 680px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 14px;
+}
+
+.gb-feature-shot figcaption {
+  padding: 0.75rem 0.85rem 0.35rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--mute);
+}
+
+.gb-system {
+  display: grid;
+  grid-template-columns: minmax(200px, 0.8fr) auto minmax(260px, 1fr) auto minmax(320px, 1.25fr);
+  gap: 1rem;
+  align-items: center;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  border: 1px solid var(--grid-major);
+  border-radius: 20px;
+  background: var(--panel);
+}
+
+.gb-system-node {
+  min-height: 132px;
+  padding: 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+}
+
+.gb-system-core {
+  border-color: color-mix(in srgb, var(--brand) 58%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 8%, transparent),
+    0 14px 36px -28px var(--brand);
+}
+
+.gb-system-node > span {
+  display: block;
+  margin-bottom: 0.65rem;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--brand);
+}
+
+.gb-system-arrow {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--brand);
+}
+
+.gb-system-data {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.gb-system-data .gb-system-node {
+  min-height: 0;
+}
+
+.gb-architecture-cards {
+  margin-top: 1rem;
+}
+
+.goodbookies-page code {
+  font-family: var(--font-mono);
+  color: var(--brand);
+}
+
 /* Scroll reveal — only hidden when JS is available to reveal it again */
 .js .reveal {
   opacity: 0;
@@ -1780,6 +1979,33 @@ html:not([data-theme="dark"]) .theme-icon-sun {
 
   .bento-shot img {
     max-height: 62vh;
+  }
+
+  .gb-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gb-flow li:nth-child(2)::after {
+    display: none;
+  }
+
+  .gb-system {
+    grid-template-columns: 1fr;
+  }
+
+  .gb-system-arrow {
+    transform: rotate(90deg);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 540px) {
+  .gb-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .gb-flow li::after {
+    display: none;
   }
 }
 
