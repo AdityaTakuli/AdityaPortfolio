@@ -990,11 +990,31 @@
   border-radius: 4px;
 }
 
+/* Capped to the viewport so a whole diagram fits on a laptop screen with room
+   around it; the viewBox letterboxes inside the stage. */
 .iso-svg {
   display: block;
   width: 100%;
-  min-width: 680px;
+  min-width: 0;
   height: auto;
+  max-height: min(72vh, 640px);
+  margin-inline: auto;
+}
+
+/* Phones: fitting the full width would shrink the labels to specks, so keep a
+   readable scale and let the stage scroll sideways instead. */
+@media (max-width: 700px) {
+  .iso-stage {
+    padding: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .iso-svg {
+    width: 600px;
+    max-width: none;
+    max-height: none;
+  }
 }
 
 .iso-grid line {
