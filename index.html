@@ -1,50 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-loader>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aditya Pratap Singh Takuli — Portfolio</title>
+    <title>Aditya Pratap Singh Takuli — Software Engineer</title>
     <meta
       name="description"
-      content="Building backend systems, data-driven models, and agentic AI — from research to production."
+      content="Software engineer building backend systems, data-driven models, and agentic AI — from research to production."
     />
+    <meta name="theme-color" content="#0d0c0a" />
     <link rel="icon" href="static/img/icons/favicon.ico" sizes="32x32" />
     <link rel="icon" href="static/img/icons/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="static/img/icons/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Syne:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="static/css/style.css?v=21" />
+    <link rel="preload" as="image" href="static/img/aditya-anime.webp" />
+    <link rel="stylesheet" href="static/css/base.css?v=1" />
+    <link rel="stylesheet" href="static/css/home.css?v=1" />
+    <link rel="stylesheet" href="static/css/sections.css?v=1" />
     <script>
       (function () {
-        document.documentElement.classList.add("js");
+        var d = document.documentElement;
+        d.classList.add("js");
         try {
           var saved = localStorage.getItem("theme");
           var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          var theme = saved || (prefersDark ? "dark" : "light");
-          document.documentElement.setAttribute("data-theme", theme);
+          d.setAttribute("data-theme", saved || (prefersDark ? "dark" : "light"));
         } catch (e) {
-          document.documentElement.setAttribute("data-theme", "light");
+          d.setAttribute("data-theme", "light");
+        }
+        // Following a link inside the site closes a curtain; the next page
+        // opens it. A fresh visit gets the full enter screen instead.
+        var internal = false;
+        try {
+          internal = sessionStorage.getItem("apst-nav") === "1";
+          sessionStorage.removeItem("apst-nav");
+        } catch (e) {}
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.__enter = new Promise(function (resolve) {
+          window.__enterResolve = resolve;
+        });
+        if (internal) {
+          d.classList.add("is-arriving");
+        } else if (!reduce) {
+          d.classList.add("is-loading");
+          setTimeout(function () {
+            d.classList.remove("is-loading");
+            window.__enterResolve();
+          }, 9500);
         }
       })();
     </script>
   </head>
   <body>
-    <div class="graph-bg" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-nav">
-      <a class="nav-brand" href="#top">Aditya</a>
-      <nav class="nav-links" aria-label="Primary">
+    <!-- Enter screen — port of "Loading Screen 1b" -->
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader-name"><span>ADITYA</span></div>
+      <div class="loader-bust">
+        <img src="static/img/aditya-anime.webp" alt="" width="1122" height="1402" fetchpriority="high" />
+      </div>
+      <div class="loader-scan"></div>
+      <div class="loader-shade"></div>
+      <div class="loader-id">
+        <span class="loader-initials">AS — 001</span>
+        <span class="loader-role">software engineer<br />backend · data · agentic AI</span>
+      </div>
+      <span class="loader-status">establishing connection</span>
+      <div class="loader-foot">
+        <div class="loader-ticker">
+          <div class="loader-ticker-track">
+            <span>loading typefaces</span>
+            <span>compiling shaders</span>
+            <span>fetching case studies</span>
+            <span>warming the pixels</span>
+            <span>ready</span>
+          </div>
+        </div>
+        <div class="loader-bar"><span><i></i></span></div>
+        <div class="loader-pct">0</div>
+      </div>
+    </div>
+
+    <div class="curtain" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <span class="curtain-label"></span>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="marks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="cursor" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="nav-name" href="#top" data-intro>Aditya Pratap Singh Takuli</a>
+      <nav class="nav-links" aria-label="Primary" data-intro>
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
+        <a href="#work">Work</a>
         <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
+        <a class="nav-cta" href="#contact">Contact</a>
       </nav>
-      <div class="nav-actions">
+      <div class="nav-tools" data-intro>
         <button
           type="button"
           class="theme-toggle"
@@ -53,473 +113,497 @@
           aria-checked="false"
           aria-label="Toggle color theme"
         >
-          <span class="theme-icon theme-icon-sun" aria-hidden="true"></span>
-          <span class="theme-track" aria-hidden="true">
-            <span class="theme-thumb"></span>
-          </span>
-          <span class="theme-icon theme-icon-moon" aria-hidden="true"></span>
+          <span class="theme-track" aria-hidden="true"><span class="theme-thumb"></span></span>
+          <span class="theme-name" aria-hidden="true"></span>
         </button>
         <a class="nav-resume" href="static/Aditya_Pratap_Singh_Takuli_Resume.pdf" download>Resume ↓</a>
+        <button type="button" class="nav-menu" aria-expanded="false" aria-controls="menu" aria-label="Open menu"></button>
       </div>
     </header>
 
-    <main id="top">
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="hero-label">Portfolio / Uttarakhand, India</p>
-          <h1 class="hero-name">Aditya Pratap Singh Takuli</h1>
-          <p class="hero-title">Software Engineer</p>
-          <p class="hero-tagline">
-            Building backend systems, data-driven models, and agentic AI — from
-            research to production.
-          </p>
-          <div class="hero-cta">
-            <a class="btn btn-fill" href="#contact">Get in touch</a>
-            <a class="btn btn-line" href="static/Aditya_Pratap_Singh_Takuli_Resume.pdf" download>Download resume</a>
-          </div>
+    <div class="menu" id="menu" aria-hidden="true">
+      <nav class="menu-links" aria-label="Menu">
+        <a href="#about"><span>About</span></a>
+        <a href="#experience"><span>Experience</span></a>
+        <a href="#work"><span>Work</span></a>
+        <a href="#skills"><span>Skills</span></a>
+        <a href="#contact"><span>Contact</span></a>
+      </nav>
+      <div class="menu-foot">
+        <a href="static/Aditya_Pratap_Singh_Takuli_Resume.pdf" download>Resume ↓</a>
+        <span>Uttarakhand, IN · <span data-clock>--:--</span> IST</span>
+      </div>
+    </div>
+
+    <main id="main">
+      <!-- Hero -------------------------------------------------------------->
+      <section class="hero tone-paper" id="top" data-tone="paper">
+        <div class="hero-top" data-intro>
+          <span class="label">Portfolio — 2026</span>
+          <span class="label">Software engineer / Uttarakhand, India</span>
         </div>
-        <figure class="hero-photo">
+        <h1 class="visually-hidden">Aditya Pratap Singh Takuli — Software Engineer</h1>
+        <span class="hero-word hero-word--a" aria-hidden="true" data-hero-word>Software</span>
+        <figure class="hero-portrait" data-hero-portrait>
           <img
-            src="static/img/profile.jpg"
-            alt="Portrait of Aditya Pratap Singh Takuli"
-            width="900"
-            height="1011"
+            src="static/img/aditya-anime.webp"
+            alt="Illustrated portrait of Aditya"
+            width="1122"
+            height="1402"
           />
-          <figcaption class="photo-caption">fig. 01 — Aditya</figcaption>
+          <span class="scan" aria-hidden="true"></span>
+          <figcaption aria-hidden="true"><span>AS — 001</span><span>fig. 01</span></figcaption>
         </figure>
-      </section>
-
-      <section id="about" class="section about reveal">
-        <div class="section-head"> 
-          <span class="section-index">01</span>
-          <h2>About</h2>
-        </div>
-        <div class="about-grid">
-          <article class="glass panel">
-            <p class="panel-label">Profile</p>
-            <p class="about-text">
-              Software Engineer with hands-on experience building backend systems,
-              REST APIs, and data-driven models in Python, C++, and SQL. Strong
-              foundation in DSA, OOP, DBMS, and Operating Systems, with a proven
-              record of shipping tested, production-grade software. Experienced in
-              agile delivery, CI/CD, and open-source contribution, with exposure to
-              AI/ML, agentic systems, and workflow automation.
+        <span class="hero-word hero-word--b" aria-hidden="true" data-hero-word>Engineer</span>
+        <div class="hero-bottom">
+          <div class="hero-intro" data-intro>
+            <p class="label">About</p>
+            <p>
+              Building backend systems, data-driven models, and agentic AI — from
+              research to production.
             </p>
-          </article>
-          <article class="glass panel">
-            <p class="panel-label">Education</p>
-            <div class="edu-item">
-              <h3>Vellore Institute of Technology, Chennai</h3>
-              <p>B.Tech — Electronics and Communication Engineering</p>
-              <p class="muted">Aug 2023 – Jul 2027 (Expected) · CGPA 8.34 / 10</p>
-            </div>
-          </article>
+          </div>
+          <div class="hero-cta" data-intro>
+            <a class="btn btn-fill" href="#contact">Get in touch <span class="btn-arrow" aria-hidden="true">→</span></a>
+            <a class="btn" href="static/Aditya_Pratap_Singh_Takuli_Resume.pdf" download>Download resume</a>
+          </div>
+          <div class="hero-where" data-intro>
+            <p class="label">Location <b>Uttarakhand, IN</b></p>
+            <p class="label">Local time <b><span data-clock>--:--</span> IST</b></p>
+          </div>
         </div>
       </section>
 
-      <section id="experience" class="section reveal">
-        <div class="section-head">
-          <span class="section-index">02</span>
-          <h2>Experience</h2>
+      <!-- Statement --------------------------------------------------------->
+      <section class="statement tone-paper" data-tone="paper" aria-label="Approach">
+        <p class="statement-col statement-col--l">
+          <span class="roll-line">Backend systems</span>
+          <span class="roll-line">built to</span>
+          <span class="roll-line">hold the load</span>
+        </p>
+        <div class="cube-stage" aria-hidden="true">
+          <div class="cube" data-cube>
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+            <div class="cube-core"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
         </div>
-        <div class="timeline">
-          <article class="job glass panel">
-            <div class="job-meta">
-              <time>Jan 2026 – Present</time>
-            </div>
-            <div class="job-body">
-              <h3>Software Engineer Intern</h3>
-              <p class="job-org">Staunch Technologies Pvt. Ltd.</p>
-              <ul>
-                <li>
-                  Designed and trained detection models on embedded datasets; built
-                  scalable data pipelines for generation, preprocessing, and
-                  class-imbalance mitigation (mAP@50: 85%).
-                </li>
-                <li>
-                  Delivered a production-ready, hardware-software integrated
-                  embedded system with an enterprise banking partner (Indian Bank).
-                </li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="job glass panel">
-            <div class="job-meta">
-              <time>June 2025 – Nov 2025</time>
-            </div>
-            <div class="job-body">
-              <h3>Samsung PRISM Project Intern</h3>
-              <p class="job-org">Samsung R&amp;D</p>
-              <ul>
-                <li>
-                  Built a multi-output XGBoost model forecasting nine microservice
-                  performance metrics across 3,042 samples (R² ≈ 0.77).
-                </li>
-                <li>
-                  Quantified a ~3.9× throughput gain (17,522 vs 4,487 req/s) and
-                  converted benchmarks into architecture recommendations across 10+
-                  microservices.
-                </li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="job glass panel">
-            <div class="job-meta">
-              <time>June 2025 – Feb 2026</time>
-            </div>
-            <div class="job-body">
-              <h3>Technical Product Lead</h3>
-              <p class="job-org">Checkinly (Smart Hospitality Platform)</p>
-              <ul>
-                <li>
-                  Led end-to-end development; integrated Onfido identity
-                  verification and Tuya/TTLock IoT SDKs, cutting manual check-in
-                  time by 85–90%.
-                </li>
-                <li>
-                  Ran market and feasibility research that shaped product
-                  architecture and go-to-market decisions.
-                </li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="job glass panel">
-            <div class="job-meta">
-              <time>May 2025 – Aug 2025</time>
-            </div>
-            <div class="job-body">
-              <h3>HPC / Research Intern</h3>
-              <p class="job-org">CSIR Fourth Paradigm Institute (CSIR-4PI), Bengaluru</p>
-              <ul>
-                <li>
-                  Designed a hybrid HTTP (REST) + WebSocket network with FastAPI for
-                  real-time WLAN data synchronisation (sub-second propagation).
-                </li>
-                <li>
-                  Optimised deep learning models for resource-constrained edge
-                  hardware.
-                </li>
-              </ul>
-            </div>
-          </article>
-        </div>
+        <p class="statement-col statement-col--r">
+          <span class="roll-line">Models &amp; agents</span>
+          <span class="roll-line">from research</span>
+          <span class="roll-line">to production</span>
+        </p>
       </section>
 
-      <section id="projects" class="section reveal">
-        <div class="section-head">
-          <span class="section-index">03</span>
-          <h2>Projects</h2>
-        </div>
-        <div class="project-grid">
-          <article class="project-card is-featured">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <a
-              class="pc-link"
-              href="projects/trialmatch.html"
-              aria-label="Open the TrialMatch case study"
-            ></a>
-            <div class="pc-media">
+      <div class="pixel-wipe" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <!-- About ------------------------------------------------------------->
+      <section class="about tone-accent grid-lines" id="about" data-tone="accent">
+        <header class="sec-head">
+          <span class="label">[01] About</span>
+          <h2 class="sec-title" data-split>About</h2>
+          <span class="label sec-note">VIT Chennai / B.Tech ECE</span>
+        </header>
+        <div class="about-grid">
+          <figure class="about-photo" data-reveal>
+            <div class="about-frame" data-duo>
+              <img class="duo" src="static/img/profile.jpg" alt="" width="900" height="1011" loading="lazy" />
               <img
-                src="static/img/projects/trialmatch/landing.jpg"
-                alt="TrialMatch landing page with an interactive globe of live trial locations"
+                class="mono"
+                src="static/img/profile.jpg"
+                alt="Portrait of Aditya Pratap Singh Takuli"
+                width="900"
+                height="1011"
                 loading="lazy"
-                width="1024"
-                height="590"
               />
             </div>
-            <div class="pc-body">
-              <p class="pc-kicker">
-                Case study <span class="pc-badge">Live</span>
-              </p>
-              <h3>TrialMatch — Clinical Trial Matching</h3>
-              <p class="project-tags">
-                Next.js · FastAPI · LangGraph · PostgreSQL · Redis
-              </p>
-              <p class="pc-blurb">
-                Describe a condition in plain language and get ranked, recruiting
-                clinical trials back. A six-node LangGraph pipeline extracts a patient
-                profile, semantically matches a 500-condition corpus, and explains
-                every eligibility decision.
-              </p>
-              <div class="pc-actions">
-                <a
-                  class="pc-chip"
-                  href="https://clinical-trial-matching-pied.vercel.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Live app ↗</a
-                >
-                <a
-                  class="pc-chip"
-                  href="https://github.com/AdityaTakuli/Clinical-Trial-Matching"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Code ↗</a
-                >
+            <figcaption><span class="label">fig. 02 — Aditya</span><span class="label">Uttarakhand, IN</span></figcaption>
+          </figure>
+          <div class="about-copy">
+            <p class="about-lead" data-split>
+              Software Engineer with hands-on experience building backend systems, REST
+              APIs, and data-driven models in Python, C++, and SQL.
+            </p>
+            <p class="about-body" data-reveal>
+              Strong foundation in DSA, OOP, DBMS, and Operating Systems, with a proven
+              record of shipping tested, production-grade software. Experienced in agile
+              delivery, CI/CD, and open-source contribution, with exposure to AI/ML,
+              agentic systems, and workflow automation.
+            </p>
+            <dl class="facts" data-reveal>
+              <div><dt class="label">Education</dt><dd>Vellore Institute of Technology, Chennai</dd></div>
+              <div><dt class="label">Degree</dt><dd>B.Tech — Electronics and Communication Engineering</dd></div>
+              <div><dt class="label">Timeline</dt><dd>Aug 2023 – Jul 2027 (Expected)</dd></div>
+              <div><dt class="label">CGPA</dt><dd>8.34 / 10</dd></div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience -------------------------------------------------------->
+      <section class="reel tone-accent grid-lines" id="experience" data-tone="accent">
+        <div class="reel-pin">
+          <header class="reel-head">
+            <h2 class="reel-title" data-split>Experience</h2>
+            <div class="reel-sub">
+              <p class="label">[02] Experience</p>
+              <p>Four roles across industry, R&amp;D, product and research.</p>
+              <p class="label" aria-hidden="true">Scroll →</p>
+            </div>
+          </header>
+          <div class="reel-viewport">
+            <ol class="reel-track">
+              <li class="job">
+                <div class="job-top"><span class="label">Jan 2026 – Present</span><span class="label">001</span></div>
+                <h3 class="job-role">Software Engineer Intern</h3>
+                <p class="job-org">Staunch Technologies Pvt. Ltd.</p>
+                <ul class="job-points">
+                  <li>
+                    Designed and trained detection models on embedded datasets; built
+                    scalable data pipelines for generation, preprocessing, and
+                    class-imbalance mitigation (mAP@50: 85%).
+                  </li>
+                  <li>
+                    Delivered a production-ready, hardware-software integrated embedded
+                    system with an enterprise banking partner (Indian Bank).
+                  </li>
+                </ul>
+              </li>
+              <li class="job">
+                <div class="job-top"><span class="label">June 2025 – Nov 2025</span><span class="label">002</span></div>
+                <h3 class="job-role">Samsung PRISM Project Intern</h3>
+                <p class="job-org">Samsung R&amp;D</p>
+                <ul class="job-points">
+                  <li>
+                    Built a multi-output XGBoost model forecasting nine microservice
+                    performance metrics across 3,042 samples (R² ≈ 0.77).
+                  </li>
+                  <li>
+                    Quantified a ~3.9× throughput gain (17,522 vs 4,487 req/s) and
+                    converted benchmarks into architecture recommendations across 10+
+                    microservices.
+                  </li>
+                </ul>
+              </li>
+              <li class="job">
+                <div class="job-top"><span class="label">June 2025 – Feb 2026</span><span class="label">003</span></div>
+                <h3 class="job-role">Technical Product Lead</h3>
+                <p class="job-org">Checkinly (Smart Hospitality Platform)</p>
+                <ul class="job-points">
+                  <li>
+                    Led end-to-end development; integrated Onfido identity verification
+                    and Tuya/TTLock IoT SDKs, cutting manual check-in time by 85–90%.
+                  </li>
+                  <li>
+                    Ran market and feasibility research that shaped product architecture
+                    and go-to-market decisions.
+                  </li>
+                </ul>
+              </li>
+              <li class="job">
+                <div class="job-top"><span class="label">May 2025 – Aug 2025</span><span class="label">004</span></div>
+                <h3 class="job-role">HPC / Research Intern</h3>
+                <p class="job-org">CSIR Fourth Paradigm Institute (CSIR-4PI), Bengaluru</p>
+                <ul class="job-points">
+                  <li>
+                    Designed a hybrid HTTP (REST) + WebSocket network with FastAPI for
+                    real-time WLAN data synchronisation (sub-second propagation).
+                  </li>
+                  <li>Optimised deep learning models for resource-constrained edge hardware.</li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+          <div class="reel-foot" aria-hidden="true">
+            <div class="reel-names">
+              <div class="reel-names-track">
+                <span>Staunch</span><span>Samsung R&amp;D</span><span>Checkinly</span><span>CSIR-4PI</span>
               </div>
-              <span class="pc-cta">Read the case study →</span>
             </div>
-          </article>
+            <div class="reel-count">
+              <div class="reel-count-track"><span>001</span><span>002</span><span>003</span><span>004</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <article class="project-card is-featured goodbookies-card">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <a
-              class="pc-link"
-              href="projects/goodbookies.html"
-              aria-label="Open the Good Bookies case study"
-            ></a>
-            <div class="pc-media">
-              <img
-                src="static/img/projects/goodbookies/01-landing-hero.png"
-                alt="Good Bookies landing page for finding and booking sports venues"
-                loading="lazy"
-                width="1024"
-                height="598"
-              />
-            </div>
-            <div class="pc-body">
-              <p class="pc-kicker">
-                Case study <span class="pc-badge">Live product</span>
+      <div class="pixel-wipe pixel-wipe--out" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <!-- Work -------------------------------------------------------------->
+      <section class="work tone-paper" id="work" data-tone="paper">
+        <header class="sec-head">
+          <span class="label">[03] Selected work</span>
+          <h2 class="sec-title" data-split>Work</h2>
+          <span class="label sec-note">05 projects</span>
+        </header>
+
+        <div class="stack">
+          <article class="stack-card" data-stack>
+            <div class="stack-copy">
+              <div class="stack-meta"><span class="label">[01] Case study</span><span class="label label--hl">Live</span></div>
+              <h3 class="stack-title">TrialMatch <small>Clinical trial matching</small></h3>
+              <p class="label">Next.js · FastAPI · LangGraph · PostgreSQL · Redis</p>
+              <p class="stack-blurb">
+                Describe a condition in plain language and get ranked, recruiting clinical
+                trials back. A six-node LangGraph pipeline extracts a patient profile,
+                semantically matches a 500-condition corpus, and explains every
+                eligibility decision.
               </p>
-              <h3>Good Bookies — Sports Booking Marketplace</h3>
-              <p class="project-tags">
-                TanStack Start · React · Supabase · MySQL · Razorpay
-              </p>
-              <p class="pc-blurb">
-                A production two-sided marketplace with minute-precise inventory,
-                dynamic pricing, split payments, open-match lobbies, turf-verified
-                player cards, and a complete partner operations portal.
-              </p>
-              <div class="pc-actions">
-                <a
-                  class="pc-chip"
-                  href="https://goodbookies.co.in"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Live site ↗</a
-                >
+              <div class="stack-links">
+                <a class="chip chip--solid" href="projects/trialmatch.html" data-title="TrialMatch">Read the case study →</a>
+                <a class="chip" href="https://clinical-trial-matching-pied.vercel.app" target="_blank" rel="noopener noreferrer">Live app ↗</a>
+                <a class="chip" href="https://github.com/AdityaTakuli/Clinical-Trial-Matching" target="_blank" rel="noopener noreferrer">Code ↗</a>
               </div>
-              <span class="pc-cta">Read the case study →</span>
             </div>
+            <div class="stack-media">
+              <figure class="frame frame--browser">
+                <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">clinical-trial-matching-pied.vercel.app</span></div>
+                <div class="frame-view">
+                  <img
+                    src="static/img/projects/trialmatch/landing.jpg"
+                    alt="TrialMatch landing page with an interactive globe of live trial locations"
+                    width="1024"
+                    height="590"
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+            </div>
+            <a class="card-link" href="projects/trialmatch.html" data-title="TrialMatch" tabindex="-1" aria-hidden="true"></a>
           </article>
 
-          <article class="project-card">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <a
-              class="pc-link"
-              href="https://github.com/AdityaTakuli/LAMDAAnalytics"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open the LAMDA Analytics repository"
-            ></a>
-            <div class="pc-body">
-              <p class="pc-kicker">
-                Project <span class="pc-badge">Hackathon winner</span>
+          <article class="stack-card" data-stack>
+            <div class="stack-copy">
+              <div class="stack-meta"><span class="label">[02] Case study</span><span class="label label--hl">Live product</span></div>
+              <h3 class="stack-title">Good Bookies <small>Sports booking marketplace</small></h3>
+              <p class="label">TanStack Start · React · Supabase · MySQL · Razorpay</p>
+              <p class="stack-blurb">
+                A production two-sided marketplace with minute-precise inventory, dynamic
+                pricing, split payments, open-match lobbies, turf-verified player cards,
+                and a complete partner operations portal.
               </p>
-              <h3>LAMDA Analytics</h3>
-              <p class="project-tags">
-                Python · Temporal Graph Networks · Multi-Agent Systems
-              </p>
-              <p class="pc-blurb">
-                Real-time supply-chain analytics using Temporal Graph Networks and a
-                multi-agent architecture for scraping, normalisation, and analysis.
-                Winner — NOKIA CERONIX National Hackathon (top 5% of 878 teams).
-              </p>
-              <span class="pc-cta">View on GitHub ↗</span>
+              <div class="stack-links">
+                <a class="chip chip--solid" href="projects/goodbookies.html" data-title="Good Bookies">Read the case study →</a>
+                <a class="chip" href="https://goodbookies.co.in" target="_blank" rel="noopener noreferrer">Live site ↗</a>
+              </div>
             </div>
+            <div class="stack-media">
+              <figure class="frame frame--browser">
+                <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">goodbookies.co.in</span></div>
+                <div class="frame-view">
+                  <img
+                    src="static/img/projects/goodbookies/gb-landing.webp"
+                    alt="Good Bookies landing page for finding and booking sports venues"
+                    width="1920"
+                    height="1200"
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+              <div class="stack-phone">
+                <figure class="frame frame--phone">
+                  <div class="frame-view">
+                    <img
+                      src="static/img/projects/goodbookies/gb-mobile-home.webp"
+                      alt="Good Bookies home screen on a phone"
+                      width="780"
+                      height="1688"
+                      loading="lazy"
+                    />
+                  </div>
+                </figure>
+              </div>
+            </div>
+            <a class="card-link" href="projects/goodbookies.html" data-title="Good Bookies" tabindex="-1" aria-hidden="true"></a>
           </article>
+        </div>
 
-          <article class="project-card">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <a
-              class="pc-link"
-              href="https://github.com/AdityaTakuli/prmon"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open the prmon repository"
-            ></a>
-            <div class="pc-body">
-              <p class="pc-kicker">
-                Open source <span class="pc-badge">Merged at CERN</span>
-              </p>
-              <h3>HSF/prmon — CERN</h3>
-              <p class="project-tags">C++ · CLI Tooling · Code Review</p>
-              <p class="pc-blurb">
-                Merged PR #302: replaced the legacy CLI parser in CERN/HSF
-                process-monitoring tooling, preserving all 12 CLI options and passing
-                all 14 tests. Official project contributor.
-              </p>
-              <span class="pc-cta">View on GitHub ↗</span>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <a
-              class="pc-link"
-              href="https://github.com/AdityaTakuli/Gold-Segmentation-Model"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open the gold detection repository"
-            ></a>
-            <div class="pc-body">
-              <p class="pc-kicker">Project <span class="pc-badge">Edge AI</span></p>
-              <h3>Gold Detection &amp; Segmentation</h3>
-              <p class="project-tags">Python · YOLO · OpenCV · SQLite · OCR</p>
-              <p class="pc-blurb">
-                Real-time detection pipeline with custom YOLO, person-segmentation for
-                false-positive suppression, OCR weight extraction, and a SQLite-backed
-                logging GUI.
-              </p>
-              <span class="pc-cta">View on GitHub ↗</span>
-            </div>
-          </article>
+        <div class="rows">
+          <div class="rows-head"><span class="label">More projects</span><span class="label">03</span></div>
+          <ul>
+            <li class="row">
+              <a href="https://github.com/AdityaTakuli/LAMDAAnalytics" target="_blank" rel="noopener noreferrer">
+                <span class="label row-idx">03</span>
+                <span>
+                  <span class="row-title">LAMDA Analytics</span>
+                  <span class="row-text">
+                    Real-time supply-chain analytics using Temporal Graph Networks and a
+                    multi-agent architecture for scraping, normalisation, and analysis.
+                    Winner — NOKIA CERONIX National Hackathon (top 5% of 878 teams).
+                  </span>
+                </span>
+                <span class="row-meta">
+                  <span class="label row-badge">Hackathon winner</span>
+                  <span class="label">Python · Temporal Graph Networks · Multi-Agent Systems</span>
+                </span>
+                <span class="row-arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
+            <li class="row">
+              <a href="https://github.com/AdityaTakuli/prmon" target="_blank" rel="noopener noreferrer">
+                <span class="label row-idx">04</span>
+                <span>
+                  <span class="row-title">HSF/prmon — CERN</span>
+                  <span class="row-text">
+                    Merged PR #302: replaced the legacy CLI parser in CERN/HSF
+                    process-monitoring tooling, preserving all 12 CLI options and passing
+                    all 14 tests. Official project contributor.
+                  </span>
+                </span>
+                <span class="row-meta">
+                  <span class="label row-badge">Merged at CERN</span>
+                  <span class="label">C++ · CLI Tooling · Code Review</span>
+                </span>
+                <span class="row-arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
+            <li class="row">
+              <a href="https://github.com/AdityaTakuli/Gold-Segmentation-Model" target="_blank" rel="noopener noreferrer">
+                <span class="label row-idx">05</span>
+                <span>
+                  <span class="row-title">Gold Detection &amp; Segmentation</span>
+                  <span class="row-text">
+                    Real-time detection pipeline with custom YOLO, person-segmentation for
+                    false-positive suppression, OCR weight extraction, and a SQLite-backed
+                    logging GUI.
+                  </span>
+                </span>
+                <span class="row-meta">
+                  <span class="label row-badge">Edge AI</span>
+                  <span class="label">Python · YOLO · OpenCV · SQLite · OCR</span>
+                </span>
+                <span class="row-arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
+          </ul>
         </div>
       </section>
 
-      <section id="skills" class="section reveal">
-        <div class="section-head">
-          <span class="section-index">04</span>
-          <h2>Skills</h2>
-        </div>
-        <div class="skills-grid">
-          <div class="skill-group glass panel">
-            <h3>Languages</h3>
-            <ul>
-              <li>Python</li>
-              <li>C++</li>
-              <li>C</li>
-              <li>SQL</li>
-              <li>Bash/Shell</li>
-              <li>Git</li>
-            </ul>
-          </div>
-          <div class="skill-group glass panel">
-            <h3>Core CS</h3>
-            <ul>
-              <li>DSA</li>
-              <li>OOP</li>
-              <li>DBMS</li>
-              <li>Operating Systems</li>
-              <li>Networking</li>
-              <li>Distributed Systems</li>
-            </ul>
-          </div>
-          <div class="skill-group glass panel">
-            <h3>Data &amp; Databases</h3>
-            <ul>
-              <li>PostgreSQL</li>
-              <li>SQLite</li>
-              <li>MongoDB</li>
-              <li>Pandas</li>
-              <li>NumPy</li>
-              <li>XGBoost</li>
-            </ul>
-          </div>
-          <div class="skill-group glass panel">
-            <h3>Backend &amp; Platforms</h3>
-            <ul>
-              <li>FastAPI</li>
-              <li>REST &amp; WebSocket</li>
-              <li>Docker</li>
-              <li>CI/CD</li>
-              <li>AWS</li>
-              <li>Linux</li>
-            </ul>
-          </div>
-          <div class="skill-group glass panel">
-            <h3>AI/ML &amp; Automation</h3>
-            <ul>
-              <li>PyTorch</li>
-              <li>Scikit-learn</li>
-              <li>YOLO</li>
-              <li>RAG</li>
-              <li>LangChain</li>
-              <li>LangGraph</li>
-              <li>Agentic AI</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section id="achievements" class="section reveal">
-        <div class="section-head">
-          <span class="section-index">05</span>
-          <h2>Achievements</h2>
-        </div>
-        <ul class="achieve-list">
-          <li class="glass panel">Winner, NOKIA CERONIX National Hackathon (top 5% of 878 teams)</li>
-          <li class="glass panel">2nd Place, CodeInit Hackathon (ACM)</li>
-          <li class="glass panel">Represented VIT Chennai at UK Innovate ’25</li>
-          <li class="glass panel">Official Contributor, CERN HSF/prmon</li>
-          <li class="glass panel">
-            Research paper published
-            (<a
-              href="https://doi.org/10.1134/S1063782625604522"
-              target="_blank"
-              rel="noopener noreferrer"
-              >DOI: 10.1134/S1063782625604522</a
-            >)
+      <!-- Skills ------------------------------------------------------------>
+      <section class="skills tone-paper" id="skills" data-tone="paper">
+        <header class="sec-head">
+          <span class="label">[04] Toolkit</span>
+          <h2 class="sec-title" data-split>Skills</h2>
+          <span class="label sec-note">05 groups</span>
+        </header>
+        <ol class="caps">
+          <li class="cap" data-reveal>
+            <span class="label">[01]</span>
+            <h3 class="cap-title">Languages</h3>
+            <ul class="cap-items"><li>Python</li><li>C++</li><li>C</li><li>SQL</li><li>Bash/Shell</li><li>Git</li></ul>
           </li>
-          <li class="glass panel">Indian Patent filed (App. No. 202641053086)</li>
-          <li class="glass panel">
-            Certified: Python, C, C++ (IIT Bombay); Generative AI Applications (IBM)
+          <li class="cap" data-reveal>
+            <span class="label">[02]</span>
+            <h3 class="cap-title">Core CS</h3>
+            <ul class="cap-items"><li>DSA</li><li>OOP</li><li>DBMS</li><li>Operating Systems</li><li>Networking</li><li>Distributed Systems</li></ul>
           </li>
-        </ul>
+          <li class="cap" data-reveal>
+            <span class="label">[03]</span>
+            <h3 class="cap-title">Data &amp; Databases</h3>
+            <ul class="cap-items"><li>PostgreSQL</li><li>SQLite</li><li>MongoDB</li><li>Pandas</li><li>NumPy</li><li>XGBoost</li></ul>
+          </li>
+          <li class="cap" data-reveal>
+            <span class="label">[04]</span>
+            <h3 class="cap-title">Backend &amp; Platforms</h3>
+            <ul class="cap-items"><li>FastAPI</li><li>REST &amp; WebSocket</li><li>Docker</li><li>CI/CD</li><li>AWS</li><li>Linux</li></ul>
+          </li>
+          <li class="cap" data-reveal>
+            <span class="label">[05]</span>
+            <h3 class="cap-title">AI/ML &amp; Automation</h3>
+            <ul class="cap-items"><li>PyTorch</li><li>Scikit-learn</li><li>YOLO</li><li>RAG</li><li>LangChain</li><li>LangGraph</li><li>Agentic AI</li></ul>
+          </li>
+        </ol>
       </section>
 
-      <section id="contact" class="section contact reveal">
-        <div class="section-head">
-          <span class="section-index">06</span>
-          <h2>Contact</h2>
+      <!-- Achievements ------------------------------------------------------>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <span>Winner — Nokia Ceronix</span><span>CERN HSF contributor</span><span>2nd — CodeInit (ACM)</span><span>Indian patent filed</span><span>Published research</span><span>UK Innovate ’25</span>
+          </div>
+          <div class="marquee-group">
+            <span>Winner — Nokia Ceronix</span><span>CERN HSF contributor</span><span>2nd — CodeInit (ACM)</span><span>Indian patent filed</span><span>Published research</span><span>UK Innovate ’25</span>
+          </div>
         </div>
-        <div class="glass panel contact-panel">
-          <div>
-            <p class="panel-label">Get in touch</p>
-            <p class="contact-lead">Open to roles, collaborations, and interesting problems.</p>
-            <a class="contact-email" href="mailto:adityapstakuli@gmail.com"
-              >adityapstakuli@gmail.com</a
-            >
+      </div>
+
+      <section class="honours tone-paper" id="achievements" data-tone="paper">
+        <header class="sec-head">
+          <span class="label">[05] Recognition</span>
+          <h2 class="sec-title sec-title--long" data-split>Achievements</h2>
+          <span class="label sec-note">07 entries</span>
+        </header>
+        <ol class="honour-list">
+          <li data-reveal><span class="label">01</span><p>Winner, NOKIA CERONIX National Hackathon<small>Top 5% of 878 teams</small></p></li>
+          <li data-reveal><span class="label">02</span><p>2nd Place, CodeInit Hackathon (ACM)</p></li>
+          <li data-reveal><span class="label">03</span><p>Represented VIT Chennai at UK Innovate ’25</p></li>
+          <li data-reveal><span class="label">04</span><p>Official Contributor, CERN HSF/prmon</p></li>
+          <li data-reveal>
+            <span class="label">05</span>
+            <p>
+              Research paper published
+              <small><a class="link" href="https://doi.org/10.1134/S1063782625604522" target="_blank" rel="noopener noreferrer">DOI: 10.1134/S1063782625604522</a></small>
+            </p>
+          </li>
+          <li data-reveal><span class="label">06</span><p>Indian Patent filed<small>App. No. 202641053086</small></p></li>
+          <li data-reveal>
+            <span class="label">07</span>
+            <p>Certified: Python, C, C++ (IIT Bombay)<small>Generative AI Applications (IBM)</small></p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Contact ----------------------------------------------------------->
+      <section class="contact tone-ink" id="contact" data-tone="ink">
+        <p class="label">[06] Contact</p>
+        <h2 class="contact-title">
+          <span class="roll-line">Get in</span>
+          <span class="roll-line">touch</span>
+        </h2>
+        <div class="contact-grid">
+          <div class="contact-main">
+            <p class="lead">Open to roles, collaborations, and interesting problems.</p>
+            <a class="contact-email" href="mailto:adityapstakuli@gmail.com" data-magnetic>adityapstakuli@gmail.com</a>
             <p class="contact-phone">+91 8791327956</p>
           </div>
-          <div>
-            <p class="panel-label">Elsewhere</p>
-            <ul class="socials">
-              <li>
-                <a href="https://github.com/adityatakuli" target="_blank" rel="noopener"
-                  >GitHub</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.linkedin.com/in/aditya10-pratap-07-singh20-takuli04/"
-                  target="_blank"
-                  rel="noopener"
-                  >LinkedIn</a
-                >
-              </li>
-              <li>
-                <a href="https://leetcode.com/u/iamARiES/" target="_blank" rel="noopener"
-                  >LeetCode</a
-                >
-              </li>
-              <li>
-                <a href="https://x.com/IamAdityaTakuli" target="_blank" rel="noopener">X</a>
-              </li>
-            </ul>
-          </div>
+          <ul class="socials" aria-label="Elsewhere">
+            <li><a href="https://github.com/adityatakuli" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://www.linkedin.com/in/aditya10-pratap-07-singh20-takuli04/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://leetcode.com/u/iamARiES/" target="_blank" rel="noopener">LeetCode <span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://x.com/IamAdityaTakuli" target="_blank" rel="noopener">X <span aria-hidden="true">↗</span></a></li>
+          </ul>
+          <dl class="contact-meta">
+            <div><dt class="label">Based in</dt><dd>Uttarakhand, India</dd></div>
+            <div><dt class="label">Local time</dt><dd><span data-clock>--:--</span> IST</dd></div>
+            <div>
+              <dt class="label">Resume</dt>
+              <dd><a class="link" href="static/Aditya_Pratap_Singh_Takuli_Resume.pdf" download>Download PDF ↓</a></dd>
+            </div>
+          </dl>
         </div>
+        <footer class="site-footer">
+          <p>© 2026 Aditya Pratap Singh Takuli</p>
+          <div class="footer-links">
+            <button type="button" class="link" data-replay>Replay intro</button>
+            <a class="link" href="#top">Back to top ↑</a>
+          </div>
+        </footer>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <p>© Aditya Pratap Singh Takuli</p>
-      <p class="muted">Drawn on graph paper · HTML / CSS / JS</p>
-    </footer>
-    <script src="static/js/theme.js"></script>
-    <script src="static/js/ui.js?v=7"></script>
+    <script src="static/js/vendor/gsap.min.js"></script>
+    <script src="static/js/vendor/ScrollTrigger.min.js"></script>
+    <script src="static/js/vendor/SplitText.min.js"></script>
+    <script src="static/js/vendor/ScrambleTextPlugin.min.js"></script>
+    <script src="static/js/vendor/CustomEase.min.js"></script>
+    <script src="static/js/vendor/lenis.min.js"></script>
+    <script src="static/js/theme.js?v=2"></script>
+    <script src="static/js/loader.js?v=1"></script>
+    <script src="static/js/motion.js?v=1"></script>
   </body>
 </html>

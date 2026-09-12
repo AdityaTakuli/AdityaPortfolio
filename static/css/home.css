@@ -1,0 +1,677 @@
+/* ==========================================================================
+   Home — enter screen, hero, statement, pixel wipes and About.
+   The enter screen is a port of "Loading Screen 1b" from the Claude Design
+   project; timings and colours follow that file.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Enter screen
+   -------------------------------------------------------------------------- */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: none;
+  overflow: hidden;
+  background: var(--night);
+  color: var(--night-fg);
+}
+
+.is-loading .loader,
+.loader.is-live {
+  display: block;
+}
+
+/* If the script never takes over, the screen gets out of the way. */
+.is-loading .loader:not(.is-live) {
+  animation: loader-failsafe 0.4s 9s forwards;
+}
+
+@keyframes loader-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.loader-name {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loader-name span {
+  font: 700 clamp(120px, 26vw, 340px) / 1 var(--f-sans);
+  letter-spacing: -0.03em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(224, 162, 103, 0.22);
+  white-space: nowrap;
+}
+
+/* The portrait sits on the same near-black it was painted on, so feathering
+   its edges is enough to make the frame disappear. */
+.loader-bust {
+  --bust-h: min(78vh, 660px);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  height: var(--bust-h);
+  aspect-ratio: 1122 / 1402;
+  margin-left: calc(var(--bust-h) * -0.4001);
+  clip-path: inset(90% 0 0 0);
+}
+
+.loader-bust img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 100%;
+  filter: contrast(1.05) saturate(1.05);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 16%, #000 84%, transparent),
+    linear-gradient(to bottom, transparent, #000 12%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 16%, #000 84%, transparent),
+    linear-gradient(to bottom, transparent, #000 12%);
+  mask-composite: intersect;
+}
+
+.loader-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 14vh;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(224, 162, 103, 0),
+    rgba(224, 162, 103, 0.14) 70%,
+    rgba(224, 162, 103, 0.5)
+  );
+  border-top: 1px solid rgba(224, 162, 103, 0.65);
+}
+
+.loader-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(13, 12, 10, 0.92) 2%, rgba(13, 12, 10, 0) 34%);
+}
+
+.loader-id {
+  position: absolute;
+  left: clamp(24px, 4vw, 48px);
+  top: clamp(28px, 4vw, 44px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.loader-initials {
+  font: 500 12px / 1 var(--f-mono);
+  letter-spacing: 0.22em;
+  color: var(--amber);
+}
+
+/* Raised from the mock's 42% to 62% opacity so the small copy clears 4.5:1. */
+.loader-role,
+.loader-status {
+  font: 400 12px / 1.6 var(--f-mono);
+  color: rgba(242, 236, 226, 0.62);
+}
+
+.loader-role {
+  max-width: 230px;
+}
+
+.loader-status {
+  position: absolute;
+  right: clamp(24px, 4vw, 48px);
+  top: clamp(28px, 4vw, 44px);
+  line-height: 1;
+  text-align: right;
+  animation: flick 4s steps(1) infinite;
+}
+
+@keyframes flick {
+  0%,
+  92% { opacity: 1; }
+  94%,
+  100% { opacity: 0.35; }
+}
+
+.loader-foot {
+  position: absolute;
+  left: clamp(24px, 4vw, 48px);
+  right: clamp(24px, 4vw, 48px);
+  bottom: clamp(28px, 4vw, 44px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(16px, 3vw, 32px);
+}
+
+.loader-ticker {
+  height: 56px;
+  overflow: hidden;
+  font: 400 13px / 56px var(--f-mono);
+  color: rgba(242, 236, 226, 0.72);
+  white-space: nowrap;
+}
+
+.loader-ticker span {
+  display: block;
+  height: 56px;
+}
+
+.loader-bar {
+  flex: 1;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.loader-bar::before {
+  content: "";
+  height: 1px;
+  background: rgba(242, 236, 226, 0.14);
+}
+
+.loader-bar span {
+  display: block;
+  height: 3px;
+  background: rgba(242, 236, 226, 0.1);
+}
+
+.loader-bar i {
+  display: block;
+  height: 100%;
+  background: var(--night-fg);
+  transform: scaleX(0.02);
+  transform-origin: 0 50%;
+}
+
+.loader-pct {
+  min-width: 110px;
+  font: 700 clamp(34px, 5vw, 56px) / 1 var(--f-sans);
+  letter-spacing: -0.03em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 560px) {
+  .loader-bar {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Hero — two extended words around a portrait window
+   -------------------------------------------------------------------------- */
+
+.hero {
+  --pw: clamp(230px, 25vw, 410px);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto auto minmax(2rem, 1fr) auto auto;
+  column-gap: var(--gutter);
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + 1rem) var(--gutter) clamp(1.25rem, 3vh, 2rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-top {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: clamp(0.75rem, 2vh, 1.5rem);
+}
+
+/* The words print in "difference", so they read dark on paper and flip to
+   light where they cross the night-coloured portrait. */
+.hero-word {
+  position: relative;
+  z-index: 2;
+  display: block;
+  font-family: var(--f-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(2.7rem, 11.6vw, 14rem);
+  line-height: 0.82;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #f2ece2;
+  mix-blend-mode: difference;
+}
+
+.hero-word--a {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  justify-self: start;
+}
+
+.hero-word--b {
+  grid-column: 1 / -1;
+  grid-row: 4;
+  justify-self: end;
+}
+
+.hero-portrait {
+  position: absolute;
+  z-index: 1;
+  left: calc(50% - var(--pw) / 2);
+  top: calc(50% - var(--pw) * 0.625);
+  width: var(--pw);
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  overflow: hidden;
+  background: #0e1007;
+}
+
+.hero-portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+
+.hero-portrait .scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 22%;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(224, 162, 103, 0), rgba(224, 162, 103, 0.12) 70%, rgba(224, 162, 103, 0.42));
+  border-top: 1px solid rgba(224, 162, 103, 0.6);
+  animation: portrait-scan 7s var(--ease-out) 1.5s infinite;
+}
+
+@keyframes portrait-scan {
+  0% { top: 100%; opacity: 1; }
+  45% { top: -22%; opacity: 1; }
+  46%,
+  100% { top: -22%; opacity: 0; }
+}
+
+.hero-portrait figcaption {
+  position: absolute;
+  inset: 0.75rem 0.85rem auto;
+  display: flex;
+  justify-content: space-between;
+  font: 500 11px / 1 var(--f-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242, 236, 226, 0.72);
+  pointer-events: none;
+}
+
+.hero-portrait figcaption span:first-child {
+  color: var(--amber);
+}
+
+.hero-portrait figcaption span:last-child {
+  align-self: flex-end;
+}
+
+.hero-bottom {
+  grid-column: 1 / -1;
+  grid-row: 5;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  align-items: end;
+  padding-top: clamp(1rem, 3vh, 2rem);
+}
+
+.hero-intro {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.hero-intro p:last-child {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 36ch;
+}
+
+.hero-cta {
+  grid-column: 5 / span 4;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.hero-where {
+  grid-column: 9 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  text-align: right;
+}
+
+.hero-where b {
+  display: block;
+  margin-top: 0.3rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+@media (max-width: 960px) {
+  .hero {
+    --pw: min(62vw, 330px);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 0;
+    padding-top: calc(var(--nav-h) + 0.75rem);
+  }
+
+  .hero-word {
+    font-size: clamp(2.4rem, 12.4vw, 7rem);
+  }
+
+  .hero-word--b {
+    align-self: flex-end;
+    margin-top: -0.2em;
+  }
+
+  .hero-portrait {
+    position: relative;
+    left: auto;
+    top: auto;
+    align-self: center;
+    margin-block: -0.35em;
+  }
+
+  .hero-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .hero-cta {
+    justify-content: flex-start;
+  }
+
+  .hero-where {
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-cta .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Statement — two stacks of rolling lines around a turning glass cube
+   -------------------------------------------------------------------------- */
+
+.statement {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--gutter);
+  padding: clamp(6rem, 16vw, 13rem) var(--gutter);
+}
+
+.statement-col {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: clamp(1.85rem, 4.4vw, 4.75rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.statement-col--r {
+  text-align: right;
+}
+
+.statement-col--r .roll-track > span {
+  text-align: right;
+}
+
+.cube-stage {
+  --s: clamp(120px, 15vw, 230px);
+  width: var(--s);
+  height: var(--s);
+  perspective: 1000px;
+}
+
+.cube,
+.cube-core {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(-24deg) rotateY(38deg);
+}
+
+.cube > i,
+.cube-core > i {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--ink) 40%, transparent);
+  background: color-mix(in srgb, var(--card) 38%, transparent);
+}
+
+.cube-core {
+  position: absolute;
+  inset: 25%;
+  width: 50%;
+  height: 50%;
+  transform: none;
+}
+
+.cube-core > i {
+  border: 0;
+  background: color-mix(in srgb, var(--accent) 88%, transparent);
+}
+
+.cube > i:nth-child(1) { transform: translateZ(calc(var(--s) / 2)); }
+.cube > i:nth-child(2) { transform: rotateY(180deg) translateZ(calc(var(--s) / 2)); }
+.cube > i:nth-child(3) { transform: rotateY(90deg) translateZ(calc(var(--s) / 2)); }
+.cube > i:nth-child(4) { transform: rotateY(-90deg) translateZ(calc(var(--s) / 2)); }
+.cube > i:nth-child(5) { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); }
+.cube > i:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); }
+
+.cube-core > i:nth-child(1) { transform: translateZ(calc(var(--s) / 4)); }
+.cube-core > i:nth-child(2) { transform: rotateY(180deg) translateZ(calc(var(--s) / 4)); }
+.cube-core > i:nth-child(3) { transform: rotateY(90deg) translateZ(calc(var(--s) / 4)); }
+.cube-core > i:nth-child(4) { transform: rotateY(-90deg) translateZ(calc(var(--s) / 4)); }
+.cube-core > i:nth-child(5) { transform: rotateX(90deg) translateZ(calc(var(--s) / 4)); }
+.cube-core > i:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--s) / 4)); }
+
+@media (max-width: 760px) {
+  .statement {
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+    gap: 3rem;
+  }
+
+  .cube-stage {
+    justify-self: center;
+    order: -1;
+  }
+
+  .statement-col {
+    font-size: clamp(1.9rem, 9vw, 3rem);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Pixel wipe — columns of accent climb in steps into the next section
+   -------------------------------------------------------------------------- */
+
+.pixel-wipe {
+  --cols: 16;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  align-items: end;
+  height: calc(var(--cell) * 4);
+  margin-bottom: -1px;
+  background: var(--wipe-bg, transparent);
+}
+
+.pixel-wipe i {
+  display: block;
+  height: 100%;
+  margin-right: -1px;
+  background: var(--wipe-fg, var(--accent));
+  transform-origin: 50% 100%;
+}
+
+.js .pixel-wipe i {
+  transform: scaleY(0);
+}
+
+.pixel-wipe--out {
+  --wipe-bg: var(--accent);
+  --wipe-fg: var(--paper);
+}
+
+@media (max-width: 900px) {
+  .pixel-wipe {
+    --cols: 8;
+  }
+
+  .pixel-wipe i:nth-child(n + 9) {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   About — accent page with a duotone portrait that settles into greyscale
+   -------------------------------------------------------------------------- */
+
+.about {
+  padding: clamp(2rem, 5vw, 4rem) var(--gutter) clamp(5rem, 10vw, 9rem);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 3rem) var(--gutter);
+  align-items: start;
+}
+
+.about-photo {
+  grid-column: 1 / span 5;
+  position: relative;
+  margin: 0;
+}
+
+.about-frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--accent);
+}
+
+.about-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 112%;
+  object-fit: cover;
+  object-position: 50% 28%;
+  filter: grayscale(1) contrast(1.08);
+}
+
+.about-frame .duo {
+  mix-blend-mode: multiply;
+}
+
+.about-frame .mono {
+  opacity: 0;
+}
+
+.about-photo figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.about-copy {
+  grid-column: 7 / -1;
+}
+
+.about-lead {
+  font-weight: 500;
+  font-size: clamp(1.6rem, 2.7vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.about-body {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: 58ch;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--fg-soft);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--fg);
+}
+
+.facts div {
+  padding: 1rem 0 1.1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.facts dt {
+  margin-bottom: 0.35rem;
+}
+
+.facts dd {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .about-photo,
+  .about-copy {
+    grid-column: 1 / -1;
+  }
+
+  .about-photo {
+    max-width: 440px;
+  }
+}
+
+@media (max-width: 520px) {
+  .facts {
+    grid-template-columns: 1fr;
+  }
+}

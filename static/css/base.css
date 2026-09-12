@@ -1,0 +1,1025 @@
+/* ==========================================================================
+   Base — tokens, type, shell, overlays and navigation shared by every page.
+   Design language: warm paper, one hot accent, extended display type, mono
+   labels and registration marks. Motion lives in static/js/motion.js.
+   ========================================================================== */
+
+:root {
+  --paper: #dcdad4;
+  --paper-deep: #d1cec7;
+  --card: #e6e4df;
+  --ink: #0d0c0a;
+  --ink-soft: #2e2b26;
+  --mute: #57524a;
+  --line: rgba(13, 12, 10, 0.16);
+  --line-strong: rgba(13, 12, 10, 0.82);
+
+  /* The accent is a fill colour; --accent-ink is the same hue dark enough to
+     carry small text on paper (both pass 4.5:1 where they are used). */
+  --accent: #ff5b14;
+  --accent-ink: #a93a05;
+  --on-accent: #0d0c0a;
+  --on-accent-mute: #3a1a08;
+  --on-accent-line: rgba(13, 12, 10, 0.13);
+
+  --invert-bg: #0d0c0a;
+  --invert-fg: #f2ece2;
+  --invert-soft: #d3ccc0;
+  --invert-mute: #a39b8f;
+  --invert-line: rgba(242, 236, 226, 0.16);
+  --invert-accent: #ff5b14;
+
+  /* The enter screen and page curtain keep the same night palette in both
+     themes, so arriving always feels like the same doorway. */
+  --night: #0d0c0a;
+  --night-fg: #f2ece2;
+  --amber: #e0a267;
+
+  --grain-opacity: 0.1;
+
+  --f-display: "Archivo", "Arial Black", "Helvetica Neue", sans-serif;
+  --f-sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --f-pixel: "Press Start 2P", ui-monospace, monospace;
+
+  --fs-body: 1.0625rem;
+  --fs-lead: clamp(1.2rem, 1.1rem + 0.6vw, 1.55rem);
+  --fs-label: 0.75rem;
+
+  --gutter: clamp(1rem, 2.4vw, 2.25rem);
+  --nav-h: 3.75rem;
+  --max: 1680px;
+  --cell: calc(100vw / 16);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-wipe: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+[data-theme="dark"] {
+  --paper: #0d0c0a;
+  --paper-deep: #080706;
+  --card: #1a1814;
+  --ink: #f2ece2;
+  --ink-soft: #d3ccc0;
+  --mute: #9d958a;
+  --line: rgba(242, 236, 226, 0.14);
+  --line-strong: rgba(242, 236, 226, 0.8);
+
+  --accent: #e0a267;
+  --accent-ink: #e0a267;
+  --on-accent: #0d0c0a;
+  --on-accent-mute: #3b2612;
+  --on-accent-line: rgba(13, 12, 10, 0.14);
+
+  --invert-bg: #f2ece2;
+  --invert-fg: #0d0c0a;
+  --invert-soft: #2e2b26;
+  --invert-mute: #57524a;
+  --invert-line: rgba(13, 12, 10, 0.16);
+  --invert-accent: #a93a05;
+
+  --grain-opacity: 0.06;
+}
+
+/* --------------------------------------------------------------------------
+   Reset
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+html.is-loading,
+html.menu-open {
+  overflow: hidden;
+}
+
+body {
+  /* Section tones re-point these five, so every component reads its colours
+     from here instead of hard-coding paper, accent or ink. */
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --fg-soft: var(--ink-soft);
+  --fg-mute: var(--mute);
+  --rule: var(--line);
+  --hl: var(--accent-ink);
+
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-sans);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--hl);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Section tones
+   -------------------------------------------------------------------------- */
+
+.tone-paper,
+.tone-accent,
+.tone-ink {
+  position: relative;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.tone-accent {
+  --bg: var(--accent);
+  --fg: var(--on-accent);
+  --fg-soft: var(--on-accent);
+  --fg-mute: var(--on-accent-mute);
+  --rule: var(--on-accent-line);
+  --hl: var(--on-accent);
+}
+
+.tone-ink {
+  --bg: var(--invert-bg);
+  --fg: var(--invert-fg);
+  --fg-soft: var(--invert-soft);
+  --fg-mute: var(--invert-mute);
+  --rule: var(--invert-line);
+  --hl: var(--invert-accent);
+}
+
+/* The accent pages carry the graph-paper grid from the reference, sized to
+   the same cell as the pixel wipes so the two line up. */
+.grid-lines {
+  background-image:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: var(--cell) var(--cell);
+}
+
+/* --------------------------------------------------------------------------
+   Type
+   -------------------------------------------------------------------------- */
+
+.label {
+  font-family: var(--f-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+.label--hl {
+  color: var(--hl);
+}
+
+.display {
+  font-family: var(--f-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.prose {
+  max-width: 64ch;
+  color: var(--fg-soft);
+}
+
+.prose + .prose {
+  margin-top: 1em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 200;
+  padding: 0.75rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  font: 500 var(--fs-label) / 1 var(--f-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* SplitText wraps each line in a clipping mask; the padding keeps descenders
+   from being shaved off by the mask. */
+.split-line-mask {
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.menu-links a {
+  overflow: clip;
+}
+
+/* Without motion (reduced-motion setting or no script) the reel lays its
+   cards out in a grid and the pixel wipes sit filled. */
+.rm .pixel-wipe i,
+.no-motion .pixel-wipe i {
+  transform: none;
+}
+
+.rm .reel-pin,
+.no-motion .reel-pin {
+  height: auto;
+}
+
+.rm .reel-track,
+.no-motion .reel-track {
+  flex-wrap: wrap;
+}
+
+.rm .job,
+.no-motion .job {
+  flex: 1 1 22rem;
+}
+
+.rm .reel-foot,
+.no-motion .reel-foot {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Section heading — index label, extended title, rule underneath
+   -------------------------------------------------------------------------- */
+
+.shell {
+  padding-inline: var(--gutter);
+}
+
+.sec-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.75rem 1.5rem;
+  padding-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--fg);
+}
+
+.sec-head .label {
+  grid-column: 1 / -1;
+}
+
+.sec-title {
+  font-family: var(--f-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8.6vw, 8.75rem);
+  line-height: 0.84;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+/* Long words ("Achievements") drop a size so they never outrun the page. */
+.sec-title--long {
+  font-size: clamp(1.5rem, 7.4vw, 6.5rem);
+}
+
+.sec-note {
+  justify-self: end;
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons — a fill that climbs from the bottom edge on hover
+   -------------------------------------------------------------------------- */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem 1.35rem;
+  border: 1px solid var(--fg);
+  font-family: var(--f-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg);
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.45s var(--ease-out), border-color 0.45s var(--ease-out);
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--fg);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  color: var(--bg);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: scaleY(1);
+}
+
+.btn-fill {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.btn-fill::before {
+  background: var(--accent);
+}
+
+.btn-fill:hover,
+.btn-fill:focus-visible {
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
+
+.tone-accent .btn-fill::before {
+  background: var(--paper);
+}
+
+.tone-accent .btn-fill:hover,
+.tone-accent .btn-fill:focus-visible {
+  color: var(--ink);
+  border-color: var(--paper);
+}
+
+.btn-arrow {
+  display: inline-block;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.btn:hover .btn-arrow {
+  transform: translateX(0.25rem);
+}
+
+/* Inline text link with an underline that draws in from the left. */
+.link {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.5s var(--ease-out);
+}
+
+.link:hover,
+.link:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* --------------------------------------------------------------------------
+   Overlays — grain, registration marks, cursor
+   -------------------------------------------------------------------------- */
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 70;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(6) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -5%); }
+  60% { transform: translate(-6%, -2%); }
+  80% { transform: translate(5%, 4%); }
+  100% { transform: translate(0, 0); }
+}
+
+.marks {
+  position: fixed;
+  inset: 0.65rem;
+  z-index: 60;
+  pointer-events: none;
+  color: var(--nav-fg, var(--ink));
+  transition: color 0.35s ease;
+}
+
+.marks i {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  opacity: 0.7;
+}
+
+.marks i::before,
+.marks i::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.marks i::before {
+  left: 6px;
+  top: 0;
+  width: 1px;
+  height: 13px;
+}
+
+.marks i::after {
+  top: 6px;
+  left: 0;
+  width: 13px;
+  height: 1px;
+}
+
+.marks i:nth-child(1) { top: 0; left: 0; }
+.marks i:nth-child(2) { top: 0; left: calc(50% - 6px); }
+.marks i:nth-child(3) { top: 0; right: 0; }
+.marks i:nth-child(4) { bottom: 0; left: 0; }
+.marks i:nth-child(5) { bottom: 0; left: calc(50% - 6px); }
+.marks i:nth-child(6) { bottom: 0; right: 0; }
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: #f2ece2;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transition: width 0.35s var(--ease-out), height 0.35s var(--ease-out),
+    margin 0.35s var(--ease-out), opacity 0.3s ease;
+}
+
+.has-cursor .cursor {
+  opacity: 1;
+}
+
+.cursor.is-hover {
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+}
+
+/* --------------------------------------------------------------------------
+   Page curtain — ten night-coloured columns that close over the page when
+   you follow an internal link and lift again on the next page.
+   -------------------------------------------------------------------------- */
+
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  pointer-events: none;
+}
+
+.curtain i {
+  display: block;
+  margin-right: -1px;
+  background: var(--night);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+}
+
+.curtain.is-active {
+  pointer-events: auto;
+}
+
+.curtain-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  text-align: center;
+  font: 500 var(--fs-label) / 1 var(--f-mono);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  opacity: 0;
+}
+
+/* Arriving from an internal link: the curtain is already shut at first
+   paint. If the script never runs, it lifts on its own. */
+.is-arriving .curtain i {
+  transform: scaleY(1);
+  animation: curtain-failsafe 0.01s 3s forwards;
+}
+
+@keyframes curtain-failsafe {
+  to { transform: scaleY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   Navigation
+   -------------------------------------------------------------------------- */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  height: var(--nav-h);
+  padding-inline: calc(var(--gutter) + 0.6rem);
+  color: var(--nav-fg, var(--ink));
+  font-family: var(--f-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.35s ease;
+}
+
+/* A soft wash behind the bar keeps it legible over big type and images. */
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -1.25rem;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--nav-bg, var(--paper)) 92%, transparent) 45%,
+    transparent
+  );
+  transition: opacity 0.35s ease;
+}
+
+.nav-accent {
+  --nav-fg: var(--on-accent);
+  --nav-bg: var(--accent);
+}
+
+.nav-ink {
+  --nav-fg: var(--invert-fg);
+  --nav-bg: var(--invert-bg);
+}
+
+.menu-open {
+  --nav-fg: var(--night-fg);
+  --nav-bg: var(--night);
+}
+
+.nav-name {
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  gap: clamp(1.25rem, 2.6vw, 2.75rem);
+}
+
+.nav-links a,
+.nav-name,
+.nav-resume {
+  position: relative;
+  padding-block: 0.4rem;
+}
+
+.nav-links a::after,
+.nav-name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.15rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after,
+.nav-links a[aria-current="true"]::after,
+.nav-name:hover::after {
+  transform: scaleX(1);
+  transform-origin: 0 50%;
+}
+
+.nav-cta::before {
+  content: "";
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.5rem;
+  background: var(--accent);
+  vertical-align: 0.02em;
+}
+
+.nav-accent .nav-cta::before,
+.menu-open .nav-cta::before {
+  background: currentColor;
+}
+
+.nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.nav-resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid currentColor;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-resume:hover,
+.nav-resume:focus-visible {
+  background: var(--nav-fg, var(--ink));
+  color: var(--nav-bg, var(--paper));
+}
+
+/* Theme switch — two squares, the filled one is the active theme */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+.theme-track {
+  position: relative;
+  width: 2.3rem;
+  height: 1.15rem;
+  border: 1px solid currentColor;
+  flex: none;
+}
+
+.theme-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(1.15rem - 6px);
+  height: calc(1.15rem - 6px);
+  background: currentColor;
+  transition: transform 0.45s var(--ease-out);
+}
+
+[data-theme="dark"] .theme-thumb {
+  transform: translateX(calc(2.3rem - 1.15rem));
+}
+
+.theme-name::after {
+  content: "Light";
+}
+
+[data-theme="dark"] .theme-name::after {
+  content: "Dark";
+}
+
+.nav-menu {
+  display: none;
+  padding: 0.4rem 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+.nav-menu::after {
+  content: "Menu";
+}
+
+.menu-open .nav-menu::after {
+  content: "Close";
+}
+
+/* Full-screen menu for small screens */
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2.5rem;
+  padding: calc(var(--nav-h) + 1.5rem) calc(var(--gutter) + 0.6rem) 2rem;
+  background: var(--night);
+  color: var(--night-fg);
+  visibility: hidden;
+  clip-path: inset(0 0 100% 0);
+}
+
+.menu-links a {
+  display: block;
+  font-family: var(--f-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(1.9rem, 9.4vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.menu-links a span {
+  display: inline-block;
+}
+
+.menu-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  font: 500 var(--fs-label) / 1.5 var(--f-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 236, 226, 0.7);
+}
+
+@media (max-width: 960px) {
+  .nav-links,
+  .nav-resume,
+  .theme-name {
+    display: none;
+  }
+
+  .nav-menu {
+    display: inline-block;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Device frames for screenshots — one browser chrome and one phone, so every
+   product shot on the site sits in the same housing.
+   -------------------------------------------------------------------------- */
+
+.shot {
+  margin: 0;
+}
+
+.shot figcaption {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.shot figcaption .label:last-child {
+  color: var(--fg-soft);
+}
+
+.frame {
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+  border-radius: 10px;
+  box-shadow: 0 40px 80px -52px rgba(13, 12, 10, 0.6), 0 1px 0 rgba(13, 12, 10, 0.04);
+}
+
+.frame-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2.1rem;
+  padding: 0 0.8rem;
+  background: var(--paper-deep);
+  border-bottom: 1px solid var(--line);
+}
+
+.frame-bar i {
+  flex: none;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 22%, transparent);
+}
+
+.frame-url {
+  flex: 1;
+  max-width: 24rem;
+  margin-left: 0.6rem;
+  padding: 0.32rem 0.7rem;
+  border-radius: 5px;
+  background: var(--card);
+  font: 500 0.6875rem / 1 var(--f-mono);
+  letter-spacing: 0.04em;
+  color: var(--mute);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.frame-view {
+  position: relative;
+  aspect-ratio: var(--ar, 16 / 10);
+  overflow: hidden;
+  background: #070a07;
+}
+
+.frame-view img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+}
+
+.frame--phone {
+  width: fit-content;
+  padding: 0.45rem;
+  border-radius: 2.1rem;
+  background: #0d0c0a;
+  border-color: rgba(242, 236, 226, 0.14);
+}
+
+.frame--phone .frame-view {
+  aspect-ratio: 400 / 860;
+  border-radius: 1.7rem;
+}
+
+/* --------------------------------------------------------------------------
+   Footer bar
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding: 1.5rem var(--gutter) 2.25rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--f-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+.site-footer a,
+.site-footer button {
+  color: var(--fg);
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Motion states. Intro elements stay hidden only while the script is about
+   to animate them, and show on their own if it never does.
+   -------------------------------------------------------------------------- */
+
+html.js:not(.intro-ready) [data-intro] {
+  opacity: 0;
+  animation: intro-failsafe 0.01s 4s forwards;
+}
+
+@keyframes intro-failsafe {
+  to { opacity: 1; }
+}
+
+.roll-line {
+  display: block;
+}
+
+.roll {
+  display: block;
+  overflow: clip;
+  height: 1em;
+  line-height: 1;
+  padding-bottom: 0.08em;
+  box-sizing: content-box;
+}
+
+.roll-track {
+  display: block;
+}
+
+.roll-track > span {
+  display: block;
+  height: 1em;
+  padding-bottom: 0.08em;
+  box-sizing: content-box;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

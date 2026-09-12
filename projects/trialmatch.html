@@ -13,36 +13,57 @@
     <link rel="apple-touch-icon" href="../static/img/icons/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta name="theme-color" content="#0d0c0a" />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&family=Syne:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../static/css/style.css?v=21" />
+    <link rel="stylesheet" href="../static/css/base.css?v=1" />
+    <link rel="stylesheet" href="../static/css/case.css?v=1" />
     <script>
       (function () {
-        document.documentElement.classList.add("js");
+        var d = document.documentElement;
+        d.classList.add("js");
         try {
           var saved = localStorage.getItem("theme");
           var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          var theme = saved || (prefersDark ? "dark" : "light");
-          document.documentElement.setAttribute("data-theme", theme);
+          d.setAttribute("data-theme", saved || (prefersDark ? "dark" : "light"));
         } catch (e) {
-          document.documentElement.setAttribute("data-theme", "light");
+          d.setAttribute("data-theme", "light");
         }
+        var internal = false;
+        try {
+          internal = sessionStorage.getItem("apst-nav") === "1";
+          sessionStorage.removeItem("apst-nav");
+        } catch (e) {}
+        window.__enter = new Promise(function (resolve) {
+          window.__enterResolve = resolve;
+        });
+        if (internal) d.classList.add("is-arriving");
       })();
     </script>
   </head>
   <body class="case-page">
-    <div class="graph-bg" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-nav">
-      <a class="nav-brand" href="../index.html">Aditya</a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="../index.html#projects">Projects</a>
+    <div class="curtain" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <span class="curtain-label"></span>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="marks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="cursor" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="nav-name" href="../index.html" data-title="Home" data-intro>Aditya Pratap Singh Takuli</a>
+      <nav class="nav-links" aria-label="Case study" data-intro>
+        <a href="#interface">Interface</a>
         <a href="#build">The agents</a>
+        <a href="#architecture">Architecture</a>
         <a href="#stack">Stack</a>
+        <a class="nav-cta" href="../index.html#work" data-title="Work">All work</a>
       </nav>
-      <div class="nav-actions">
+      <div class="nav-tools" data-intro>
         <button
           type="button"
           class="theme-toggle"
@@ -51,23 +72,41 @@
           aria-checked="false"
           aria-label="Toggle color theme"
         >
-          <span class="theme-icon theme-icon-sun" aria-hidden="true"></span>
-          <span class="theme-track" aria-hidden="true">
-            <span class="theme-thumb"></span>
-          </span>
-          <span class="theme-icon theme-icon-moon" aria-hidden="true"></span>
+          <span class="theme-track" aria-hidden="true"><span class="theme-thumb"></span></span>
+          <span class="theme-name" aria-hidden="true"></span>
         </button>
-        <a class="case-back" href="../index.html#projects">← Back</a>
+        <a class="nav-resume" href="../index.html#work" data-title="Work">← Index</a>
+        <button type="button" class="nav-menu" aria-expanded="false" aria-controls="menu" aria-label="Open menu"></button>
       </div>
     </header>
 
-    <main>
+    <div class="menu" id="menu" aria-hidden="true">
+      <nav class="menu-links" aria-label="Menu">
+        <a href="#interface"><span>Interface</span></a>
+        <a href="#build"><span>Agents</span></a>
+        <a href="#architecture"><span>Architecture</span></a>
+        <a href="#stack"><span>Stack</span></a>
+        <a href="../index.html#work" data-title="Work"><span>All work</span></a>
+      </nav>
+      <div class="menu-foot">
+        <a href="https://clinical-trial-matching-pied.vercel.app" target="_blank" rel="noopener noreferrer">Live app ↗</a>
+        <span>Case study 01</span>
+      </div>
+    </div>
+
+    <main id="main">
       <section class="case-banner">
+        <div class="case-top" data-intro>
+          <span class="label">Case study 01</span>
+          <span class="label">AI clinical trial discovery</span>
+          <span class="label">clinical-trial-matching-pied.vercel.app</span>
+        </div>
         <h1 class="visually-hidden">TrialMatch</h1>
         <svg
           class="text-hover"
           data-text-hover
-          viewBox="0 0 720 80"
+          data-intro
+          viewBox="0 0 820 80"
           preserveAspectRatio="xMidYMid meet"
           role="img"
           aria-label="TrialMatch"
@@ -77,7 +116,7 @@
               class="th-gradient"
               id="thGradient"
               gradientUnits="userSpaceOnUse"
-              cx="360"
+              cx="410"
               cy="40"
               r="0"
             >
@@ -94,32 +133,32 @@
           </defs>
           <text
             class="th-base"
-            x="360"
+            x="410"
             y="49"
             text-anchor="middle"
             dominant-baseline="middle"
-            textLength="686"
+            textLength="680"
             lengthAdjust="spacingAndGlyphs"
           ><tspan class="th-trial">TRIAL</tspan><tspan class="th-match">MATCH</tspan></text>
           <text
             class="th-fill"
-            x="360"
+            x="410"
             y="49"
             text-anchor="middle"
             dominant-baseline="middle"
-            textLength="686"
+            textLength="680"
             lengthAdjust="spacingAndGlyphs"
             mask="url(#thMask)"
           ><tspan class="th-trial">TRIAL</tspan><tspan class="th-match">MATCH</tspan></text>
         </svg>
-        <p class="banner-tag">
+        <p class="banner-tag" data-intro>
           <span>Case study / <b>AI clinical trial discovery</b></span>
           <span>Next.js · FastAPI · LangGraph · PostgreSQL · Redis</span>
         </p>
       </section>
 
       <section class="case-lede">
-        <div class="lede-copy">
+        <div class="lede-copy" data-intro>
           <p>
             AI-powered clinical trial discovery. Patients describe their situation
             in plain language; TrialMatch extracts a structured patient profile,
@@ -128,7 +167,7 @@
             eligibility, and explains every match in patient-friendly words.
           </p>
         </div>
-        <dl class="case-meta">
+        <dl class="case-meta" data-intro>
           <div>
             <dt>Role</dt>
             <dd>Solo — full stack &amp; AI pipeline</dd>
@@ -146,7 +185,7 @@
             <dd>PostgreSQL · Redis</dd>
           </div>
         </dl>
-        <div class="case-cta">
+        <div class="case-cta" data-intro>
           <a
             class="btn btn-fill"
             href="https://clinical-trial-matching-pied.vercel.app"
@@ -164,87 +203,80 @@
         </div>
       </section>
 
-      <section class="section reveal" id="interface">
+      <div class="case-cover" data-reveal>
+        <figure class="frame frame--browser">
+          <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">clinical-trial-matching-pied.vercel.app</span></div>
+          <div class="frame-view" style="--ar: 1024 / 590">
+            <img
+              src="../static/img/projects/trialmatch/landing.jpg"
+              alt="TrialMatch landing page with an interactive WebGL globe of live trial locations"
+              width="1024"
+              height="590"
+            />
+          </div>
+        </figure>
+      </div>
+
+      <section class="section" id="interface">
         <div class="section-head">
           <span class="section-index">01</span>
           <h2>Interface</h2>
         </div>
-        <ul class="bento">
-          <li class="bento-item bento-shot b-wide">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <figure class="bento-frame">
-              <img
-                src="../static/img/projects/trialmatch/landing.jpg"
-                alt="TrialMatch landing page with an interactive WebGL globe of live trial locations"
-                loading="lazy"
-              />
-              <figcaption class="bento-cap">
-                Landing — WebGL globe, live trial locations
-              </figcaption>
-            </figure>
-          </li>
-
-          <li class="bento-item bento-shot b-tall">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <figure class="bento-frame">
-              <img
-                src="../static/img/projects/trialmatch/mobile.jpg"
-                alt="TrialMatch search screen on mobile with natural-language prompt examples"
-                loading="lazy"
-              />
-              <figcaption class="bento-cap">Responsive search on mobile</figcaption>
-            </figure>
-          </li>
-
-          <li class="bento-item bento-shot b-half">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <figure class="bento-frame">
-              <img
-                src="../static/img/projects/trialmatch/results.jpg"
-                alt="Matched trials with match scores, condition tags and score comparison charts"
-                loading="lazy"
-              />
-              <figcaption class="bento-cap">Ranked results + score breakdown</figcaption>
-            </figure>
-          </li>
-
-          <li class="bento-item bento-shot b-half">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <figure class="bento-frame">
-              <img
-                src="../static/img/projects/trialmatch/pipeline.jpg"
-                alt="Matching pipeline explainer section listing the AI stages"
-                loading="lazy"
-              />
-              <figcaption class="bento-cap">Pipeline explainer</figcaption>
-            </figure>
-          </li>
-
-          <li class="bento-item b-stat">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <div class="bento-frame">
-              <strong>500</strong>
-              <span>Condition corpus, embedded</span>
+        <div class="gallery">
+          <figure class="shot shot--wide" data-reveal>
+            <div class="frame frame--browser">
+              <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">clinical-trial-matching-pied.vercel.app/search</span></div>
+              <div class="frame-view" style="--ar: 1024 / 590">
+                <img
+                  src="../static/img/projects/trialmatch/results.jpg"
+                  alt="Matched trials with match scores, condition tags and score comparison charts"
+                  width="1024"
+                  height="590"
+                  loading="lazy"
+                />
+              </div>
             </div>
-          </li>
-          <li class="bento-item b-stat">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <div class="bento-frame">
-              <strong>6</strong>
-              <span>LangGraph pipeline nodes</span>
+            <figcaption><span class="label">01</span><span class="label">Ranked results and score breakdown</span></figcaption>
+          </figure>
+          <figure class="shot shot--phone" data-reveal>
+            <div class="frame frame--phone">
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/trialmatch/mobile.jpg"
+                  alt="TrialMatch search screen on mobile with natural-language prompt examples"
+                  width="511"
+                  height="1024"
+                  loading="lazy"
+                />
+              </div>
             </div>
-          </li>
-          <li class="bento-item b-stat">
-            <span class="glow-ring" aria-hidden="true"></span>
-            <div class="bento-frame">
-              <strong>195+</strong>
-              <span>Countries of trial coverage</span>
+            <figcaption><span class="label">02</span><span class="label">Search on mobile</span></figcaption>
+          </figure>
+
+          <figure class="shot shot--wide" data-reveal>
+            <div class="frame frame--browser">
+              <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">clinical-trial-matching-pied.vercel.app</span></div>
+              <div class="frame-view" style="--ar: 1024 / 573">
+                <img
+                  src="../static/img/projects/trialmatch/pipeline.jpg"
+                  alt="Matching pipeline explainer section listing the AI stages"
+                  width="1024"
+                  height="573"
+                  loading="lazy"
+                />
+              </div>
             </div>
-          </li>
-        </ul>
+            <figcaption><span class="label">03</span><span class="label">The pipeline, explained in the product</span></figcaption>
+          </figure>
+          <div class="stats stats--side" data-reveal>
+            <div class="stat"><strong data-count="500">500</strong><span class="label">Condition corpus, embedded</span></div>
+            <div class="stat"><strong data-count="6">6</strong><span class="label">LangGraph pipeline nodes</span></div>
+            <div class="stat"><strong data-count="195" data-suffix="+">195+</strong><span class="label">Countries of trial coverage</span></div>
+          </div>
+        </div>
       </section>
 
-      <section class="section reveal" id="build">
+      <section class="section" id="build">
         <div class="section-head">
           <span class="section-index">02</span>
           <h2>The agents</h2>
@@ -446,7 +478,6 @@
 
         <ul class="agent-grid">
           <li class="bold-card agent-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <div class="agent-head">
                 <span class="step-num">01</span>
@@ -469,7 +500,6 @@
             </div>
           </li>
           <li class="bold-card agent-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <div class="agent-head">
                 <span class="step-num">02</span>
@@ -492,7 +522,6 @@
             </div>
           </li>
           <li class="bold-card agent-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <div class="agent-head">
                 <span class="step-num">03</span>
@@ -515,7 +544,6 @@
             </div>
           </li>
           <li class="bold-card agent-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <div class="agent-head">
                 <span class="step-num">04</span>
@@ -538,7 +566,6 @@
             </div>
           </li>
           <li class="bold-card agent-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <div class="agent-head">
                 <span class="step-num">05</span>
@@ -561,7 +588,6 @@
             </div>
           </li>
           <li class="bold-card agent-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <div class="agent-head">
                 <span class="step-num">06</span>
@@ -586,7 +612,7 @@
         </ul>
       </section>
 
-      <section class="section reveal" id="architecture">
+      <section class="section" id="architecture">
         <div class="section-head">
           <span class="section-index">03</span>
           <h2>Architecture</h2>
@@ -751,7 +777,6 @@
 
         <ul class="arch-grid">
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -771,7 +796,6 @@
             </div>
           </li>
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -792,7 +816,6 @@
             </div>
           </li>
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -815,14 +838,13 @@
         </ul>
       </section>
 
-      <section class="section reveal" id="decisions">
+      <section class="section" id="decisions">
         <div class="section-head">
           <span class="section-index">04</span>
           <h2>Engineering decisions</h2>
         </div>
         <ul class="decision-grid">
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -844,7 +866,6 @@
             </div>
           </li>
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -864,7 +885,6 @@
             </div>
           </li>
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -882,7 +902,6 @@
             </div>
           </li>
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -901,7 +920,6 @@
             </div>
           </li>
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -921,14 +939,13 @@
         </ul>
       </section>
 
-      <section class="section reveal" id="stack">
+      <section class="section" id="stack">
         <div class="section-head">
           <span class="section-index">05</span>
           <h2>Stack</h2>
         </div>
         <ul class="stack-grid">
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -951,7 +968,6 @@
             </div>
           </li>
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -972,7 +988,6 @@
             </div>
           </li>
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -992,7 +1007,6 @@
             </div>
           </li>
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1014,7 +1028,6 @@
             </div>
           </li>
           <li class="bold-card">
-            <span class="glow-ring" aria-hidden="true"></span>
             <div class="bold-inner">
               <span class="bold-badge">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1035,8 +1048,9 @@
         </ul>
       </section>
 
-      <section class="case-outro reveal">
-        <h2>Try the matcher</h2>
+      <section class="case-outro tone-ink" data-tone="ink">
+        <p class="label">TrialMatch / Live app</p>
+        <h2>Try the<br />matcher.</h2>
         <div class="hero-cta">
           <a
             class="btn btn-fill"
@@ -1046,22 +1060,36 @@
             >Open live app ↗</a
           >
           <a
-            class="btn btn-line"
+            class="btn"
             href="https://github.com/AdityaTakuli/Clinical-Trial-Matching"
             target="_blank"
             rel="noopener noreferrer"
             >Read the code ↗</a
           >
         </div>
+        <a class="next-case" href="goodbookies.html" data-title="Good Bookies">
+          <span class="label">Next case study</span>
+          <strong>Good Bookies</strong>
+          <span aria-hidden="true">→</span>
+        </a>
+        <footer class="site-footer">
+          <p>© 2026 Aditya Pratap Singh Takuli</p>
+          <div class="footer-links">
+            <a class="link" href="../index.html" data-title="Home">Back to portfolio</a>
+            <a class="link" href="#main">Back to top ↑</a>
+          </div>
+        </footer>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <p>© Aditya Pratap Singh Takuli</p>
-      <p class="muted"><a href="../index.html">Back to portfolio</a></p>
-    </footer>
-
-    <script src="../static/js/theme.js"></script>
-    <script src="../static/js/ui.js?v=7"></script>
+    <script src="../static/js/vendor/gsap.min.js"></script>
+    <script src="../static/js/vendor/ScrollTrigger.min.js"></script>
+    <script src="../static/js/vendor/SplitText.min.js"></script>
+    <script src="../static/js/vendor/ScrambleTextPlugin.min.js"></script>
+    <script src="../static/js/vendor/CustomEase.min.js"></script>
+    <script src="../static/js/vendor/lenis.min.js"></script>
+    <script src="../static/js/theme.js?v=2"></script>
+    <script src="../static/js/motion.js?v=1"></script>
+    <script src="../static/js/ui.js?v=8"></script>
   </body>
 </html>
