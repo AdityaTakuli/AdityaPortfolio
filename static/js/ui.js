@@ -99,7 +99,7 @@
   if (diagrams.length && !reduceMotion) {
     // Each pulse slides one fixed-size dash along its path, so the packet
     // looks the same on a short hand-off and a long service call.
-    document.querySelectorAll(".nd-pulse").forEach(function (path) {
+    document.querySelectorAll(".nd-pulse, .iso-pulse").forEach(function (path) {
       var length = path.getTotalLength();
       var dash = parseFloat(getComputedStyle(path).getPropertyValue("--dash")) || 32;
       path.style.setProperty("--len", length + "px");
@@ -126,6 +126,43 @@
       diagrams.forEach(function (svg) {
         flowObserver.observe(svg);
       });
+    }
+  }
+
+  /* ----------------------------------------------------------------------
+     Isometric diagrams — the chips arrive with their plates collapsed onto
+     the tray and open once the diagram is on screen. Arming happens here
+     rather than in the stylesheet so that with scripts blocked the plates
+     simply render at rest.
+     ---------------------------------------------------------------------- */
+  var isos = document.querySelectorAll(".iso-svg");
+
+  if (isos.length && !reduceMotion) {
+    isos.forEach(function (svg) {
+      svg.classList.add("iso-armed");
+    });
+
+    var open = function (svg) {
+      svg.classList.remove("iso-armed");
+    };
+
+    if ("IntersectionObserver" in window) {
+      var liftObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            open(entry.target);
+            liftObserver.unobserve(entry.target);
+          });
+        },
+        { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
+      );
+
+      isos.forEach(function (svg) {
+        liftObserver.observe(svg);
+      });
+    } else {
+      isos.forEach(open);
     }
   }
 })();

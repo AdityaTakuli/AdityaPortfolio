@@ -973,3 +973,194 @@
     opacity: 1;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Isometric layer diagrams. The chips are extruded in one SVG coordinate
+   system, so raising a plate in Z is a plain translateY — which is what every
+   lift below animates. The stage keeps the night palette in both themes, the
+   same way the enter screen does, so the slabs always have something dark to
+   sit on and the amber traces always read.
+   -------------------------------------------------------------------------- */
+
+.iso-stage {
+  overflow-x: auto;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  background: var(--night);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.iso-svg {
+  display: block;
+  width: 100%;
+  min-width: 680px;
+  height: auto;
+}
+
+.iso-grid line {
+  stroke: rgba(242, 236, 226, 0.07);
+  stroke-width: 1;
+}
+
+.iso-shadow {
+  fill: rgba(0, 0, 0, 0.55);
+  opacity: 0.5;
+}
+
+/* Faces. Three tones per slab stand in for a light from the upper left. */
+.iso-face--top { fill: #c6c2b9; }
+.iso-face--right { fill: #7c7770; }
+.iso-face--left { fill: #55514b; }
+
+.iso-tray.iso-face--top { fill: rgba(242, 236, 226, 0.16); }
+.iso-tray.iso-face--right { fill: rgba(242, 236, 226, 0.09); }
+.iso-tray.iso-face--left { fill: rgba(242, 236, 226, 0.06); }
+
+.iso-slab--edge.iso-face--top { fill: #dcd8cf; }
+.iso-slab--core.iso-face--top { fill: #cbc7be; }
+.iso-slab--mod.iso-face--top { fill: #b0aca4; }
+.iso-slab--data.iso-face--top { fill: #9d9992; }
+.iso-slab--ext.iso-face--top { fill: #8a867f; }
+
+.iso-slab--data.iso-face--right,
+.iso-slab--ext.iso-face--right { fill: #625e58; }
+.iso-slab--data.iso-face--left,
+.iso-slab--ext.iso-face--left { fill: #433f3b; }
+
+.iso-cap.iso-face--top { fill: #ece8df; }
+.iso-cap--ext.iso-face--top { fill: var(--amber); }
+.iso-cap--data.iso-face--top { fill: #d6d2c9; }
+
+.iso-glyph {
+  fill: rgba(13, 12, 10, 0.6);
+  stroke: rgba(13, 12, 10, 0.6);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.iso-glyph rect,
+.iso-glyph circle,
+.iso-glyph ellipse,
+.iso-glyph polygon { stroke: none; }
+
+/* Wires and the travelling pulse. */
+.iso-wire {
+  fill: none;
+  stroke: rgba(224, 162, 103, 0.32);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.iso-pulse {
+  --dash: 26px;
+  fill: none;
+  stroke: var(--amber);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: var(--dash) calc(var(--len) + var(--dash));
+  stroke-dashoffset: var(--dash);
+  opacity: 0;
+}
+
+.nd-live .iso-pulse {
+  animation: iso-flow var(--cycle, 9s) linear infinite backwards;
+}
+
+@keyframes iso-flow {
+  0% { stroke-dashoffset: var(--dash); opacity: 0; }
+  3% { opacity: 1; }
+  28% { opacity: 1; }
+  32% { stroke-dashoffset: calc(-1 * var(--len)); opacity: 0; }
+  100% { stroke-dashoffset: calc(-1 * var(--len)); opacity: 0; }
+}
+
+/* Labels stay upright in screen space so nothing important is ever skewed.
+   On a dense grid a label can land over a neighbouring slab, so each one is
+   painted with a dark halo first — the map-label trick — which keeps it
+   legible over light metal and dark grid alike. */
+.iso-label text {
+  text-anchor: middle;
+  paint-order: stroke fill;
+  stroke: var(--night);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.iso-field {
+  font: 400 13px / 1 var(--f-mono);
+  fill: rgba(242, 236, 226, 0.78);
+  text-anchor: start;
+  paint-order: stroke fill;
+  stroke: var(--night);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+
+/* Stack plates rise one after another as the pipeline fills the state. */
+.iso-svg.iso-armed .iso-plate--field {
+  transform: translateY(calc(var(--i) * 26px));
+}
+
+.iso-plate--field {
+  transition: transform 0.9s var(--ease-out) calc(var(--i) * 0.09s);
+}
+
+.iso-leader {
+  stroke: rgba(224, 162, 103, 0.5);
+  stroke-width: 1.5;
+}
+
+.iso-kicker {
+  font: 500 12px / 1 var(--f-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  fill: var(--amber);
+}
+
+.iso-title {
+  font: 700 19px / 1 var(--f-sans);
+  fill: var(--night-fg);
+}
+
+.iso-sub {
+  font: 400 13px / 1 var(--f-mono);
+  fill: rgba(242, 236, 226, 0.62);
+}
+
+/* The lift. Plates rest apart; before the diagram is revealed they sit
+   collapsed on the tray, and the reveal opens them in sequence. */
+.iso-plate--slab,
+.iso-plate--cap,
+.iso-label {
+  transition: transform 0.9s var(--ease-out) var(--d, 0s),
+              opacity 0.6s var(--ease-out) var(--d, 0s);
+}
+
+/* Armed is added by ui.js and removed when the diagram scrolls in, so with
+   scripts blocked the plates simply render at rest. */
+.iso-svg.iso-armed .iso-plate--slab { transform: translateY(9px); }
+.iso-svg.iso-armed .iso-plate--cap { transform: translateY(18px); }
+.iso-svg.iso-armed .iso-label { opacity: 0; transform: translateY(10px); }
+.iso-svg.iso-armed .iso-fields { opacity: 0; }
+.iso-fields { transition: opacity 0.8s var(--ease-out) 0.5s; }
+
+.iso-chip:hover .iso-plate--cap { transform: translateY(-7px); }
+.iso-chip:hover .iso-plate--slab { transform: translateY(-3px); }
+.iso-chip { cursor: default; }
+
+.nd-idle .iso-pulse { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .iso-plate--slab,
+  .iso-plate--cap,
+  .iso-label { transition: none; }
+  .iso-svg.iso-armed .iso-plate--slab,
+  .iso-svg.iso-armed .iso-plate--cap,
+  .iso-svg.iso-armed .iso-plate--field { transform: none; }
+  .iso-svg.iso-armed .iso-fields { opacity: 1; }
+  .iso-svg.iso-armed .iso-label { opacity: 1; transform: none; }
+  .nd-live .iso-pulse { animation: none; opacity: 0.9; }
+}
