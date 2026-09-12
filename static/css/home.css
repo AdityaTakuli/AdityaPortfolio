@@ -52,19 +52,19 @@
   white-space: nowrap;
 }
 
-/* The portrait sits on the same near-black it was painted on, so feathering
-   its edges is enough to make the frame disappear. */
+/* The bust is cropped so its bottom row is solid shirt, which sits flush on the
+   screen edge with no fade, mask or shading over it. */
 .loader-bust {
   /* Fill the screen: height-led on desktop, width-led on phones, with a cap
      so huge monitors don't upscale the art past roughly 1.1x. The head sits
-     2.6% down in the source, so 100svh keeps all of it on screen. */
+     3.9% down in the source, so 100svh keeps all of it on screen. */
   --bust-h: min(100svh, 118vw, 1600px);
   position: absolute;
   bottom: 0;
   left: 50%;
   height: var(--bust-h);
-  aspect-ratio: 1122 / 1402;
-  margin-left: calc(var(--bust-h) * -0.4001);
+  aspect-ratio: 1122 / 1344;
+  margin-left: calc(var(--bust-h) * -0.4174);
   clip-path: inset(90% 0 0 0);
 }
 
@@ -89,13 +89,6 @@
     rgba(224, 162, 103, 0.5)
   );
   border-top: 1px solid rgba(224, 162, 103, 0.65);
-}
-
-.loader-shade {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(to top, rgba(13, 12, 10, 0.92) 2%, rgba(13, 12, 10, 0) 34%);
 }
 
 .loader-id {
