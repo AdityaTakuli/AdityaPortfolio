@@ -264,7 +264,7 @@
   aspect-ratio: 4 / 5;
   margin: 0;
   overflow: hidden;
-  background: #0e1007;
+  background: transparent;
 }
 
 .hero-portrait img {
@@ -303,7 +303,7 @@
   font: 500 11px / 1 var(--f-mono);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(242, 236, 226, 0.72);
+  color: color-mix(in srgb, var(--ink) 62%, transparent);
   pointer-events: none;
 }
 
