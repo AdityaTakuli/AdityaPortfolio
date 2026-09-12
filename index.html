@@ -27,9 +27,8 @@
         var d = document.documentElement;
         d.classList.add("js");
         try {
-          var saved = localStorage.getItem("theme");
-          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          d.setAttribute("data-theme", saved || (prefersDark ? "dark" : "light"));
+          // Light is the default; only a visitor's own choice overrides it.
+          d.setAttribute("data-theme", localStorage.getItem("theme") || "light");
         } catch (e) {
           d.setAttribute("data-theme", "light");
         }
