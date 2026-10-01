@@ -607,6 +607,37 @@
   color: var(--hl);
 }
 
+.honour-points {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.65rem;
+}
+
+.honour-list .honour-points li {
+  position: relative;
+  display: block;
+  padding: 0 0 0 1.25rem;
+  border: 0;
+  font-size: 0.975rem;
+  line-height: 1.4;
+  color: var(--fg-mute);
+}
+
+.honour-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.38em;
+  height: 0.38em;
+  background: currentColor;
+}
+
+.honour-list .honour-points .label {
+  display: block;
+  padding-top: 0.2rem;
+}
+
 @media (max-width: 760px) {
   .honour-list {
     grid-template-columns: 1fr;
