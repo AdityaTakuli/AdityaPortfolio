@@ -14,6 +14,21 @@
   --accent-ink: #ffc24d;
 }
 
+/* Patent 01 (the drone) swaps the amber for a flight cyan. */
+.uav-page {
+  --accent: #2ee6d0;
+  --accent-ink: #09625a;
+}
+
+[data-theme="dark"] .uav-page {
+  --accent: #3ee6d6;
+  --accent-ink: #3ee6d6;
+}
+
+.uav-page .pt-stage {
+  --stage-hl: #3ee6d6;
+}
+
 /* The stage is always night, so the nav flips to night colours over it. */
 .nav-night {
   --nav-fg: var(--night-fg);
@@ -71,6 +86,7 @@
    -------------------------------------------------------------------------- */
 
 .pt-stage {
+  --stage-hl: var(--amber);
   position: relative;
   background: var(--night);
   color: var(--night-fg);
@@ -149,7 +165,7 @@
 
 .pt-hud-top b {
   font-weight: 500;
-  color: var(--amber);
+  color: var(--stage-hl);
 }
 
 /* Registration marks in the four corners of the stage. */
@@ -216,14 +232,14 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--amber);
+  color: var(--stage-hl);
 }
 
 .pt-step .pt-step-num::after {
   content: "";
   flex: 1;
   height: 1px;
-  background: rgba(224, 162, 103, 0.45);
+  background: color-mix(in srgb, var(--stage-hl) 45%, transparent);
 }
 
 .pt-step h3 {
@@ -263,7 +279,7 @@
 .pt-progress-fill {
   position: absolute;
   inset: 0;
-  background: var(--amber);
+  background: var(--stage-hl);
   transform: scaleX(var(--p, 0));
   transform-origin: 0 50%;
 }
@@ -352,7 +368,7 @@
   top: -4px;
   width: 9px;
   height: 9px;
-  border: 1px solid var(--amber);
+  border: 1px solid var(--stage-hl);
   border-radius: 50%;
   background: rgba(13, 12, 10, 0.6);
 }
@@ -364,7 +380,7 @@
   top: 0;
   width: 0.75rem;
   height: 1px;
-  background: var(--amber);
+  background: var(--stage-hl);
 }
 
 .pt-tag span {
@@ -372,7 +388,7 @@
   font-size: 0.6875rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--stage-hl);
   transform: translateY(-0.55rem);
 }
 

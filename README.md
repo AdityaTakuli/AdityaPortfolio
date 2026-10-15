@@ -10,18 +10,22 @@ Static site — no build step. Open `index.html`, or serve the folder.
 
 - `index.html` — home: enter screen, hero, statement, about, experience reel, work, skills, achievements, contact
 - `projects/trialmatch.html`, `projects/goodbookies.html` — case studies
-- `projects/orchestrated-control.html` — patent intro page with a scroll-driven 3D exploded model
+- `projects/modular-uav.html`, `projects/orchestrated-control.html` — patent intro pages, each with a
+  scroll-driven 3D model
 - `static/css/base.css` — design tokens, type, shell, nav, device frames
 - `static/css/home.css` — enter screen, hero, statement, pixel wipes, about
 - `static/css/sections.css` — experience reel, work, skills, achievements, contact
 - `static/css/case.css` — case-study layout, node diagrams and the isometric layer diagrams
-- `static/css/patent.css` — patent page accent, pinned 3D stage and public-record table
+- `static/css/patent.css` — patent pages' accents, pinned 3D stage and public-record table
 - `static/js/loader.js` — enter screen timeline
 - `static/js/motion.js` — smooth scroll, reveals, pinned reel, page transitions, cursor
 - `static/js/ui.js` — case-study wordmark hover and diagram packets
 - `static/js/theme.js` — light/dark toggle
-- `static/js/patent3d.js` — Three.js scene for the patent page; every part is modelled from
-  primitives and canvas textures (no model files), and scroll progress drives every pose
+- `static/js/patent-kit.js` — shared runner for the patent pages' 3D stages: renderer, scroll
+  progress, camera path, captions and tags, plus geometry/texture helpers
+- `static/js/patent-uav3d.js`, `static/js/patent3d.js` — the drone and controller scenes; every
+  part is modelled from primitives and canvas textures (no model files), and scroll progress
+  drives every pose
 - `static/js/vendor/` — GSAP 3.15 (ScrollTrigger, SplitText, ScrambleText, CustomEase), Lenis 1.3 and Three.js r170 (ES module, loaded through an import map)
 - `static/img/` — portrait, project screenshots, icons
 - `scripts/gen_iso.py` — generates the isometric layer diagrams into

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modular UAV — Patent · Aditya Pratap Singh Takuli</title>
+    <meta
+      name="description"
+      content="Modular Unmanned Aerial Vehicle with Independent Thrust Vectoring and Stabilization Control — an Indian patent application (IN 202641053086 A1) co-invented by Aditya Pratap Singh Takuli."
+    />
+    <meta name="theme-color" content="#0d0c0a" />
+    <link rel="icon" href="../static/img/icons/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../static/img/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../static/img/icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/base.css?v=1" />
+    <link rel="stylesheet" href="../static/css/case.css?v=5" />
+    <link rel="stylesheet" href="../static/css/patent.css?v=1" />
+    <script>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        try {
+          // Light is the default; only a visitor's own choice overrides it.
+          d.setAttribute("data-theme", localStorage.getItem("theme") || "light");
+        } catch (e) {
+          d.setAttribute("data-theme", "light");
+        }
+        var internal = false;
+        try {
+          internal = sessionStorage.getItem("apst-nav") === "1";
+          sessionStorage.removeItem("apst-nav");
+        } catch (e) {}
+        window.__enter = new Promise(function (resolve) {
+          window.__enterResolve = resolve;
+        });
+        if (internal) d.classList.add("is-arriving");
+      })();
+    </script>
+    <script type="importmap">
+      { "imports": { "three": "../static/js/vendor/three.module.min.js" } }
+    </script>
+  </head>
+  <body class="case-page patent-page uav-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="curtain" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <span class="curtain-label"></span>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="marks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="cursor" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="nav-name" href="../index.html" data-title="Home" data-intro>Aditya Pratap Singh Takuli</a>
+      <nav class="nav-links" aria-label="Patent" data-intro>
+        <a href="#model">Model</a>
+        <a href="#idea">Idea</a>
+        <a href="#domains">Applications</a>
+        <a href="#record">Record</a>
+        <a class="nav-cta" href="../index.html#achievements" data-title="Recognition">All honours</a>
+      </nav>
+      <div class="nav-tools" data-intro>
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle"
+          role="switch"
+          aria-checked="false"
+          aria-label="Toggle color theme"
+        >
+          <span class="theme-track" aria-hidden="true"><span class="theme-thumb"></span></span>
+          <span class="theme-name" aria-hidden="true"></span>
+        </button>
+        <a class="nav-resume" href="../index.html#achievements" data-title="Recognition">← Index</a>
+        <button type="button" class="nav-menu" aria-expanded="false" aria-controls="menu" aria-label="Open menu"></button>
+      </div>
+    </header>
+
+    <div class="menu" id="menu" aria-hidden="true">
+      <nav class="menu-links" aria-label="Menu">
+        <a href="#model"><span>Model</span></a>
+        <a href="#idea"><span>Idea</span></a>
+        <a href="#domains"><span>Applications</span></a>
+        <a href="#record"><span>Record</span></a>
+        <a href="../index.html#achievements" data-title="Recognition"><span>All honours</span></a>
+      </nav>
+      <div class="menu-foot">
+        <span>IN 202641053086 A1</span>
+        <span>Patent 01</span>
+      </div>
+    </div>
+
+    <main id="main">
+      <section class="case-banner">
+        <div class="case-top" data-intro>
+          <span class="label">Patent 01</span>
+          <span class="label">Indian patent application</span>
+          <span class="label pt-status">Published · 08.05.2026</span>
+        </div>
+        <h1 class="visually-hidden">Modular Unmanned Aerial Vehicle with Independent Thrust Vectoring and Stabilization Control</h1>
+        <svg
+          class="text-hover pt-wordmark"
+          data-text-hover
+          data-intro
+          viewBox="0 0 820 80"
+          preserveAspectRatio="xMidYMid meet"
+          role="img"
+          aria-label="Modular UAV"
+        >
+          <defs>
+            <radialGradient
+              class="th-gradient"
+              id="uavGradient"
+              gradientUnits="userSpaceOnUse"
+              cx="410"
+              cy="40"
+              r="0"
+            >
+              <stop offset="0%" stop-color="#000000" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </radialGradient>
+            <mask id="uavMask">
+              <rect x="0" y="0" width="100%" height="100%" fill="url(#uavGradient)" />
+            </mask>
+          </defs>
+          <text
+            class="th-base"
+            x="410"
+            y="49"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            textLength="782"
+            lengthAdjust="spacingAndGlyphs"
+          ><tspan class="th-a">MODULAR</tspan><tspan class="th-b" dx="40">UAV</tspan></text>
+          <text
+            class="th-fill"
+            x="410"
+            y="49"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            textLength="782"
+            lengthAdjust="spacingAndGlyphs"
+            mask="url(#uavMask)"
+          ><tspan class="th-a">MODULAR</tspan><tspan class="th-b" dx="40">UAV</tspan></text>
+        </svg>
+        <p class="banner-tag" data-intro>
+          <span>Patent / <b>Unmanned aerial vehicles</b></span>
+          <span>Modular · Tilt · Level · Swap · Fly</span>
+        </p>
+      </section>
+
+      <section class="case-lede">
+        <div class="lede-copy" data-intro>
+          <p>
+            A drone that keeps its body level while it moves. Instead of tipping
+            the whole airframe to steer, each of its four ducted rotors tilts on
+            its own hinge, so cameras, sensors and parcels ride flat. The wings
+            come off, and one bay takes either a battery or a payload.
+          </p>
+        </div>
+        <dl class="case-meta" data-intro>
+          <div><dt>Status</dt><dd>Published · A1</dd></div>
+          <div><dt>Publication</dt><dd>IN 202641053086</dd></div>
+          <div><dt>Filed</dt><dd>25 April 2026</dd></div>
+          <div><dt>Applicant</dt><dd>Vellore Institute of Technology, Chennai</dd></div>
+          <div><dt>Role</dt><dd>Co-inventor</dd></div>
+        </dl>
+        <div class="case-cta" data-intro>
+          <a class="btn btn-fill" href="#model">Launch the model ↓</a>
+          <a class="btn" href="#record">Public record</a>
+        </div>
+      </section>
+
+      <!-- Pinned 3D stage: scroll takes the drone apart and through its moves. -->
+      <section class="pt-stage" id="model" data-tone="night" aria-label="Interactive 3D model of the drone, driven by scrolling">
+        <div class="pt-sticky">
+          <div class="pt-canvas" data-pt-canvas aria-hidden="true"></div>
+          <div class="pt-tags" data-pt-tags aria-hidden="true"></div>
+          <div class="pt-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <p class="pt-fallback">Interactive model loading — it needs WebGL and JavaScript.</p>
+
+          <div class="pt-hud">
+            <div class="pt-hud-top">
+              <span>FIG. 01 / <b>Flight assembly</b></span>
+              <span>Artistic interpretation · not to scale</span>
+            </div>
+
+            <ol class="pt-steps" data-pt-steps>
+              <li class="pt-step is-active">
+                <span class="pt-step-num">01 / 06</span>
+                <h3>Airframe</h3>
+                <p>A long, level fuselage, two wing modules and four ducted rotors, hovering in place.</p>
+              </li>
+              <li class="pt-step">
+                <span class="pt-step-num">02 / 06</span>
+                <h3>Modular</h3>
+                <p>The wings come away from the body, so the airframe packs down and parts swap in the field.</p>
+              </li>
+              <li class="pt-step">
+                <span class="pt-step-num">03 / 06</span>
+                <h3>Tilt</h3>
+                <p>Every rotor sits on its own hinge and tilts independently, steering thrust instead of the airframe.</p>
+              </li>
+              <li class="pt-step">
+                <span class="pt-step-num">04 / 06</span>
+                <h3>Level</h3>
+                <p>Onboard sensing and a learned stabiliser hold the body flat while the rotors do the leaning.</p>
+              </li>
+              <li class="pt-step">
+                <span class="pt-step-num">05 / 06</span>
+                <h3>Swap</h3>
+                <p>A vertical bay takes a battery or a payload module. Change the mission between flights.</p>
+              </li>
+              <li class="pt-step">
+                <span class="pt-step-num">06 / 06</span>
+                <h3>Fly</h3>
+                <p>Rotors lean forward, the body stays level: steadier footage, steadier deliveries.</p>
+              </li>
+            </ol>
+
+            <div class="pt-hud-foot">
+              <span class="pt-hint">Scroll to fly</span>
+              <div class="pt-progress" aria-hidden="true">
+                <div class="pt-progress-fill" data-pt-fill></div>
+                <div class="pt-ticks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <span class="pt-count" data-pt-count>000%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="idea">
+        <div class="section-head">
+          <span class="section-index">01</span>
+          <h2 data-split>The idea</h2>
+        </div>
+        <p class="about-text" data-reveal>
+          Most multirotors move by tipping their whole airframe: pitch to go
+          forward, roll to go sideways. Whatever they carry tips with them, so
+          cameras need heavy gimbals and parcels slide. This drone keeps its body
+          still and moves the thrust instead.
+        </p>
+        <ul class="decision-grid" style="margin-top: clamp(2.5rem, 5vw, 4rem)">
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">01</span>
+              <div class="bold-body">
+                <h3>Steer thrust, not the body</h3>
+                <p>
+                  The rotors do the leaning. The fuselage, and everything mounted
+                  to it, stays level through every manoeuvre.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">02</span>
+              <div class="bold-body">
+                <h3>One hinge per rotor</h3>
+                <p>
+                  Each rotor tilts on its own, so thrust can be pointed
+                  independently at every corner of the craft.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">03</span>
+              <div class="bold-body">
+                <h3>A body that holds level</h3>
+                <p>
+                  Onboard sensing and a learned stabiliser keep correcting, so the
+                  body stays flat in gusts and turns.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">04</span>
+              <div class="bold-body">
+                <h3>Wings that come off</h3>
+                <p>
+                  Two wing modules attach to the body and detach for transport,
+                  repair or a different mission.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">05</span>
+              <div class="bold-body">
+                <h3>One bay, many missions</h3>
+                <p>
+                  A vertical bay in the body takes either a battery or a payload
+                  module, swapped between flights.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section" id="domains">
+        <div class="section-head">
+          <span class="section-index">02</span>
+          <h2 data-split>Where it flies</h2>
+        </div>
+        <ul class="pt-domains">
+          <li data-reveal><span class="label">01</span><strong>Imaging</strong><em>Level footage without a heavy gimbal</em></li>
+          <li data-reveal><span class="label">02</span><strong>Delivery</strong><em>Parcels that ride flat</em></li>
+          <li data-reveal><span class="label">03</span><strong>Inspection</strong><em>Steady up close to structures</em></li>
+          <li data-reveal><span class="label">04</span><strong>Survey</strong><em>A constant sensor angle for mapping</em></li>
+          <li data-reveal><span class="label">05</span><strong>Rescue</strong><em>Swap in the right sensor fast</em></li>
+          <li data-reveal><span class="label">06</span><strong>Agriculture</strong><em>One airframe, a payload per task</em></li>
+        </ul>
+      </section>
+
+      <section class="section" id="record">
+        <div class="section-head">
+          <span class="section-index">03</span>
+          <h2 data-split>Public record</h2>
+        </div>
+        <dl class="pt-record" data-reveal>
+          <div class="pt-wide">
+            <dt>(54)</dt>
+            <dd>Title</dd>
+            <dd class="pt-title">Modular unmanned aerial vehicle with independent thrust vectoring and stabilization control</dd>
+          </div>
+          <div>
+            <dt>(10)</dt>
+            <dd>Publication no.</dd>
+            <dd>IN 202641053086 A1</dd>
+          </div>
+          <div>
+            <dt>(21)</dt>
+            <dd>Application no.</dd>
+            <dd>202641053086</dd>
+          </div>
+          <div>
+            <dt>(22)</dt>
+            <dd>Date of filing</dd>
+            <dd>25 April 2026</dd>
+          </div>
+          <div>
+            <dt>(43)</dt>
+            <dd>Publication date</dd>
+            <dd>08 May 2026 · Journal 19/2026</dd>
+          </div>
+          <div>
+            <dt>(71)</dt>
+            <dd>Applicant</dd>
+            <dd>Vellore Institute of Technology, Chennai</dd>
+          </div>
+          <div>
+            <dt>(19)</dt>
+            <dd>Office</dd>
+            <dd>Intellectual Property Office, India</dd>
+          </div>
+          <div class="pt-wide">
+            <dt>(72)</dt>
+            <dd>Inventors</dd>
+            <dd>Ravi Prakash Dwivedi · Sai Mithil K · Ritam Pandey · <b>Aditya Pratap Singh Takuli</b> · Shivam Yadav · Pawan Kalyan Pendyala</dd>
+          </div>
+        </dl>
+        <div class="pt-sealed" data-reveal>
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="6" y="14" width="20" height="14" rx="1.5" />
+            <path d="M10 14v-4a6 6 0 0 1 12 0v4" />
+            <path d="M16 19v4" />
+          </svg>
+          <p>
+            <span class="label">An introduction, not a disclosure</span>
+            The claims, drawings and detailed specification are deliberately left
+            out of this page; the published application is available through the
+            Indian Patent Office. The model above is an artistic interpretation of
+            the idea, not a technical drawing of the invention.
+          </p>
+        </div>
+      </section>
+
+      <section class="case-outro tone-ink" data-tone="ink">
+        <p class="label">Modular UAV / Patent 01</p>
+        <h2>Move the thrust.<br />Keep the body.</h2>
+        <div class="hero-cta">
+          <a class="btn btn-fill" href="#model">Replay the flight ↑</a>
+          <a class="btn" href="../index.html#achievements" data-title="Recognition">All honours</a>
+        </div>
+        <a class="next-case" href="orchestrated-control.html" data-title="Orchestrated Control">
+          <span class="label">Next patent</span>
+          <strong>Orchestrated Control</strong>
+          <span aria-hidden="true">→</span>
+        </a>
+        <footer class="site-footer">
+          <p>© 2026 Aditya Pratap Singh Takuli</p>
+          <div class="footer-links">
+            <a class="link" href="../index.html" data-title="Home">Back to portfolio</a>
+            <a class="link" href="#main">Back to top ↑</a>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <script src="../static/js/vendor/gsap.min.js"></script>
+    <script src="../static/js/vendor/ScrollTrigger.min.js"></script>
+    <script src="../static/js/vendor/SplitText.min.js"></script>
+    <script src="../static/js/vendor/ScrambleTextPlugin.min.js"></script>
+    <script src="../static/js/vendor/CustomEase.min.js"></script>
+    <script src="../static/js/vendor/lenis.min.js"></script>
+    <script src="../static/js/theme.js?v=2"></script>
+    <script src="../static/js/motion.js?v=1"></script>
+    <script src="../static/js/ui.js?v=9"></script>
+    <script type="module" src="../static/js/patent-uav3d.js?v=1"></script>
+  </body>
+</html>
