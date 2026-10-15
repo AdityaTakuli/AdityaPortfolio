@@ -652,10 +652,17 @@ function makePose(W) {
     parts.horizon.visible = levelT > 0.001;
     parts.horizon.scale.setScalar(0.85 + 0.15 * easeOut(levelT));
 
-    // Rotors: independent swings, then a held mixed pose, then all forward.
+    // Tilt follows the drawings: first every rotor leans forward together
+    // (forward thrust), then the two sides lean against each other and the
+    // whole craft yaws on the spot — the body never pitches or rolls.
+    const u = Math.min(1, Math.max(0, (p - 0.36) / 0.18));
+    const fwd = tiltT * smooth(0, 0.25, u) * (1 - smooth(0.42, 0.58, u));
+    const yawA = tiltT * smooth(0.55, 0.78, u);
+    parts.craft.rotation.y = 0.55 * yawA;
     rotors.forEach((r, i) => {
-      const swing = tiltT * 0.6 * Math.sin(time * 1.1 + PHASE[i]);
-      r.angle = swing + levelT * HOLD[i] - flyT * 0.5;
+      const side = i % 2 === 0 ? 1 : -1; // +z rotors vs -z rotors
+      const idle = tiltT * 0.05 * Math.sin(time * 1.6 + PHASE[i]);
+      r.angle = idle - 0.8 * fwd - 0.65 * yawA * side + levelT * HOLD[i] - flyT * 0.95;
       r.pivot.rotation.z = r.angle;
       const rate = (1 - expl) * 26 + expl * 6 + flyT * 8;
       r.spin += rate * dt;
