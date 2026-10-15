@@ -633,22 +633,25 @@
 
     // Case studies stack: the card underneath settles back as the next lands.
     mm.add("(min-width: 961px) and (prefers-reduced-motion: no-preference)", function () {
-      var cards = gsap.utils.toArray("[data-stack]");
-      cards.forEach(function (card, i) {
-        var next = cards[i + 1];
-        if (!next) return;
-        gsap.to(card, {
-          scale: 0.94,
-          "--dim": 0.55,
-          ease: "none",
-          scrollTrigger: {
-            trigger: next,
-            start: "top bottom",
-            end: function () {
-              return "top " + (navHeight() + 16) + "px";
-            },
-            scrub: true
-          }
+      // Each .stack settles on its own, so Work never dims under Patents.
+      gsap.utils.toArray(".stack").forEach(function (stack) {
+        var cards = gsap.utils.toArray(stack.querySelectorAll("[data-stack]"));
+        cards.forEach(function (card, i) {
+          var next = cards[i + 1];
+          if (!next) return;
+          gsap.to(card, {
+            scale: 0.94,
+            "--dim": 0.55,
+            ease: "none",
+            scrollTrigger: {
+              trigger: next,
+              start: "top bottom",
+              end: function () {
+                return "top " + (navHeight() + 16) + "px";
+              },
+              scrub: true
+            }
+          });
         });
       });
     });
