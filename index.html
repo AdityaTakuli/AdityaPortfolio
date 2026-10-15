@@ -21,7 +21,7 @@
     <link rel="preload" as="image" href="static/img/aditya-cutout.webp?v=4" />
     <link rel="stylesheet" href="static/css/base.css?v=1" />
     <link rel="stylesheet" href="static/css/home.css?v=4" />
-    <link rel="stylesheet" href="static/css/sections.css?v=1" />
+    <link rel="stylesheet" href="static/css/sections.css?v=2" />
     <script>
       (function () {
         var d = document.documentElement;
@@ -99,6 +99,7 @@
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
         <a href="#work">Work</a>
+        <a href="#patents">Patents</a>
         <a href="#skills">Skills</a>
         <a class="nav-cta" href="#contact">Contact</a>
       </nav>
@@ -124,6 +125,7 @@
         <a href="#about"><span>About</span></a>
         <a href="#experience"><span>Experience</span></a>
         <a href="#work"><span>Work</span></a>
+        <a href="#patents"><span>Patents</span></a>
         <a href="#skills"><span>Skills</span></a>
         <a href="#contact"><span>Contact</span></a>
       </nav>
@@ -482,10 +484,87 @@
         </div>
       </section>
 
+      <!-- Patents ----------------------------------------------------------->
+      <section class="work patents tone-paper" id="patents" data-tone="paper">
+        <header class="sec-head">
+          <span class="label">[04] Inventions</span>
+          <h2 class="sec-title" data-split>Patents</h2>
+          <span class="label sec-note">02 published</span>
+        </header>
+
+        <div class="stack">
+          <article class="stack-card patent-card patent-card--uav" data-stack>
+            <div class="stack-copy">
+              <div class="stack-meta"><span class="label">[01] Patent</span><span class="label label--hl">Published · A1</span></div>
+              <h3 class="stack-title">Modular UAV <small>Independent thrust vectoring &amp; stabilization control</small></h3>
+              <p class="label">IN 202641053086 · Filed 25 Apr 2026 · Co-inventor</p>
+              <p class="stack-blurb">
+                A drone that keeps its body level while it moves. Instead of tipping
+                the whole airframe to steer, each of its four ducted rotors tilts on
+                its own hinge, so cameras, sensors and parcels ride flat. The wings
+                come off, and one bay takes either a battery or a payload.
+              </p>
+              <div class="stack-links">
+                <a class="chip chip--solid" href="projects/modular-uav.html" data-title="Modular UAV">Explore the 3D model →</a>
+                <span class="chip chip--quiet">VIT Chennai</span>
+              </div>
+            </div>
+            <div class="stack-media">
+              <figure class="frame frame--browser frame--stage">
+                <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">patent · IN 202641053086 A1</span></div>
+                <div class="frame-view">
+                  <img
+                    src="static/img/patents/modular-uav.webp"
+                    alt="Artistic 3D model of the modular drone with its wings detached and rotors tilted"
+                    width="1600"
+                    height="1000"
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+            </div>
+            <a class="card-link" href="projects/modular-uav.html" data-title="Modular UAV" tabindex="-1" aria-hidden="true"></a>
+          </article>
+
+          <article class="stack-card patent-card patent-card--oc" data-stack>
+            <div class="stack-copy">
+              <div class="stack-meta"><span class="label">[02] Patent</span><span class="label label--hl">Published · A1</span></div>
+              <h3 class="stack-title">Orchestrated Control <small>Of physical infrastructure</small></h3>
+              <p class="label">IN 202641106171 · Filed 03 Sep 2026 · Co-inventor</p>
+              <p class="stack-blurb">
+                A system that lets a building look after itself. It listens to the
+                spaces it runs in, forms one consistent picture of what is happening,
+                decides what should change, and refuses to move a single piece of
+                hardware until that decision has been checked.
+              </p>
+              <div class="stack-links">
+                <a class="chip chip--solid" href="projects/orchestrated-control.html" data-title="Orchestrated Control">Explore the 3D model →</a>
+                <span class="chip chip--quiet">VIT Chennai</span>
+              </div>
+            </div>
+            <div class="stack-media">
+              <figure class="frame frame--browser frame--stage">
+                <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">patent · IN 202641106171 A1</span></div>
+                <div class="frame-view">
+                  <img
+                    src="static/img/patents/orchestrated-control.webp"
+                    alt="Artistic 3D model of the control unit opened into its layers"
+                    width="1600"
+                    height="1000"
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+            </div>
+            <a class="card-link" href="projects/orchestrated-control.html" data-title="Orchestrated Control" tabindex="-1" aria-hidden="true"></a>
+          </article>
+        </div>
+      </section>
+
       <!-- Skills ------------------------------------------------------------>
       <section class="skills tone-paper" id="skills" data-tone="paper">
         <header class="sec-head">
-          <span class="label">[04] Toolkit</span>
+          <span class="label">[05] Toolkit</span>
           <h2 class="sec-title" data-split>Skills</h2>
           <span class="label sec-note">05 groups</span>
         </header>
@@ -532,7 +611,7 @@
 
       <section class="honours tone-paper" id="achievements" data-tone="paper">
         <header class="sec-head">
-          <span class="label">[05] Recognition</span>
+          <span class="label">[06] Recognition</span>
           <h2 class="sec-title sec-title--long" data-split>Achievements</h2>
           <span class="label sec-note">07 entries</span>
         </header>
@@ -550,13 +629,10 @@
           </li>
           <li data-reveal>
             <span class="label">06</span>
-            <div>
-              <p>Published Patents</p>
-              <ul class="honour-points">
-                <li><a class="link" href="projects/modular-uav.html" data-title="Modular UAV">Modular Unmanned Aerial Vehicle with Independent Thrust Vectoring and Stabilization Control ↗</a><span class="label">App. No. 202641053086</span></li>
-                <li><a class="link" href="projects/orchestrated-control.html" data-title="Orchestrated Control">System for Orchestrated Control of Physical Infrastructure ↗</a><span class="label">App. No. 202641106171</span></li>
-              </ul>
-            </div>
+            <p>
+              Two published patents, VIT Chennai
+              <small><a class="link" href="#patents">Modular UAV · Orchestrated Control — see Patents ↑</a></small>
+            </p>
           </li>
           <li data-reveal>
             <span class="label">07</span>
@@ -567,7 +643,7 @@
 
       <!-- Contact ----------------------------------------------------------->
       <section class="contact tone-ink" id="contact" data-tone="ink">
-        <p class="label">[06] Contact</p>
+        <p class="label">[07] Contact</p>
         <h2 class="contact-title">
           <span class="roll-line">Get in</span>
           <span class="roll-line">touch</span>

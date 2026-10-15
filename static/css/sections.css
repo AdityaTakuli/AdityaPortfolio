@@ -361,6 +361,71 @@
   }
 }
 
+/* Patents reuse the work stack; the media is a night render of each model. */
+.patent-card {
+  --pc: #c98a2b;
+}
+
+.patent-card--uav {
+  --pc: #0f8f83;
+}
+
+:root[data-theme="dark"] .patent-card--uav {
+  --pc: #3ee6d6;
+}
+
+:root[data-theme="dark"] .patent-card--oc {
+  --pc: #f0a540;
+}
+
+.frame--stage {
+  border-color: color-mix(in srgb, var(--night-fg) 14%, var(--night));
+  background: var(--night);
+}
+
+.frame--stage .frame-bar {
+  background: color-mix(in srgb, var(--night-fg) 6%, var(--night));
+  border-bottom-color: color-mix(in srgb, var(--night-fg) 10%, transparent);
+}
+
+.frame--stage .frame-bar i {
+  background: color-mix(in srgb, var(--night-fg) 22%, transparent);
+}
+
+.frame--stage .frame-bar i:first-child {
+  background: var(--pc);
+}
+
+.frame--stage .frame-url {
+  background: color-mix(in srgb, var(--night-fg) 8%, var(--night));
+  color: color-mix(in srgb, var(--night-fg) 62%, transparent);
+}
+
+.frame--stage .frame-view {
+  background: var(--night);
+}
+
+.frame--stage .frame-view img {
+  object-position: 50% 50%;
+  transition: transform 1.2s var(--ease-out);
+}
+
+.patent-card:hover .frame--stage .frame-view img {
+  transform: scale(1.035);
+}
+
+.patent-card .stack-meta .label--hl,
+.patent-card .stack-title small {
+  color: var(--pc);
+}
+
+.chip--quiet,
+.chip--quiet:hover {
+  background: transparent;
+  border-style: dashed;
+  color: var(--mute);
+}
+
 /* Index of the smaller projects */
 .rows {
   margin-top: clamp(4rem, 8vw, 6rem);
@@ -605,37 +670,6 @@
 
 .honour-list a {
   color: var(--hl);
-}
-
-.honour-points {
-  display: grid;
-  gap: 0.7rem;
-  margin-top: 0.65rem;
-}
-
-.honour-list .honour-points li {
-  position: relative;
-  display: block;
-  padding: 0 0 0 1.25rem;
-  border: 0;
-  font-size: 0.975rem;
-  line-height: 1.4;
-  color: var(--fg-mute);
-}
-
-.honour-points li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 0.38em;
-  height: 0.38em;
-  background: currentColor;
-}
-
-.honour-list .honour-points .label {
-  display: block;
-  padding-top: 0.2rem;
 }
 
 @media (max-width: 760px) {
