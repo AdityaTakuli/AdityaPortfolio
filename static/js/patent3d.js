@@ -975,8 +975,10 @@ function build(renderer) {
 
 const KEYS = [
   { p: 0.0, az: -0.62, el: 0.66, r: 31, tx: 0, ty: 1.0 },
-  { p: 0.18, az: -0.38, el: 0.52, r: 31, tx: 0, ty: 2.0 },
-  { p: 0.42, az: 0.08, el: 0.34, r: 36, tx: 0, ty: 3.6 },
+  { p: 0.18, az: -0.38, el: 0.52, r: 35, tx: 0, ty: 3.4 },
+  // Pulled back while the lid is at its highest, so it clears the HUD on short screens.
+  { p: 0.3, az: -0.16, el: 0.44, r: 41, tx: 0, ty: 4.8 },
+  { p: 0.42, az: 0.08, el: 0.36, r: 39, tx: 0, ty: 4.4 },
   { p: 0.62, az: 0.42, el: 0.3, r: 35, tx: 0.6, ty: 3.4 },
   { p: 0.8, az: 0.72, el: 0.28, r: 41, tx: 3.6, ty: 4.0 },
   { p: 1.0, az: 0.92, el: 0.36, r: 45, tx: 4.6, ty: 3.8 }
@@ -1021,8 +1023,8 @@ function makePose(W) {
     parts.board.position.y = 0.8 + 0.4 * expl;
     parts.core.position.set(2.6 + 0.5 * expl, 0.96 + 0.4 * expl + 2.7 * smooth(0.22, 0.48, p), -0.3);
     parts.relay.position.set(-3.2 - 0.7 * expl, 0.96 + 0.4 * expl + 2.0 * smooth(0.24, 0.5, p), -1.6);
-    parts.sensor.position.y = 2.08 + 0.4 * expl + 3.9 * senseT;
-    parts.lid.position.set(-0.8 * lidT, 2.525 + 6.9 * easeOut(lidT), -4.4 * lidT);
+    parts.sensor.position.y = 2.08 + 0.4 * expl + 3.2 * senseT;
+    parts.lid.position.set(-0.8 * lidT, 2.525 + 5.7 * easeOut(lidT), -4.4 * lidT);
     parts.lid.rotation.set(0.42 * lidT, 0, 0.08 * lidT);
     parts.lid.userData.etch.material.opacity = 0.62 - 0.25 * smooth(0.5, 0.8, p);
 

@@ -609,7 +609,7 @@ const TAGS = [
   { a: "servo", step: [2], k: "03 · Tilt", t: "Servo actuator", minor: true },
   { a: "horizon", step: [3], k: "04 · Level", t: "Body holds level" },
   { a: "brain", step: [3], k: "04 · Level", t: "Inertial sensing", minor: true },
-  { a: "battery", step: [4], k: "05 · Swap", t: "Battery module" },
+  { a: "battery", step: [4], k: "05 · Swap", t: "Battery module", minor: true },
   { a: "payload", step: [4], k: "05 · Swap", t: "Payload module", left: true },
   { a: "rotorFly", step: [5], k: "06 · Fly", t: "Thrust leans forward" }
 ];
