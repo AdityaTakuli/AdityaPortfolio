@@ -94,7 +94,9 @@
 }
 
 html {
-  color-scheme: light;
+  /* "only light" keeps browsers from auto-darkening the page; the dark theme
+     is only ever the visitor's own choice (data-theme="dark"). */
+  color-scheme: only light;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }

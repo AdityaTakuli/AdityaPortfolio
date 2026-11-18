@@ -9,6 +9,9 @@
       content="Software engineer building backend systems, data-driven models, and agentic AI — from research to production."
     />
     <meta name="theme-color" content="#dcdad4" />
+    <!-- Light unless the visitor picks dark; also opts out of browsers that
+         auto-darken websites (Edge, Brave and Chrome "dark mode for web content"). -->
+    <meta name="color-scheme" content="only light" />
     <link rel="icon" href="static/img/icons/favicon.ico" sizes="32x32" />
     <link rel="icon" href="static/img/icons/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="static/img/icons/apple-touch-icon.png" />
@@ -19,7 +22,7 @@
       rel="stylesheet"
     />
     <link rel="preload" as="image" href="static/img/aditya-cutout.webp?v=4" />
-    <link rel="stylesheet" href="static/css/base.css?v=3" />
+    <link rel="stylesheet" href="static/css/base.css?v=4" />
     <link rel="stylesheet" href="static/css/home.css?v=8" />
     <link rel="stylesheet" href="static/css/sections.css?v=6" />
     <script>
@@ -28,7 +31,7 @@
         d.classList.add("js");
         try {
           // Light is the default; only a visitor's own choice overrides it.
-          d.setAttribute("data-theme", localStorage.getItem("theme") || "light");
+          d.setAttribute("data-theme", localStorage.getItem("theme-pref") || "light");
         } catch (e) {
           d.setAttribute("data-theme", "light");
         }
@@ -788,7 +791,7 @@
     <script src="static/js/vendor/ScrambleTextPlugin.min.js"></script>
     <script src="static/js/vendor/CustomEase.min.js"></script>
     <script src="static/js/vendor/lenis.min.js"></script>
-    <script src="static/js/theme.js?v=2"></script>
+    <script src="static/js/theme.js?v=3"></script>
     <script src="static/js/loader.js?v=1"></script>
     <script src="static/js/motion.js?v=3"></script>
   </body>

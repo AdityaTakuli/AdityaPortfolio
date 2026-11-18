@@ -79,6 +79,9 @@
   display: block;
   width: 100%;
   height: auto;
+  /* Never clip the wordmark: if a browser or a fallback font sets the glyphs
+     a little differently, they spill into the margin instead of being cut. */
+  overflow: visible;
   cursor: crosshair;
   touch-action: pan-y;
 }

@@ -9,6 +9,9 @@
       content="System for Orchestrated Control of Physical Infrastructure — an Indian patent application (IN 202641106171 A1) co-invented by Aditya Pratap Singh Takuli."
     />
     <meta name="theme-color" content="#dcdad4" />
+    <!-- Light unless the visitor picks dark; also opts out of browsers that
+         auto-darken websites (Edge, Brave and Chrome "dark mode for web content"). -->
+    <meta name="color-scheme" content="only light" />
     <link rel="icon" href="../static/img/icons/favicon.ico" sizes="32x32" />
     <link rel="icon" href="../static/img/icons/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="../static/img/icons/apple-touch-icon.png" />
@@ -18,8 +21,8 @@
       href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../static/css/base.css?v=3" />
-    <link rel="stylesheet" href="../static/css/case.css?v=8" />
+    <link rel="stylesheet" href="../static/css/base.css?v=4" />
+    <link rel="stylesheet" href="../static/css/case.css?v=9" />
     <link rel="stylesheet" href="../static/css/patent.css?v=1" />
     <script>
       (function () {
@@ -27,7 +30,7 @@
         d.classList.add("js");
         try {
           // Light is the default; only a visitor's own choice overrides it.
-          d.setAttribute("data-theme", localStorage.getItem("theme") || "light");
+          d.setAttribute("data-theme", localStorage.getItem("theme-pref") || "light");
         } catch (e) {
           d.setAttribute("data-theme", "light");
         }
@@ -416,7 +419,7 @@
     <script src="../static/js/vendor/ScrambleTextPlugin.min.js"></script>
     <script src="../static/js/vendor/CustomEase.min.js"></script>
     <script src="../static/js/vendor/lenis.min.js"></script>
-    <script src="../static/js/theme.js?v=2"></script>
+    <script src="../static/js/theme.js?v=3"></script>
     <script src="../static/js/motion.js?v=3"></script>
     <script src="../static/js/ui.js?v=10"></script>
     <script type="module" src="../static/js/patent3d.js?v=3"></script>
