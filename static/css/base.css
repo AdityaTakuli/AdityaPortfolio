@@ -850,7 +850,42 @@ button {
   }
 
   .nav-menu {
-    display: inline-block;
+    display: inline-flex;
+  }
+}
+
+/* Phones: the nav keeps its look but every control gets Apple's 44pt hit
+   area (HIG, Accessibility › controls), and tighter tracking so the full name,
+   the theme switch and Menu fit a 360px screen without crowding. */
+@media (max-width: 600px) {
+  .nav {
+    gap: 0.75rem;
+    letter-spacing: 0.06em;
+  }
+
+  .nav-tools {
+    gap: 0.25rem;
+  }
+
+  .nav-name,
+  .theme-toggle,
+  .nav-menu {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .theme-toggle,
+  .nav-menu {
+    justify-content: center;
+    min-width: 44px;
+    padding-block: 0;
+  }
+
+  .nav-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -971,6 +1006,15 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .footer-links a,
+  .footer-links button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
 }
 
 /* --------------------------------------------------------------------------

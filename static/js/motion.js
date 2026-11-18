@@ -43,6 +43,27 @@
   });
 
   var gsap = window.gsap;
+  /* Experience on phones: show the first point of each role and put the rest
+     behind one button (progressive disclosure). CSS only hides the extra
+     points below 601px, so desktop and no-script visitors see everything. */
+  document.querySelectorAll(".job-points").forEach(function (list) {
+    var extra = list.children.length - 1;
+    if (extra < 1) return;
+    list.classList.add("is-collapsed");
+    var more = document.createElement("button");
+    more.type = "button";
+    more.className = "job-more";
+    more.setAttribute("aria-expanded", "false");
+    more.textContent = "Show " + extra + " more";
+    more.addEventListener("click", function () {
+      var collapsed = list.classList.toggle("is-collapsed");
+      more.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      more.textContent = collapsed ? "Show " + extra + " more" : "Show less";
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    });
+    list.insertAdjacentElement("afterend", more);
+  });
+
   var ScrollTrigger = window.ScrollTrigger;
 
   if (!gsap || !ScrollTrigger) {
@@ -349,6 +370,9 @@
         "</span></span></span>";
     });
     if (reduce) return;
+    // On phones the statement columns stack, so the lower one would spend most
+    // of its time on screen half-rolled; let the lines settle sooner there.
+    var narrow = window.matchMedia("(max-width: 760px)").matches;
     document.querySelectorAll(".statement-col, .contact-title").forEach(function (group) {
       gsap.fromTo(
         group.querySelectorAll(".roll-track"),
@@ -357,7 +381,12 @@
           yPercent: -50,
           ease: "none",
           stagger: 0.14,
-          scrollTrigger: { trigger: group, start: "top 92%", end: "center 52%", scrub: 0.8 }
+          scrollTrigger: {
+            trigger: group,
+            start: "top 92%",
+            end: narrow ? "top 62%" : "center 52%",
+            scrub: 0.8
+          }
         }
       );
     });

@@ -1222,3 +1222,36 @@
   .iso-svg.iso-armed .iso-label { opacity: 1; transform: none; }
   .nd-live .iso-pulse { animation: none; opacity: 0.9; }
 }
+
+/* --------------------------------------------------------------------------
+   Phones — same design, calmer. Headings break only between words, and the
+   stats read as rows (number, then what it counts) across the full width.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .section-head h2 {
+    font-size: clamp(1.45rem, 6.6vw, 2.4rem);
+    overflow-wrap: normal;
+  }
+
+  .gallery .stats--side {
+    grid-column: 1 / -1;
+  }
+
+  .stats .stat {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 0;
+  }
+
+  .stat strong {
+    font-size: 2.2rem;
+    white-space: nowrap;
+  }
+
+  .gallery .shot--phone .frame--phone {
+    height: min(68svh, 34rem);
+  }
+}

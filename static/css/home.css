@@ -14,8 +14,15 @@
   z-index: 120;
   display: none;
   overflow: hidden;
-  background: var(--night);
-  color: var(--night-fg);
+  /* Follows the theme: paper and ink by default (light), the night palette
+     in dark mode, where --paper/--ink become #0d0c0a/#f2ece2. */
+  --door-hl: var(--accent);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+[data-theme="dark"] .loader {
+  --door-hl: var(--amber);
 }
 
 .is-loading .loader,
@@ -48,7 +55,7 @@
   font: 700 clamp(120px, 26vw, 340px) / 1 var(--f-sans);
   letter-spacing: -0.03em;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(224, 162, 103, 0.22);
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--accent-ink) 30%, transparent);
   white-space: nowrap;
 }
 
@@ -84,11 +91,11 @@
   pointer-events: none;
   background: linear-gradient(
     to top,
-    rgba(224, 162, 103, 0),
-    rgba(224, 162, 103, 0.14) 70%,
-    rgba(224, 162, 103, 0.5)
+    color-mix(in srgb, var(--door-hl) 0%, transparent),
+    color-mix(in srgb, var(--door-hl) 14%, transparent) 70%,
+    color-mix(in srgb, var(--door-hl) 50%, transparent)
   );
-  border-top: 1px solid rgba(224, 162, 103, 0.65);
+  border-top: 1px solid color-mix(in srgb, var(--door-hl) 65%, transparent);
 }
 
 .loader-id {
@@ -103,14 +110,14 @@
 .loader-initials {
   font: 500 12px / 1 var(--f-mono);
   letter-spacing: 0.22em;
-  color: var(--amber);
+  color: var(--accent-ink);
 }
 
 /* Raised from the mock's 42% to 62% opacity so the small copy clears 4.5:1. */
 .loader-role,
 .loader-status {
   font: 400 12px / 1.6 var(--f-mono);
-  color: rgba(242, 236, 226, 0.62);
+  color: color-mix(in srgb, var(--ink) 66%, transparent);
 }
 
 .loader-role {
@@ -148,7 +155,7 @@
   height: 56px;
   overflow: hidden;
   font: 400 13px / 56px var(--f-mono);
-  color: rgba(242, 236, 226, 0.72);
+  color: color-mix(in srgb, var(--ink) 74%, transparent);
   white-space: nowrap;
 }
 
@@ -168,19 +175,19 @@
 .loader-bar::before {
   content: "";
   height: 1px;
-  background: rgba(242, 236, 226, 0.14);
+  background: var(--line);
 }
 
 .loader-bar span {
   display: block;
   height: 3px;
-  background: rgba(242, 236, 226, 0.1);
+  background: color-mix(in srgb, var(--ink) 10%, transparent);
 }
 
 .loader-bar i {
   display: block;
   height: 100%;
-  background: var(--night-fg);
+  background: var(--ink);
   transform: scaleX(0.02);
   transform-origin: 0 50%;
 }
@@ -197,6 +204,31 @@
   .loader-bar {
     display: none;
   }
+}
+
+/* In the light theme the counter, status and bar sit on paper on one side and
+   on the black shirt on the other (all of it on phones). Painting them in the
+   paper colour with "difference" turns them dark over paper and light over the
+   shirt, so they read on both. Dark mode already has light ink on night. */
+:root:not([data-theme="dark"]) .loader-foot {
+  color: #dcdad4;
+  mix-blend-mode: difference;
+}
+
+:root:not([data-theme="dark"]) .loader-ticker {
+  color: #dcdad4;
+}
+
+:root:not([data-theme="dark"]) .loader-bar::before {
+  background: rgba(220, 218, 212, 0.4);
+}
+
+:root:not([data-theme="dark"]) .loader-bar span {
+  background: rgba(220, 218, 212, 0.25);
+}
+
+:root:not([data-theme="dark"]) .loader-bar i {
+  background: #dcdad4;
 }
 
 /* --------------------------------------------------------------------------
@@ -418,6 +450,28 @@
 @media (max-width: 480px) {
   .hero-cta .btn {
     flex: 1 1 100%;
+  }
+}
+
+/* Phones: one idea per screen. The giant SOFTWARE / ENGINEER already says the
+   role, and About and Contact give the location, so the small repeats go. */
+@media (max-width: 600px) {
+  .hero-top .label:last-child,
+  .hero-portrait figcaption,
+  .hero-where {
+    display: none;
+  }
+
+  .hero-top {
+    padding-bottom: 0.5rem;
+  }
+
+  .hero-bottom {
+    gap: 1.25rem;
+  }
+
+  .hero-cta .btn {
+    min-height: 48px;
   }
 }
 

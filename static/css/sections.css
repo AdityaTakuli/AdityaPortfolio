@@ -951,3 +951,101 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* --------------------------------------------------------------------------
+   Phones — same design, less at once. Following Apple's HIG: every element
+   earns its place (Design principles › Simplicity), long content is disclosed
+   progressively (Layout › Visual hierarchy), and every control is at least
+   44pt tall (Accessibility › controls). Desktop is untouched.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  /* Project and patent cards: the screenshot alone, no phone mock on top. */
+  .stack-phone {
+    display: none;
+  }
+
+  .stack-card {
+    gap: 1.1rem;
+  }
+
+  .stack-copy {
+    gap: 0.85rem;
+  }
+
+  /* The two labels keep their phrases whole instead of breaking mid-line. */
+  .stack-meta {
+    flex-wrap: wrap;
+    row-gap: 0.35rem;
+  }
+
+  .stack-meta .label {
+    white-space: nowrap;
+  }
+
+  /* The card links to the full story, so the blurb only needs its opening. */
+  .stack-blurb {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+  }
+
+  /* Buttons: the main action takes the full width, the rest share the row
+     below, all 44pt tall and centred, so the row never wraps raggedly. */
+  .stack-links {
+    gap: 0.5rem;
+  }
+
+  .stack-links .chip {
+    flex: 1 1 0;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  .stack-links .chip--solid,
+  .stack-links .chip--cta {
+    flex-basis: 100%;
+  }
+
+  /* Patents: the full-width button and the badge on the render already say
+     "click here"; the pointer note and the school tag would only crowd it. */
+  .stack-links .click-me,
+  .stack-links .chip--quiet {
+    display: none;
+  }
+
+  /* Experience: the first point of each role, the rest one tap away. */
+  .job-points.is-collapsed li:nth-child(n + 2) {
+    display: none;
+  }
+
+  /* Contact: the email and resume links get a full 44pt tap row. */
+  .contact-email,
+  .contact-meta .link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .job-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    margin-top: 0.25rem;
+    color: inherit;
+    font: 500 var(--fs-label) / 1 var(--f-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+}
+
+@media (min-width: 601px) {
+  .job-more {
+    display: none;
+  }
+}
