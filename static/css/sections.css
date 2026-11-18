@@ -312,6 +312,40 @@
   color: var(--on-accent);
 }
 
+/* The way into the running product: filled in the accent with a pulsing
+   "on air" dot, so it is never mistaken for a secondary link. */
+.chip--live {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+}
+
+.chip--live::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+  animation: live-dot 1.8s ease-in-out infinite;
+}
+
+.chip--live:hover,
+.chip--live:focus-visible {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+@keyframes live-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip--live::before { animation: none; }
+}
+
 .stack-media {
   grid-column: 6 / -1;
   position: relative;
