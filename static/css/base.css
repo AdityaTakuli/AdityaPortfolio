@@ -99,6 +99,21 @@ html {
   color-scheme: only light;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* Hard horizontal bounds: nothing that slides or overhangs (hero words,
+     rolling lines, pixel wipes, card shadows) can make the page wider than
+     the screen, so a phone can never pan sideways. Older Safari gets
+     "hidden"; "clip" is preferred because it keeps position: sticky working. */
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html,
+  body,
+  main {
+    /* main too: some iPhone Safari versions still let a finger pan the page
+       sideways past html/body clipping, but never past a clipped wrapper. */
+    overflow-x: clip;
+  }
 }
 
 html[data-theme="dark"] {
