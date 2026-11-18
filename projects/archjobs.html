@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArchJobs — Case Study · Aditya Pratap Singh Takuli</title>
+    <meta
+      name="description"
+      content="ArchJobs: an architecture, interiors and BIM job feed and application tracker built with Node.js, Express, React, MySQL, the Gmail API and budgeted LLM labelling."
+    />
+    <meta name="theme-color" content="#0d0c0a" />
+    <link rel="icon" href="../static/img/icons/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../static/img/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../static/img/icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/base.css?v=1" />
+    <link rel="stylesheet" href="../static/css/case.css?v=6" />
+    <script>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        try {
+          // Light is the default; only a visitor's own choice overrides it.
+          d.setAttribute("data-theme", localStorage.getItem("theme") || "light");
+        } catch (e) {
+          d.setAttribute("data-theme", "light");
+        }
+        var internal = false;
+        try {
+          internal = sessionStorage.getItem("apst-nav") === "1";
+          sessionStorage.removeItem("apst-nav");
+        } catch (e) {}
+        window.__enter = new Promise(function (resolve) {
+          window.__enterResolve = resolve;
+        });
+        if (internal) d.classList.add("is-arriving");
+      })();
+    </script>
+  </head>
+  <body class="case-page archjobs-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="curtain" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <span class="curtain-label"></span>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="marks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="cursor" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="nav-name" href="../index.html" data-title="Home" data-intro>Aditya Pratap Singh Takuli</a>
+      <nav class="nav-links" aria-label="Case study" data-intro>
+        <a href="#interface">Interface</a>
+        <a href="#pipeline">Pipeline</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#stack">Stack</a>
+        <a class="nav-cta" href="../index.html#work" data-title="Work">All work</a>
+      </nav>
+      <div class="nav-tools" data-intro>
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle"
+          role="switch"
+          aria-checked="false"
+          aria-label="Toggle color theme"
+        >
+          <span class="theme-track" aria-hidden="true"><span class="theme-thumb"></span></span>
+          <span class="theme-name" aria-hidden="true"></span>
+        </button>
+        <a class="nav-resume" href="../index.html#work" data-title="Work">← Index</a>
+        <button type="button" class="nav-menu" aria-expanded="false" aria-controls="menu" aria-label="Open menu"></button>
+      </div>
+    </header>
+
+    <div class="menu" id="menu" aria-hidden="true">
+      <nav class="menu-links" aria-label="Menu">
+        <a href="#interface"><span>Interface</span></a>
+        <a href="#pipeline"><span>Pipeline</span></a>
+        <a href="#architecture"><span>Architecture</span></a>
+        <a href="#stack"><span>Stack</span></a>
+        <a href="../index.html#work" data-title="Work"><span>All work</span></a>
+      </nav>
+      <div class="menu-foot">
+        <a href="https://archjobs.velocitytechnologies.in" target="_blank" rel="noopener noreferrer">archjobs.velocitytechnologies.in ↗</a>
+        <span>Case study 01</span>
+      </div>
+    </div>
+
+    <main id="main">
+      <section class="case-banner">
+        <div class="case-top" data-intro>
+          <span class="label">Case study 01</span>
+          <span class="label">Architecture job feed &amp; tracker</span>
+          <span class="label">archjobs.velocitytechnologies.in</span>
+        </div>
+        <h1 class="visually-hidden">ArchJobs</h1>
+        <svg
+          class="text-hover"
+          data-text-hover
+          data-intro
+          viewBox="0 0 820 80"
+          preserveAspectRatio="xMidYMid meet"
+          role="img"
+          aria-label="ArchJobs"
+        >
+          <defs>
+            <radialGradient
+              class="th-gradient"
+              id="ajGradient"
+              gradientUnits="userSpaceOnUse"
+              cx="410"
+              cy="40"
+              r="0"
+            >
+              <stop offset="0%" stop-color="#000000" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </radialGradient>
+            <mask id="ajMask">
+              <rect x="0" y="0" width="100%" height="100%" fill="url(#ajGradient)" />
+            </mask>
+          </defs>
+          <text
+            class="th-base"
+            x="410"
+            y="49"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            textLength="600"
+            lengthAdjust="spacingAndGlyphs"
+          ><tspan class="th-arch">ARCH</tspan><tspan class="th-jobs" dx="34">JOBS</tspan></text>
+          <text
+            class="th-fill"
+            x="410"
+            y="49"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            textLength="600"
+            lengthAdjust="spacingAndGlyphs"
+            mask="url(#ajMask)"
+          ><tspan class="th-arch">ARCH</tspan><tspan class="th-jobs" dx="34">JOBS</tspan></text>
+        </svg>
+        <p class="banner-tag" data-intro>
+          <span>Case study / <b>Architecture job feed &amp; tracker</b></span>
+          <span>Node.js · Express · React · MySQL · Gmail API · LLMs</span>
+        </p>
+      </section>
+
+      <section class="case-lede">
+        <div class="lede-copy" data-intro>
+          <p>
+            Every architecture, interiors and BIM internship and fresher job in India,
+            on one page. ArchJobs pulls openings from Google Jobs, firms' own careers
+            feeds and Gmail job alerts, merges the duplicates, labels each role with
+            budgeted LLM calls, and keeps an application tracker that moves itself
+            forward as replies arrive.
+          </p>
+        </div>
+        <dl class="case-meta" data-intro>
+          <div><dt>Role</dt><dd>Product &amp; full-stack engineering</dd></div>
+          <div><dt>Type</dt><dd>Invite-only job feed and tracker</dd></div>
+          <div><dt>Core stack</dt><dd>Node.js · Express 5 · React 19</dd></div>
+          <div><dt>Data &amp; AI</dt><dd>MySQL · Gmail API · Groq · Gemini</dd></div>
+        </dl>
+        <div class="case-cta" data-intro>
+          <a class="btn btn-fill" href="https://archjobs.velocitytechnologies.in" target="_blank" rel="noopener noreferrer"
+            >Open live site ↗</a
+          >
+          <a class="btn" href="#interface">See the interface ↓</a>
+        </div>
+      </section>
+
+      <div class="case-cover" data-reveal>
+        <figure class="frame frame--browser">
+          <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">archjobs.velocitytechnologies.in</span></div>
+          <div class="frame-view">
+            <img
+              src="../static/img/projects/archjobs/aj-landing.webp"
+              alt="ArchJobs landing page: every internship and fresher job, on one page, beside an architectural elevation drawing"
+              width="1920"
+              height="1200"
+            />
+          </div>
+        </figure>
+      </div>
+
+      <section class="section" id="interface">
+        <div class="section-head">
+          <span class="section-index">01</span>
+          <h2 data-split>Interface</h2>
+        </div>
+        <div class="gallery">
+          <figure class="shot shot--wide" data-reveal>
+            <div class="frame frame--browser">
+              <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">archjobs.velocitytechnologies.in/#what</span></div>
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/archjobs/aj-features.webp"
+                  alt="Six feature cards: job feed, labelling, application tracker, daily digest, direct apply links and firms list"
+                  width="1920"
+                  height="1200"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption><span class="label">01</span><span class="label">Six jobs, one app</span></figcaption>
+          </figure>
+          <figure class="shot shot--phone" data-reveal>
+            <div class="frame frame--phone">
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/archjobs/aj-mobile.webp"
+                  alt="ArchJobs landing page on a phone"
+                  width="780"
+                  height="1688"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption><span class="label">02</span><span class="label">Mobile first</span></figcaption>
+          </figure>
+
+          <figure class="shot shot--phone" data-reveal>
+            <div class="frame frame--phone">
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/archjobs/aj-mobile-steps.webp"
+                  alt="Three onboarding steps on a phone: sign in, pick cities, connect Gmail"
+                  width="780"
+                  height="1688"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption><span class="label">03</span><span class="label">Three steps, one optional</span></figcaption>
+          </figure>
+          <figure class="shot shot--wide" data-reveal>
+            <div class="frame frame--browser">
+              <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">archjobs.velocitytechnologies.in/#data</span></div>
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/archjobs/aj-google-data.webp"
+                  alt="Plain-language disclosure of the Google scopes ArchJobs asks for and what it does with Gmail data"
+                  width="1920"
+                  height="1200"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption><span class="label">04</span><span class="label">Every Google scope explained before it is granted</span></figcaption>
+          </figure>
+
+          <figure class="shot shot--wide" data-reveal>
+            <div class="frame frame--browser">
+              <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">archjobs.velocitytechnologies.in</span></div>
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/archjobs/aj-landing-dark.webp"
+                  alt="ArchJobs landing page in dark mode with the blueprint elevation drawing"
+                  width="1920"
+                  height="1200"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption><span class="label">05</span><span class="label">Blueprint theme, light and dark</span></figcaption>
+          </figure>
+          <div class="stats stats--side" data-reveal>
+            <div class="stat"><strong data-count="3">3</strong><span class="label">Job sources merged into one feed</span></div>
+            <div class="stat"><strong data-count="30" data-suffix="m">30m</strong><span class="label">Gmail alerts and replies read</span></div>
+            <div class="stat"><strong data-count="4">4</strong><span class="label">AI budget limits checked per call</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="pipeline">
+        <div class="section-head">
+          <span class="section-index">02</span>
+          <h2 data-split>The pipeline</h2>
+        </div>
+        <p class="about-text" data-reveal>
+          A job board is easy; a feed you can trust is not. The same role shows up on
+          five sites, half the listings are for senior architects, and a third are
+          already closed. ArchJobs runs every posting through one ingest path before
+          anyone sees it.
+        </p>
+        <ol class="gb-flow" aria-label="Job ingest pipeline">
+          <li data-reveal>
+            <span>01</span>
+            <h3>Collect</h3>
+            <p>
+              Google Jobs searches twice a day, paced against the monthly SerpApi
+              quota. Workday and SmartRecruiters careers feeds every morning. Gmail job
+              alerts every 30 minutes.
+            </p>
+          </li>
+          <li data-reveal>
+            <span>02</span>
+            <h3>Merge</h3>
+            <p>
+              Cities, company suffixes and title noise are normalised, then roles are
+              deduped on company, title and city. Each keeps its best apply link: the
+              firm's own site first, reposting sites last.
+            </p>
+          </li>
+          <li data-reveal>
+            <span>03</span>
+            <h3>Label</h3>
+            <p>
+              An LLM returns strict JSON: relevant or not, internship or fresher, BIM,
+              software, stipend, years of experience. If every model is down or out of
+              budget, keyword rules stand in and an hourly retry sends it back.
+            </p>
+          </li>
+          <li data-reveal>
+            <span>04</span>
+            <h3>Retire</h3>
+            <p>
+              A posting leaves every list the moment its apply-by date passes or its
+              link returns a 404 or a "no longer accepting" page. Deleted roles are
+              remembered for 180 days so they cannot come back.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" id="architecture">
+        <div class="section-head">
+          <span class="section-index">03</span>
+          <h2 data-split>Architecture</h2>
+        </div>
+        <figure class="diagram" data-reveal>
+          <div class="iso-stage">
+            <svg class="nd-svg iso-svg" viewBox="-763.4 -172.0 2063.7 1346.2" role="img" aria-label="ArchJobs pipeline: Google Jobs, firms' careers feeds and Gmail feed scheduled tasks, which normalise, dedupe and label each job with an LLM gateway, store it in MySQL and serve it through an Express API to the React app and a daily digest email" preserveAspectRatio="xMidYMid meet" style="--cycle: 10.0s"><title>ArchJobs pipeline: Google Jobs, firms' careers feeds and Gmail feed scheduled tasks, which normalise, dedupe and label each job with an LLM gateway, store it in MySQL and serve it through an Express API to the React app and a daily digest email</title><g class="iso-grid"><line x1="0.0" y1="-310.0" x2="-1342.3" y2="465.0" /><line x1="268.5" y1="-155.0" x2="-1073.9" y2="620.0" /><line x1="536.9" y1="0.0" x2="-805.4" y2="775.0" /><line x1="805.4" y1="155.0" x2="-536.9" y2="930.0" /><line x1="1073.9" y1="310.0" x2="-268.5" y2="1085.0" /><line x1="1342.3" y1="465.0" x2="0.0" y2="1240.0" /><line x1="1610.8" y1="620.0" x2="268.5" y2="1395.0" /><line x1="1879.3" y1="775.0" x2="536.9" y2="1550.0" /><line x1="0.0" y1="-310.0" x2="1879.3" y2="775.0" /><line x1="-268.5" y1="-155.0" x2="1610.8" y2="930.0" /><line x1="-536.9" y1="0.0" x2="1342.3" y2="1085.0" /><line x1="-805.4" y1="155.0" x2="1073.9" y2="1240.0" /><line x1="-1073.9" y1="310.0" x2="805.4" y2="1395.0" /><line x1="-1342.3" y1="465.0" x2="536.9" y2="1550.0" /></g><g class="iso-wires"><path class="iso-wire" d="M 0.00 90.10 L 134.23 167.60 L -134.23 322.60 L 0.00 400.10" /><path class="iso-pulse" d="M 0.00 90.10 L 134.23 167.60 L -134.23 322.60 L 0.00 400.10" style="--len:620.0; animation-delay:0.00s" /><path class="iso-wire" d="M -268.47 245.10 L -134.23 322.60 L -134.23 322.60 L 0.00 400.10" /><path class="iso-pulse" d="M -268.47 245.10 L -134.23 322.60 L -134.23 322.60 L 0.00 400.10" style="--len:310.0; animation-delay:0.61s" /><path class="iso-wire" d="M -536.94 400.10 L -402.70 477.60 L -134.23 322.60 L 0.00 400.10" /><path class="iso-pulse" d="M -536.94 400.10 L -402.70 477.60 L -134.23 322.60 L 0.00 400.10" style="--len:620.0; animation-delay:1.22s" /><path class="iso-wire" d="M 0.00 400.10 L 134.23 477.60 L 134.23 477.60 L 268.47 555.10" /><path class="iso-pulse" d="M 0.00 400.10 L 134.23 477.60 L 134.23 477.60 L 268.47 555.10" style="--len:310.0; animation-delay:1.83s" /><path class="iso-wire" d="M 268.47 555.10 L 268.47 555.10 L 0.00 710.10 L 0.00 710.10" /><path class="iso-pulse" d="M 268.47 555.10 L 268.47 555.10 L 0.00 710.10 L 0.00 710.10" style="--len:310.0; animation-delay:2.44s" /><path class="iso-wire" d="M 268.47 555.10 L 402.70 632.60 L 402.70 632.60 L 536.94 710.10" /><path class="iso-pulse" d="M 268.47 555.10 L 402.70 632.60 L 402.70 632.60 L 536.94 710.10" style="--len:310.0; animation-delay:3.06s" /><path class="iso-wire" d="M 536.94 710.10 L 671.17 787.60 L 671.17 787.60 L 805.40 865.10" /><path class="iso-pulse" d="M 536.94 710.10 L 671.17 787.60 L 671.17 787.60 L 805.40 865.10" style="--len:310.0; animation-delay:3.67s" /><path class="iso-wire" d="M 805.40 865.10 L 805.40 865.10 L 1073.87 710.10 L 1073.87 710.10" /><path class="iso-pulse" d="M 805.40 865.10 L 805.40 865.10 L 1073.87 710.10 L 1073.87 710.10" style="--len:310.0; animation-delay:4.28s" /><path class="iso-wire" d="M 805.40 865.10 L 805.40 865.10 L 536.94 1020.10 L 536.94 1020.10" /><path class="iso-pulse" d="M 805.40 865.10 L 805.40 865.10 L 536.94 1020.10 L 536.94 1020.10" style="--len:310.0; animation-delay:4.89s" /></g><g class="iso-chip iso-chip--ext" style="--d:0.00s"><polygon class="iso-shadow" points="0.00,-2.00 169.91,96.10 0.00,194.20 -169.91,96.10" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="-166.45,91.10 0.00,187.20 0.00,192.20 -166.45,96.10" /><polygon class="iso-face iso-face--right iso-tray" points="166.45,91.10 0.00,187.20 0.00,192.20 166.45,96.10" /><polygon class="iso-face iso-face--top iso-tray" points="0.00,-5.00 166.45,91.10 0.00,187.20 -166.45,91.10" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--ext" points="-133.16,60.10 0.00,136.98 0.00,158.98 -133.16,82.10" /><polygon class="iso-face iso-face--right iso-slab iso-slab--ext" points="133.16,60.10 0.00,136.98 0.00,158.98 133.16,82.10" /><polygon class="iso-face iso-face--top iso-slab iso-slab--ext" points="0.00,-16.78 133.16,60.10 0.00,136.98 -133.16,60.10" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--ext" points="-99.87,42.10 0.00,99.76 0.00,108.76 -99.87,51.10" /><polygon class="iso-face iso-face--right iso-cap iso-cap--ext" points="99.87,42.10 0.00,99.76 0.00,108.76 99.87,51.10" /><polygon class="iso-face iso-face--top iso-cap iso-cap--ext" points="0.00,-15.56 99.87,42.10 0.00,99.76 -99.87,42.10" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,0.000,-15.560)"><rect x="30.0" y="30.0" width="11.4" height="11.4" rx="1" /><rect x="30.0" y="48.4" width="11.4" height="11.4" rx="1" /><rect x="30.0" y="66.9" width="11.4" height="11.4" rx="1" /><rect x="48.4" y="30.0" width="11.4" height="11.4" rx="1" /><rect x="48.4" y="48.4" width="11.4" height="11.4" rx="1" /><rect x="48.4" y="66.9" width="11.4" height="11.4" rx="1" /><rect x="66.9" y="30.0" width="11.4" height="11.4" rx="1" /><rect x="66.9" y="48.4" width="11.4" height="11.4" rx="1" /><rect x="66.9" y="66.9" width="11.4" height="11.4" rx="1" /></g></g><g class="iso-label" transform="translate(0.00,42.10)"><text class="iso-kicker" x="0" y="-166.1">source</text><text class="iso-title" x="0" y="-144.1">Google Jobs</text><text class="iso-sub" x="0" y="-122.1">SerpApi · quota-paced</text><line class="iso-leader" x1="0" y1="-114.1" x2="0" y2="-98.1" /></g></g><g class="iso-chip iso-chip--ext" style="--d:0.08s"><polygon class="iso-shadow" points="-268.47,153.00 -98.55,251.10 -268.47,349.20 -438.38,251.10" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="-434.92,246.10 -268.47,342.20 -268.47,347.20 -434.92,251.10" /><polygon class="iso-face iso-face--right iso-tray" points="-102.02,246.10 -268.47,342.20 -268.47,347.20 -102.02,251.10" /><polygon class="iso-face iso-face--top iso-tray" points="-268.47,150.00 -102.02,246.10 -268.47,342.20 -434.92,246.10" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--ext" points="-401.63,215.10 -268.47,291.98 -268.47,313.98 -401.63,237.10" /><polygon class="iso-face iso-face--right iso-slab iso-slab--ext" points="-135.31,215.10 -268.47,291.98 -268.47,313.98 -135.31,237.10" /><polygon class="iso-face iso-face--top iso-slab iso-slab--ext" points="-268.47,138.22 -135.31,215.10 -268.47,291.98 -401.63,215.10" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--ext" points="-368.34,197.10 -268.47,254.76 -268.47,263.76 -368.34,206.10" /><polygon class="iso-face iso-face--right iso-cap iso-cap--ext" points="-168.60,197.10 -268.47,254.76 -268.47,263.76 -168.60,206.10" /><polygon class="iso-face iso-face--top iso-cap iso-cap--ext" points="-268.47,139.44 -168.60,197.10 -268.47,254.76 -368.34,197.10" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,-268.468,139.440)"><rect x="30.0" y="30.0" width="11.4" height="11.4" rx="1" /><rect x="30.0" y="48.4" width="11.4" height="11.4" rx="1" /><rect x="30.0" y="66.9" width="11.4" height="11.4" rx="1" /><rect x="48.4" y="30.0" width="11.4" height="11.4" rx="1" /><rect x="48.4" y="48.4" width="11.4" height="11.4" rx="1" /><rect x="48.4" y="66.9" width="11.4" height="11.4" rx="1" /><rect x="66.9" y="30.0" width="11.4" height="11.4" rx="1" /><rect x="66.9" y="48.4" width="11.4" height="11.4" rx="1" /><rect x="66.9" y="66.9" width="11.4" height="11.4" rx="1" /></g></g><g class="iso-label" transform="translate(-268.47,197.10)"><text class="iso-kicker" x="0" y="-166.1">source</text><text class="iso-title" x="0" y="-144.1">Careers feeds</text><text class="iso-sub" x="0" y="-122.1">Workday · SmartRecruiters</text><line class="iso-leader" x1="0" y1="-114.1" x2="0" y2="-98.1" /></g></g><g class="iso-chip iso-chip--ext" style="--d:0.16s"><polygon class="iso-shadow" points="-536.94,308.00 -367.02,406.10 -536.94,504.20 -706.85,406.10" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="-703.39,401.10 -536.94,497.20 -536.94,502.20 -703.39,406.10" /><polygon class="iso-face iso-face--right iso-tray" points="-370.49,401.10 -536.94,497.20 -536.94,502.20 -370.49,406.10" /><polygon class="iso-face iso-face--top iso-tray" points="-536.94,305.00 -370.49,401.10 -536.94,497.20 -703.39,401.10" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--ext" points="-670.10,370.10 -536.94,446.98 -536.94,468.98 -670.10,392.10" /><polygon class="iso-face iso-face--right iso-slab iso-slab--ext" points="-403.78,370.10 -536.94,446.98 -536.94,468.98 -403.78,392.10" /><polygon class="iso-face iso-face--top iso-slab iso-slab--ext" points="-536.94,293.22 -403.78,370.10 -536.94,446.98 -670.10,370.10" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--ext" points="-636.81,352.10 -536.94,409.76 -536.94,418.76 -636.81,361.10" /><polygon class="iso-face iso-face--right iso-cap iso-cap--ext" points="-437.07,352.10 -536.94,409.76 -536.94,418.76 -437.07,361.10" /><polygon class="iso-face iso-face--top iso-cap iso-cap--ext" points="-536.94,294.44 -437.07,352.10 -536.94,409.76 -636.81,352.10" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,-536.936,294.440)"><rect x="25.4" y="25.4" width="64.6" height="64.6" rx="2" /><line x1="25.4" y1="43.5" x2="89.9" y2="43.5" /></g></g><g class="iso-label" transform="translate(-536.94,352.10)"><text class="iso-kicker" x="0" y="-166.1">source</text><text class="iso-title" x="0" y="-144.1">Gmail API</text><text class="iso-sub" x="0" y="-122.1">job alerts · replies (read-only)</text><line class="iso-leader" x1="0" y1="-114.1" x2="0" y2="-98.1" /></g></g><g class="iso-chip iso-chip--mod" style="--d:0.24s"><polygon class="iso-shadow" points="0.00,308.00 169.91,406.10 0.00,504.20 -169.91,406.10" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="-166.45,401.10 0.00,497.20 0.00,502.20 -166.45,406.10" /><polygon class="iso-face iso-face--right iso-tray" points="166.45,401.10 0.00,497.20 0.00,502.20 166.45,406.10" /><polygon class="iso-face iso-face--top iso-tray" points="0.00,305.00 166.45,401.10 0.00,497.20 -166.45,401.10" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--mod" points="-133.16,370.10 0.00,446.98 0.00,468.98 -133.16,392.10" /><polygon class="iso-face iso-face--right iso-slab iso-slab--mod" points="133.16,370.10 0.00,446.98 0.00,468.98 133.16,392.10" /><polygon class="iso-face iso-face--top iso-slab iso-slab--mod" points="0.00,293.22 133.16,370.10 0.00,446.98 -133.16,370.10" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--mod" points="-99.87,352.10 0.00,409.76 0.00,418.76 -99.87,361.10" /><polygon class="iso-face iso-face--right iso-cap iso-cap--mod" points="99.87,352.10 0.00,409.76 0.00,418.76 99.87,361.10" /><polygon class="iso-face iso-face--top iso-cap iso-cap--mod" points="0.00,294.44 99.87,352.10 0.00,409.76 -99.87,352.10" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,0.000,294.440)"><rect x="27.7" y="54.7" width="12.0" height="33.0" rx="1.5" /><rect x="51.7" y="45.7" width="12.0" height="42.0" rx="1.5" /><rect x="75.6" y="36.7" width="12.0" height="51.0" rx="1.5" /></g></g><g class="iso-label" transform="translate(0.00,352.10)"><text class="iso-kicker" x="0" y="-166.1">scheduler</text><text class="iso-title" x="0" y="-144.1">node-cron tasks</text><text class="iso-sub" x="0" y="-122.1">fetch · read-gmail · archive</text><line class="iso-leader" x1="0" y1="-114.1" x2="0" y2="-98.1" /></g></g><g class="iso-chip iso-chip--core" style="--d:0.32s"><polygon class="iso-shadow" points="268.47,463.00 438.38,561.10 268.47,659.20 98.55,561.10" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="102.02,556.10 268.47,652.20 268.47,657.20 102.02,561.10" /><polygon class="iso-face iso-face--right iso-tray" points="434.92,556.10 268.47,652.20 268.47,657.20 434.92,561.10" /><polygon class="iso-face iso-face--top iso-tray" points="268.47,460.00 434.92,556.10 268.47,652.20 102.02,556.10" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--core" points="135.31,525.10 268.47,601.98 268.47,623.98 135.31,547.10" /><polygon class="iso-face iso-face--right iso-slab iso-slab--core" points="401.63,525.10 268.47,601.98 268.47,623.98 401.63,547.10" /><polygon class="iso-face iso-face--top iso-slab iso-slab--core" points="268.47,448.22 401.63,525.10 268.47,601.98 135.31,525.10" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--core" points="168.60,507.10 268.47,564.76 268.47,573.76 168.60,516.10" /><polygon class="iso-face iso-face--right iso-cap iso-cap--core" points="368.34,507.10 268.47,564.76 268.47,573.76 368.34,516.10" /><polygon class="iso-face iso-face--top iso-cap iso-cap--core" points="268.47,449.44 368.34,507.10 268.47,564.76 168.60,507.10" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,268.468,449.440)"><circle cx="57.7" cy="57.7" r="9.7" /><circle cx="80.7" cy="57.7" r="6.0" /><line x1="57.7" y1="57.7" x2="80.7" y2="57.7" /><circle cx="46.1" cy="77.6" r="6.0" /><line x1="57.7" y1="57.7" x2="46.1" y2="77.6" /><circle cx="46.1" cy="37.7" r="6.0" /><line x1="57.7" y1="57.7" x2="46.1" y2="37.7" /></g></g><g class="iso-label" transform="translate(268.47,507.10)"><text class="iso-kicker" x="0" y="-166.1">ingest</text><text class="iso-title" x="0" y="-144.1">Normalise + dedupe</text><text class="iso-sub" x="0" y="-122.1">company · title · city · link check</text><line class="iso-leader" x1="0" y1="-114.1" x2="0" y2="-98.1" /></g></g><g class="iso-chip iso-chip--ext" style="--d:0.40s"><polygon class="iso-shadow" points="0.00,618.00 169.91,716.10 0.00,814.20 -169.91,716.10" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="-166.45,711.10 0.00,807.20 0.00,812.20 -166.45,716.10" /><polygon class="iso-face iso-face--right iso-tray" points="166.45,711.10 0.00,807.20 0.00,812.20 166.45,716.10" /><polygon class="iso-face iso-face--top iso-tray" points="0.00,615.00 166.45,711.10 0.00,807.20 -166.45,711.10" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--ext" points="-133.16,680.10 0.00,756.98 0.00,778.98 -133.16,702.10" /><polygon class="iso-face iso-face--right iso-slab iso-slab--ext" points="133.16,680.10 0.00,756.98 0.00,778.98 133.16,702.10" /><polygon class="iso-face iso-face--top iso-slab iso-slab--ext" points="0.00,603.22 133.16,680.10 0.00,756.98 -133.16,680.10" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--ext" points="-99.87,662.10 0.00,719.76 0.00,728.76 -99.87,671.10" /><polygon class="iso-face iso-face--right iso-cap iso-cap--ext" points="99.87,662.10 0.00,719.76 0.00,728.76 99.87,671.10" /><polygon class="iso-face iso-face--top iso-cap iso-cap--ext" points="0.00,604.44 99.87,662.10 0.00,719.76 -99.87,662.10" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,0.000,604.440)"><polygon points="62.3,34.6 41.5,61.1 56.5,61.1 53.0,80.7 73.8,54.2 58.8,54.2" /></g></g><g class="iso-label" transform="translate(0.00,662.10)"><text class="iso-kicker" x="0" y="-166.1">labelling</text><text class="iso-title" x="0" y="-144.1">LLM gateway</text><text class="iso-sub" x="0" y="-122.1">Groq · Gemini · rules fallback</text><line class="iso-leader" x1="0" y1="-114.1" x2="0" y2="-98.1" /></g></g><g class="iso-chip iso-chip--data" style="--d:0.48s"><polygon class="iso-shadow" points="536.94,618.00 706.85,716.10 536.94,814.20 367.02,716.10" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="370.49,711.10 536.94,807.20 536.94,812.20 370.49,716.10" /><polygon class="iso-face iso-face--right iso-tray" points="703.39,711.10 536.94,807.20 536.94,812.20 703.39,716.10" /><polygon class="iso-face iso-face--top iso-tray" points="536.94,615.00 703.39,711.10 536.94,807.20 370.49,711.10" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--data" points="403.78,680.10 536.94,756.98 536.94,778.98 403.78,702.10" /><polygon class="iso-face iso-face--right iso-slab iso-slab--data" points="670.10,680.10 536.94,756.98 536.94,778.98 670.10,702.10" /><polygon class="iso-face iso-face--top iso-slab iso-slab--data" points="536.94,603.22 670.10,680.10 536.94,756.98 403.78,680.10" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--data" points="437.07,662.10 536.94,719.76 536.94,728.76 437.07,671.10" /><polygon class="iso-face iso-face--right iso-cap iso-cap--data" points="636.81,662.10 536.94,719.76 536.94,728.76 636.81,671.10" /><polygon class="iso-face iso-face--top iso-cap iso-cap--data" points="536.94,604.44 636.81,662.10 536.94,719.76 437.07,662.10" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,536.936,604.440)"><ellipse cx="57.7" cy="47.3" rx="23.1" ry="10.4" /><ellipse cx="57.7" cy="68.0" rx="23.1" ry="10.4" /></g></g><g class="iso-label" transform="translate(536.94,662.10)"><text class="iso-kicker" x="0" y="-166.1">store</text><text class="iso-title" x="0" y="-144.1">MySQL</text><text class="iso-sub" x="0" y="-122.1">jobs · tracker · ai_usage</text><line class="iso-leader" x1="0" y1="-114.1" x2="0" y2="-98.1" /></g></g><g class="iso-chip iso-chip--edge" style="--d:0.56s"><polygon class="iso-shadow" points="1073.87,618.00 1243.79,716.10 1073.87,814.20 903.96,716.10" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="907.42,711.10 1073.87,807.20 1073.87,812.20 907.42,716.10" /><polygon class="iso-face iso-face--right iso-tray" points="1240.32,711.10 1073.87,807.20 1073.87,812.20 1240.32,716.10" /><polygon class="iso-face iso-face--top iso-tray" points="1073.87,615.00 1240.32,711.10 1073.87,807.20 907.42,711.10" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--edge" points="940.71,680.10 1073.87,756.98 1073.87,778.98 940.71,702.10" /><polygon class="iso-face iso-face--right iso-slab iso-slab--edge" points="1207.03,680.10 1073.87,756.98 1073.87,778.98 1207.03,702.10" /><polygon class="iso-face iso-face--top iso-slab iso-slab--edge" points="1073.87,603.22 1207.03,680.10 1073.87,756.98 940.71,680.10" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--edge" points="974.00,662.10 1073.87,719.76 1073.87,728.76 974.00,671.10" /><polygon class="iso-face iso-face--right iso-cap iso-cap--edge" points="1173.74,662.10 1073.87,719.76 1073.87,728.76 1173.74,671.10" /><polygon class="iso-face iso-face--top iso-cap iso-cap--edge" points="1073.87,604.44 1173.74,662.10 1073.87,719.76 974.00,662.10" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,1073.872,604.440)"><rect x="25.4" y="25.4" width="64.6" height="64.6" rx="2" /><line x1="25.4" y1="43.5" x2="89.9" y2="43.5" /></g></g><g class="iso-label" transform="translate(1073.87,662.10)"><text class="iso-kicker" x="0" y="-166.1">client</text><text class="iso-title" x="0" y="-144.1">React app</text><text class="iso-sub" x="0" y="-122.1">Jobs · Tracker · Firms</text><line class="iso-leader" x1="0" y1="-114.1" x2="0" y2="-98.1" /></g></g><g class="iso-chip iso-chip--core" style="--d:0.64s"><polygon class="iso-shadow" points="805.40,773.00 975.32,871.10 805.40,969.20 635.49,871.10" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="638.95,866.10 805.40,962.20 805.40,967.20 638.95,871.10" /><polygon class="iso-face iso-face--right iso-tray" points="971.85,866.10 805.40,962.20 805.40,967.20 971.85,871.10" /><polygon class="iso-face iso-face--top iso-tray" points="805.40,770.00 971.85,866.10 805.40,962.20 638.95,866.10" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--core" points="672.24,835.10 805.40,911.98 805.40,933.98 672.24,857.10" /><polygon class="iso-face iso-face--right iso-slab iso-slab--core" points="938.56,835.10 805.40,911.98 805.40,933.98 938.56,857.10" /><polygon class="iso-face iso-face--top iso-slab iso-slab--core" points="805.40,758.22 938.56,835.10 805.40,911.98 672.24,835.10" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--core" points="705.53,817.10 805.40,874.76 805.40,883.76 705.53,826.10" /><polygon class="iso-face iso-face--right iso-cap iso-cap--core" points="905.27,817.10 805.40,874.76 805.40,883.76 905.27,826.10" /><polygon class="iso-face iso-face--top iso-cap iso-cap--core" points="805.40,759.44 905.27,817.10 805.40,874.76 705.53,817.10" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,805.404,759.440)"><polygon points="62.3,34.6 41.5,61.1 56.5,61.1 53.0,80.7 73.8,54.2 58.8,54.2" /></g></g><g class="iso-label" transform="translate(805.40,817.10)"><text class="iso-kicker" x="0" y="-166.1">server</text><text class="iso-title" x="0" y="-144.1">Express 5 API</text><text class="iso-sub" x="0" y="-122.1">Google OAuth · sessions · CSP</text><line class="iso-leader" x1="0" y1="-114.1" x2="0" y2="-98.1" /></g></g><g class="iso-chip iso-chip--edge" style="--d:0.72s"><polygon class="iso-shadow" points="536.94,928.00 706.85,1026.10 536.94,1124.20 367.02,1026.10" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="370.49,1021.10 536.94,1117.20 536.94,1122.20 370.49,1026.10" /><polygon class="iso-face iso-face--right iso-tray" points="703.39,1021.10 536.94,1117.20 536.94,1122.20 703.39,1026.10" /><polygon class="iso-face iso-face--top iso-tray" points="536.94,925.00 703.39,1021.10 536.94,1117.20 370.49,1021.10" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--edge" points="403.78,990.10 536.94,1066.98 536.94,1088.98 403.78,1012.10" /><polygon class="iso-face iso-face--right iso-slab iso-slab--edge" points="670.10,990.10 536.94,1066.98 536.94,1088.98 670.10,1012.10" /><polygon class="iso-face iso-face--top iso-slab iso-slab--edge" points="536.94,913.22 670.10,990.10 536.94,1066.98 403.78,990.10" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--edge" points="437.07,972.10 536.94,1029.76 536.94,1038.76 437.07,981.10" /><polygon class="iso-face iso-face--right iso-cap iso-cap--edge" points="636.81,972.10 536.94,1029.76 536.94,1038.76 636.81,981.10" /><polygon class="iso-face iso-face--top iso-cap iso-cap--edge" points="536.94,914.44 636.81,972.10 536.94,1029.76 437.07,972.10" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,536.936,914.440)"><rect x="25.4" y="25.4" width="64.6" height="64.6" rx="2" /><line x1="25.4" y1="43.5" x2="89.9" y2="43.5" /></g></g><g class="iso-label" transform="translate(536.94,972.10)"><text class="iso-kicker" x="0" y="-166.1">outbound</text><text class="iso-title" x="0" y="-144.1">Daily digest</text><text class="iso-sub" x="0" y="-122.1">SMTP · per-user time</text><line class="iso-leader" x1="0" y1="-114.1" x2="0" y2="-98.1" /></g></g></svg>
+          </div>
+          <figcaption>
+            Three sources feed scheduled tasks on one Node host. Every job goes through
+            the same ingest path, is labelled through an LLM gateway inside a daily
+            token budget, and lands in MySQL, which the Express API serves to the React
+            app and the daily digest.
+          </figcaption>
+        </figure>
+        <ul class="arch-grid gb-architecture-cards">
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">AI</span>
+              <div class="bold-body">
+                <h3>AI inside a budget</h3>
+                <p>
+                  Every model call is checked against four limits first: tokens per
+                  day, requests per day, tokens per run and tokens per minute. Totals
+                  live in an <code>ai_usage</code> table, so every task and restart
+                  shares one budget.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">@</span>
+              <div class="bold-body">
+                <h3>A tracker that reads replies</h3>
+                <p>
+                  A separate mail model labels each reply as applied, interview,
+                  assessment, offer or rejected, and moves the matching tracker entry
+                  forward, never backwards, keeping the recruiter as the contact.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">ID</span>
+              <div class="bold-body">
+                <h3>Shared feed, private trackers</h3>
+                <p>
+                  The job list, AI labels and search quota are shared by everyone who
+                  is invited. Trackers, firms, searches, settings and digests belong to
+                  one Google account each.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section" id="decisions">
+        <div class="section-head">
+          <span class="section-index">04</span>
+          <h2 data-split>Engineering decisions</h2>
+        </div>
+        <ul class="decision-grid">
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">Q</span>
+              <div class="bold-body">
+                <h3>Quota is spread, not spent</h3>
+                <p>
+                  Each run asks SerpApi how many searches are left and spreads them
+                  over the rest of the month. Query and city pairs rotate, so adding a
+                  city shares the quota instead of multiplying it.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">?</span>
+              <div class="bold-body">
+                <h3>Searches that forgive typos</h3>
+                <p>
+                  "revti" becomes Revit, "arch" expands, and a city typed into the
+                  keyword box moves to "where". The same search within six hours
+                  reuses stored results for free.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">✓</span>
+              <div class="bold-body">
+                <h3>Forged email cannot add jobs</h3>
+                <p>
+                  A job alert or reply only counts when Gmail's own
+                  Authentication-Results header shows the sender passed DMARC, or DKIM
+                  or SPF for the From domain.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">⇢</span>
+              <div class="bold-body">
+                <h3>Link checks cannot reach inside</h3>
+                <p>
+                  Every URL the server opens goes through one safe fetch: http(s) on
+                  ports 80 and 443 only, never localhost, private networks or cloud
+                  metadata, checked again at connect time and on every redirect.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">🔒</span>
+              <div class="bold-body">
+                <h3>Read-only, and it stays that way</h3>
+                <p>
+                  Gmail access is <code>gmail.readonly</code>, refresh tokens are
+                  encrypted with AES-256-GCM, email bodies are never stored, and
+                  disconnecting revokes the grant at Google.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section" id="stack">
+        <div class="section-head">
+          <span class="section-index">05</span>
+          <h2 data-split>Stack</h2>
+        </div>
+        <ul class="stack-grid">
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">UI</span>
+              <div class="bold-body">
+                <h3>Application</h3>
+                <ul class="stack-chips">
+                  <li>React 19</li>
+                  <li>Vite</li>
+                  <li>GSAP</li>
+                  <li>Motion</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">API</span>
+              <div class="bold-body">
+                <h3>Server &amp; data</h3>
+                <ul class="stack-chips">
+                  <li>Node.js</li>
+                  <li>Express 5</li>
+                  <li>MySQL 8</li>
+                  <li>node-cron</li>
+                  <li>Cheerio</li>
+                  <li>undici</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">AI</span>
+              <div class="bold-body">
+                <h3>AI &amp; mail</h3>
+                <ul class="stack-chips">
+                  <li>Groq gpt-oss-120b</li>
+                  <li>Gemini</li>
+                  <li>LLM gateway</li>
+                  <li>Gmail API</li>
+                  <li>mailparser</li>
+                  <li>Nodemailer</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">CI</span>
+              <div class="bold-body">
+                <h3>Security &amp; hosting</h3>
+                <ul class="stack-chips">
+                  <li>Google OAuth</li>
+                  <li>HMAC sessions</li>
+                  <li>CSP · HSTS</li>
+                  <li>AES-256-GCM</li>
+                  <li>node:test</li>
+                  <li>Hostinger</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="case-outro tone-ink" data-tone="ink">
+        <p class="label">ArchJobs / Live · Invite-only</p>
+        <h2>Every opening.<br />One page.</h2>
+        <div class="hero-cta">
+          <a class="btn btn-fill" href="https://archjobs.velocitytechnologies.in" target="_blank" rel="noopener noreferrer"
+            >Visit ArchJobs ↗</a
+          >
+          <a class="btn" href="https://github.com/AdityaTakuli/JobHunt" target="_blank" rel="noopener noreferrer"
+            >Read the code ↗</a
+          >
+        </div>
+        <a class="next-case" href="goodbookies.html" data-title="Good Bookies">
+          <span class="label">Next case study</span>
+          <strong>Good Bookies</strong>
+          <span aria-hidden="true">→</span>
+        </a>
+        <footer class="site-footer">
+          <p>© 2026 Aditya Pratap Singh Takuli</p>
+          <div class="footer-links">
+            <a class="link" href="../index.html" data-title="Home">Back to portfolio</a>
+            <a class="link" href="#main">Back to top ↑</a>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <script src="../static/js/vendor/gsap.min.js"></script>
+    <script src="../static/js/vendor/ScrollTrigger.min.js"></script>
+    <script src="../static/js/vendor/SplitText.min.js"></script>
+    <script src="../static/js/vendor/ScrambleTextPlugin.min.js"></script>
+    <script src="../static/js/vendor/CustomEase.min.js"></script>
+    <script src="../static/js/vendor/lenis.min.js"></script>
+    <script src="../static/js/theme.js?v=2"></script>
+    <script src="../static/js/motion.js?v=1"></script>
+    <script src="../static/js/ui.js?v=9"></script>
+  </body>
+</html>

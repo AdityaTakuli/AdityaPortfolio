@@ -13,6 +13,36 @@
   --accent-ink: #7aa5ff;
 }
 
+.archjobs-page {
+  --accent: #2f66f0;
+  --accent-ink: #1c46c9;
+}
+
+[data-theme="dark"] .archjobs-page {
+  --accent: #6b93ff;
+  --accent-ink: #8aaaff;
+}
+
+.lexagent-page {
+  --accent: #b07a2e;
+  --accent-ink: #7d5216;
+}
+
+[data-theme="dark"] .lexagent-page {
+  --accent: #d6a75e;
+  --accent-ink: #e0b672;
+}
+
+.notchex-page {
+  --accent: #ec7f62;
+  --accent-ink: #b4442a;
+}
+
+[data-theme="dark"] .notchex-page {
+  --accent: #f6987c;
+  --accent-ink: #f8a68d;
+}
+
 .goodbookies-page {
   --accent: #3ddc63;
   --accent-ink: #0e6629;
@@ -69,12 +99,16 @@
 }
 
 .th-base .th-trial,
-.th-base .th-good {
+.th-base .th-good,
+.th-base .th-arch,
+.th-base .th-a {
   stroke: color-mix(in srgb, var(--ink) 34%, transparent);
 }
 
 .th-base .th-match,
-.th-base .th-bookies {
+.th-base .th-bookies,
+.th-base .th-jobs,
+.th-base .th-b {
   stroke: color-mix(in srgb, var(--accent) 62%, transparent);
 }
 
@@ -83,13 +117,17 @@
 }
 
 .th-fill .th-trial,
-.th-fill .th-good {
+.th-fill .th-good,
+.th-fill .th-arch,
+.th-fill .th-a {
   fill: var(--ink);
   stroke: var(--ink);
 }
 
 .th-fill .th-match,
-.th-fill .th-bookies {
+.th-fill .th-bookies,
+.th-fill .th-jobs,
+.th-fill .th-b {
   fill: var(--accent);
   stroke: var(--accent);
 }

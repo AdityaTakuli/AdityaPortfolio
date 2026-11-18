@@ -9,7 +9,7 @@ Static site — no build step. Open `index.html`, or serve the folder.
 ## Structure
 
 - `index.html` — home: enter screen, hero, statement, about, experience reel, work, patents, skills, achievements, contact
-- `projects/trialmatch.html`, `projects/goodbookies.html` — case studies
+- `projects/archjobs.html`, `goodbookies.html`, `lexagent.html`, `notchex.html`, `trialmatch.html` — case studies, in Work order
 - `projects/modular-uav.html`, `projects/orchestrated-control.html` — patent intro pages, each with a
   scroll-driven 3D model
 - `static/css/base.css` — design tokens, type, shell, nav, device frames

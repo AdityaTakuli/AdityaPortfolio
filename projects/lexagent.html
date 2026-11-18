@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LexAgent — Case Study · Aditya Pratap Singh Takuli</title>
+    <meta
+      name="description"
+      content="LexAgent: adversarial multi-agent debate with opinion-grounded citation checking for legal questions over U.S. Supreme Court opinions. LangGraph, hybrid retrieval, FastAPI and React."
+    />
+    <meta name="theme-color" content="#0d0c0a" />
+    <link rel="icon" href="../static/img/icons/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../static/img/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../static/img/icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/base.css?v=1" />
+    <link rel="stylesheet" href="../static/css/case.css?v=6" />
+    <script>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        try {
+          // Light is the default; only a visitor's own choice overrides it.
+          d.setAttribute("data-theme", localStorage.getItem("theme") || "light");
+        } catch (e) {
+          d.setAttribute("data-theme", "light");
+        }
+        var internal = false;
+        try {
+          internal = sessionStorage.getItem("apst-nav") === "1";
+          sessionStorage.removeItem("apst-nav");
+        } catch (e) {}
+        window.__enter = new Promise(function (resolve) {
+          window.__enterResolve = resolve;
+        });
+        if (internal) d.classList.add("is-arriving");
+      })();
+    </script>
+  </head>
+  <body class="case-page lexagent-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="curtain" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <span class="curtain-label"></span>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="marks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="cursor" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="nav-name" href="../index.html" data-title="Home" data-intro>Aditya Pratap Singh Takuli</a>
+      <nav class="nav-links" aria-label="Case study" data-intro>
+        <a href="#interface">Interface</a>
+        <a href="#debate">The debate</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#stack">Stack</a>
+        <a class="nav-cta" href="../index.html#work" data-title="Work">All work</a>
+      </nav>
+      <div class="nav-tools" data-intro>
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle"
+          role="switch"
+          aria-checked="false"
+          aria-label="Toggle color theme"
+        >
+          <span class="theme-track" aria-hidden="true"><span class="theme-thumb"></span></span>
+          <span class="theme-name" aria-hidden="true"></span>
+        </button>
+        <a class="nav-resume" href="../index.html#work" data-title="Work">← Index</a>
+        <button type="button" class="nav-menu" aria-expanded="false" aria-controls="menu" aria-label="Open menu"></button>
+      </div>
+    </header>
+
+    <div class="menu" id="menu" aria-hidden="true">
+      <nav class="menu-links" aria-label="Menu">
+        <a href="#interface"><span>Interface</span></a>
+        <a href="#debate"><span>Debate</span></a>
+        <a href="#architecture"><span>Architecture</span></a>
+        <a href="#stack"><span>Stack</span></a>
+        <a href="../index.html#work" data-title="Work"><span>All work</span></a>
+      </nav>
+      <div class="menu-foot">
+        <a href="https://lexagent.velocitytechnologies.in" target="_blank" rel="noopener noreferrer">lexagent.velocitytechnologies.in ↗</a>
+        <span>Case study 03</span>
+      </div>
+    </div>
+
+    <main id="main">
+      <section class="case-banner">
+        <div class="case-top" data-intro>
+          <span class="label">Case study 03</span>
+          <span class="label">Multi-agent legal research</span>
+          <span class="label">lexagent.velocitytechnologies.in</span>
+        </div>
+        <h1 class="visually-hidden">LexAgent</h1>
+        <svg
+          class="text-hover"
+          data-text-hover
+          data-intro
+          viewBox="0 0 820 80"
+          preserveAspectRatio="xMidYMid meet"
+          role="img"
+          aria-label="LexAgent"
+        >
+          <defs>
+            <radialGradient
+              class="th-gradient"
+              id="lxGradient"
+              gradientUnits="userSpaceOnUse"
+              cx="410"
+              cy="40"
+              r="0"
+            >
+              <stop offset="0%" stop-color="#000000" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </radialGradient>
+            <mask id="lxMask">
+              <rect x="0" y="0" width="100%" height="100%" fill="url(#lxGradient)" />
+            </mask>
+          </defs>
+          <text
+            class="th-base"
+            x="410"
+            y="49"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            textLength="620"
+            lengthAdjust="spacingAndGlyphs"
+          ><tspan class="th-a">LEX</tspan><tspan class="th-b">AGENT</tspan></text>
+          <text
+            class="th-fill"
+            x="410"
+            y="49"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            textLength="620"
+            lengthAdjust="spacingAndGlyphs"
+            mask="url(#lxMask)"
+          ><tspan class="th-a">LEX</tspan><tspan class="th-b">AGENT</tspan></text>
+        </svg>
+        <p class="banner-tag" data-intro>
+          <span>Case study / <b>Multi-agent legal research</b></span>
+          <span>Python · LangGraph · ChromaDB · BM25 · FastAPI · React</span>
+        </p>
+      </section>
+
+      <section class="case-lede">
+        <div class="lede-copy" data-intro>
+          <p>
+            Language models invent legal authorities, and credit real cases with
+            holdings those cases never contained. LexAgent makes an answer survive an
+            adversary and a citation check first: a prosecutor and a defense debate a
+            question over U.S. Supreme Court opinions, every case they cite is tested
+            against the opinion it names, and a judge rules only on what survives.
+          </p>
+        </div>
+        <dl class="case-meta" data-intro>
+          <div><dt>Role</dt><dd>Research &amp; engineering, team project</dd></div>
+          <div><dt>Type</dt><dd>Research prototype with an IEEE-format paper</dd></div>
+          <div><dt>Agents</dt><dd>LangGraph · prosecutor · defense · judge</dd></div>
+          <div><dt>Retrieval</dt><dd>BGE + BM25 · ChromaDB</dd></div>
+        </dl>
+        <div class="case-cta" data-intro>
+          <a class="btn btn-fill" href="https://lexagent.velocitytechnologies.in" target="_blank" rel="noopener noreferrer"
+            >Open live demo ↗</a
+          >
+          <a class="btn" href="#interface">See the interface ↓</a>
+        </div>
+      </section>
+
+      <div class="case-cover" data-reveal>
+        <figure class="frame frame--browser">
+          <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">lexagent.velocitytechnologies.in</span></div>
+          <div class="frame-view">
+            <img
+              src="../static/img/projects/lexagent/lx-landing.webp"
+              alt="LexAgent landing page: legal answers that show their work, beside a statue of Lady Justice between two columns"
+              width="1920"
+              height="1200"
+            />
+          </div>
+        </figure>
+      </div>
+
+      <section class="section" id="interface">
+        <div class="section-head">
+          <span class="section-index">01</span>
+          <h2 data-split>Interface</h2>
+        </div>
+        <div class="gallery">
+          <figure class="shot shot--wide" data-reveal>
+            <div class="frame frame--browser">
+              <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">lexagent.velocitytechnologies.in/#/chat</span></div>
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/lexagent/lx-chat.webp"
+                  alt="A debate in progress: the defense's argument, a citation check with Supported and Misattributed verdicts, reflection and the debate controller calling another round"
+                  width="1920"
+                  height="1200"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption><span class="label">01</span><span class="label">A debate arriving stage by stage</span></figcaption>
+          </figure>
+          <figure class="shot shot--phone" data-reveal>
+            <div class="frame frame--phone">
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/lexagent/lx-mobile-chat.webp"
+                  alt="The same debate on a phone, with the stage rail pinned to the top"
+                  width="780"
+                  height="1688"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption><span class="label">02</span><span class="label">The same debate on a phone</span></figcaption>
+          </figure>
+
+          <figure class="shot shot--phone" data-reveal>
+            <div class="frame frame--phone">
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/lexagent/lx-mobile.webp"
+                  alt="LexAgent landing page on a phone"
+                  width="780"
+                  height="1688"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption><span class="label">03</span><span class="label">Landing, phone width</span></figcaption>
+          </figure>
+          <figure class="shot shot--wide" data-reveal>
+            <div class="frame frame--browser">
+              <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">lexagent.velocitytechnologies.in</span></div>
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/lexagent/lx-check.webp"
+                  alt="A recorded debate on cell-phone searches: Riley v. California supported, Chambers v. Maroney struck out as misattributed"
+                  width="1920"
+                  height="1200"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption><span class="label">04</span><span class="label">The check as it happens: a misattributed case struck out</span></figcaption>
+          </figure>
+
+          <figure class="shot shot--wide" data-reveal>
+            <div class="frame frame--browser">
+              <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span class="frame-url">lexagent.velocitytechnologies.in/#verdicts</span></div>
+              <div class="frame-view">
+                <img
+                  src="../static/img/projects/lexagent/lx-verdicts.webp"
+                  alt="Five verdict cards: Supported, Uncertain, Misattributed, Fabricated and Unverifiable"
+                  width="1920"
+                  height="1200"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption><span class="label">05</span><span class="label">Five verdicts for every case cited</span></figcaption>
+          </figure>
+          <div class="stats stats--side" data-reveal>
+            <div class="stat"><strong data-count="593">593</strong><span class="label">Volumes of the U.S. Reports indexed</span></div>
+            <div class="stat"><strong data-count="528" data-suffix="k">528k</strong><span class="label">Passages in the research corpus</span></div>
+            <div class="stat"><strong data-count="0">0</strong><span class="label">Final answers resting on a non-existent case</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="debate">
+        <div class="section-head">
+          <span class="section-index">02</span>
+          <h2 data-split>The debate</h2>
+        </div>
+        <p class="about-text" data-reveal>
+          One model answering alone will cite cases that do not exist. LexAgent turns a
+          question into a LangGraph run with an adversary and a verifier inside the
+          loop, and streams every stage to the browser as it happens.
+        </p>
+        <ol class="gb-flow" aria-label="Debate pipeline">
+          <li data-reveal>
+            <span>01</span>
+            <h3>Retrieve</h3>
+            <p>
+              Dense embeddings and BM25 are fused by reciprocal rank, with a cap on
+              passages per case so one long opinion cannot fill the context. Eight
+              passages per round.
+            </p>
+          </li>
+          <li data-reveal>
+            <span>02</span>
+            <h3>Argue and challenge</h3>
+            <p>
+              The prosecutor makes the strongest case the passages allow, citing at most
+              two authorities. The defense attacks the weak points with
+              counter-authority from the same corpus.
+            </p>
+          </li>
+          <li data-reveal>
+            <span>03</span>
+            <h3>Verify</h3>
+            <p>
+              Each citation is resolved to the actual opinion, then its holding is
+              tested against that opinion's own text. Five verdicts, from Supported to
+              Fabricated.
+            </p>
+          </li>
+          <li data-reveal>
+            <span>04</span>
+            <h3>Decide and rule</h3>
+            <p>
+              A controller reads citation scores and open gaps and either stops or runs
+              another round, up to three. The judge writes the answer from the
+              citations that survived.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" id="architecture">
+        <div class="section-head">
+          <span class="section-index">03</span>
+          <h2 data-split>Architecture</h2>
+        </div>
+        <figure class="diagram" data-reveal>
+          <div class="iso-stage">
+            <svg class="nd-svg iso-svg" viewBox="-480.9 -22.0 2001.0 1310.0" role="img" aria-label="LexAgent debate: a question goes through hybrid retrieval over the U.S. Reports, a prosecutor and a defense argue, a citation checker tests every cited case against the case catalog, a controller decides whether to run another round, and a judge rules" preserveAspectRatio="xMidYMid meet" style="--cycle: 11.0s"><title>LexAgent debate: a question goes through hybrid retrieval over the U.S. Reports, a prosecutor and a defense argue, a citation checker tests every cited case against the case catalog, a controller decides whether to run another round, and a judge rules</title><g class="iso-grid"><line x1="0.0" y1="-300.0" x2="-1039.2" y2="300.0" /><line x1="259.8" y1="-150.0" x2="-779.4" y2="450.0" /><line x1="519.6" y1="0.0" x2="-519.6" y2="600.0" /><line x1="779.4" y1="150.0" x2="-259.8" y2="750.0" /><line x1="1039.2" y1="300.0" x2="0.0" y2="900.0" /><line x1="1299.0" y1="450.0" x2="259.8" y2="1050.0" /><line x1="1558.8" y1="600.0" x2="519.6" y2="1200.0" /><line x1="1818.7" y1="750.0" x2="779.4" y2="1350.0" /><line x1="2078.5" y1="900.0" x2="1039.2" y2="1500.0" /><line x1="2338.3" y1="1050.0" x2="1299.0" y2="1650.0" /><line x1="0.0" y1="-300.0" x2="2338.3" y2="1050.0" /><line x1="-259.8" y1="-150.0" x2="2078.5" y2="1200.0" /><line x1="-519.6" y1="0.0" x2="1818.7" y2="1350.0" /><line x1="-779.4" y1="150.0" x2="1558.8" y2="1500.0" /><line x1="-1039.2" y1="300.0" x2="1299.0" y2="1650.0" /></g><g class="iso-wires"><path class="iso-wire" d="M -259.81 237.00 L -129.90 312.00 L -129.90 312.00 L 0.00 387.00" /><path class="iso-pulse" d="M -259.81 237.00 L -129.90 312.00 L -129.90 312.00 L 0.00 387.00" style="--len:300.0; animation-delay:0.00s" /><path class="iso-wire" d="M 259.81 237.00 L 259.81 237.00 L 0.00 387.00 L 0.00 387.00" /><path class="iso-pulse" d="M 259.81 237.00 L 259.81 237.00 L 0.00 387.00 L 0.00 387.00" style="--len:300.0; animation-delay:0.76s" /><path class="iso-wire" d="M 0.00 387.00 L 129.90 462.00 L 129.90 462.00 L 259.81 537.00" /><path class="iso-pulse" d="M 0.00 387.00 L 129.90 462.00 L 129.90 462.00 L 259.81 537.00" style="--len:300.0; animation-delay:1.51s" /><path class="iso-wire" d="M 259.81 537.00 L 389.71 612.00 L 389.71 612.00 L 519.62 687.00" /><path class="iso-pulse" d="M 259.81 537.00 L 389.71 612.00 L 389.71 612.00 L 519.62 687.00" style="--len:300.0; animation-delay:2.27s" /><path class="iso-wire" d="M 519.62 687.00 L 649.52 762.00 L 649.52 762.00 L 779.42 837.00" /><path class="iso-pulse" d="M 519.62 687.00 L 649.52 762.00 L 649.52 762.00 L 779.42 837.00" style="--len:300.0; animation-delay:3.03s" /><path class="iso-wire" d="M 1039.23 687.00 L 1039.23 687.00 L 779.42 837.00 L 779.42 837.00" /><path class="iso-pulse" d="M 1039.23 687.00 L 1039.23 687.00 L 779.42 837.00 L 779.42 837.00" style="--len:300.0; animation-delay:3.78s" /><path class="iso-wire" d="M 779.42 837.00 L 909.33 912.00 L 909.33 912.00 L 1039.23 987.00" /><path class="iso-pulse" d="M 779.42 837.00 L 909.33 912.00 L 909.33 912.00 L 1039.23 987.00" style="--len:300.0; animation-delay:4.54s" /><path class="iso-wire" d="M 1039.23 987.00 L 1169.13 1062.00 L 1169.13 1062.00 L 1299.04 1137.00" /><path class="iso-pulse" d="M 1039.23 987.00 L 1169.13 1062.00 L 1169.13 1062.00 L 1299.04 1137.00" style="--len:300.0; animation-delay:5.29s" /></g><g class="iso-chip iso-chip--edge" style="--d:0.00s"><polygon class="iso-shadow" points="-259.81,148.00 -95.26,243.00 -259.81,338.00 -424.35,243.00" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="-420.89,238.00 -259.81,331.00 -259.81,336.00 -420.89,243.00" /><polygon class="iso-face iso-face--right iso-tray" points="-98.73,238.00 -259.81,331.00 -259.81,336.00 -98.73,243.00" /><polygon class="iso-face iso-face--top iso-tray" points="-259.81,145.00 -98.73,238.00 -259.81,331.00 -420.89,238.00" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--edge" points="-388.67,207.00 -259.81,281.40 -259.81,303.40 -388.67,229.00" /><polygon class="iso-face iso-face--right iso-slab iso-slab--edge" points="-130.94,207.00 -259.81,281.40 -259.81,303.40 -130.94,229.00" /><polygon class="iso-face iso-face--top iso-slab iso-slab--edge" points="-259.81,132.60 -130.94,207.00 -259.81,281.40 -388.67,207.00" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--edge" points="-356.46,189.00 -259.81,244.80 -259.81,253.80 -356.46,198.00" /><polygon class="iso-face iso-face--right iso-cap iso-cap--edge" points="-163.16,189.00 -259.81,244.80 -259.81,253.80 -163.16,198.00" /><polygon class="iso-face iso-face--top iso-cap iso-cap--edge" points="-259.81,133.20 -163.16,189.00 -259.81,244.80 -356.46,189.00" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,-259.808,133.200)"><rect x="24.6" y="24.6" width="62.5" height="62.5" rx="2" /><line x1="24.6" y1="42.1" x2="87.0" y2="42.1" /></g></g><g class="iso-label" transform="translate(-259.81,189.00)"><text class="iso-kicker" x="0" y="-163.0">input</text><text class="iso-title" x="0" y="-141.0">Legal question</text><text class="iso-sub" x="0" y="-119.0">plain language</text><line class="iso-leader" x1="0" y1="-111.0" x2="0" y2="-95.0" /></g></g><g class="iso-chip iso-chip--data" style="--d:0.08s"><polygon class="iso-shadow" points="259.81,148.00 424.35,243.00 259.81,338.00 95.26,243.00" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="98.73,238.00 259.81,331.00 259.81,336.00 98.73,243.00" /><polygon class="iso-face iso-face--right iso-tray" points="420.89,238.00 259.81,331.00 259.81,336.00 420.89,243.00" /><polygon class="iso-face iso-face--top iso-tray" points="259.81,145.00 420.89,238.00 259.81,331.00 98.73,238.00" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--data" points="130.94,207.00 259.81,281.40 259.81,303.40 130.94,229.00" /><polygon class="iso-face iso-face--right iso-slab iso-slab--data" points="388.67,207.00 259.81,281.40 259.81,303.40 388.67,229.00" /><polygon class="iso-face iso-face--top iso-slab iso-slab--data" points="259.81,132.60 388.67,207.00 259.81,281.40 130.94,207.00" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--data" points="163.16,189.00 259.81,244.80 259.81,253.80 163.16,198.00" /><polygon class="iso-face iso-face--right iso-cap iso-cap--data" points="356.46,189.00 259.81,244.80 259.81,253.80 356.46,198.00" /><polygon class="iso-face iso-face--top iso-cap iso-cap--data" points="259.81,133.20 356.46,189.00 259.81,244.80 163.16,189.00" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,259.808,133.200)"><ellipse cx="55.8" cy="45.8" rx="22.3" ry="10.0" /><ellipse cx="55.8" cy="65.8" rx="22.3" ry="10.0" /></g></g><g class="iso-label" transform="translate(259.81,189.00)"><text class="iso-kicker" x="0" y="-163.0">store</text><text class="iso-title" x="0" y="-141.0">U.S. Reports</text><text class="iso-sub" x="0" y="-119.0">ChromaDB · 528k passages</text><line class="iso-leader" x1="0" y1="-111.0" x2="0" y2="-95.0" /></g></g><g class="iso-chip iso-chip--mod" style="--d:0.16s"><polygon class="iso-shadow" points="0.00,298.00 164.54,393.00 0.00,488.00 -164.54,393.00" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="-161.08,388.00 0.00,481.00 0.00,486.00 -161.08,393.00" /><polygon class="iso-face iso-face--right iso-tray" points="161.08,388.00 0.00,481.00 0.00,486.00 161.08,393.00" /><polygon class="iso-face iso-face--top iso-tray" points="0.00,295.00 161.08,388.00 0.00,481.00 -161.08,388.00" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--mod" points="-128.86,357.00 0.00,431.40 0.00,453.40 -128.86,379.00" /><polygon class="iso-face iso-face--right iso-slab iso-slab--mod" points="128.86,357.00 0.00,431.40 0.00,453.40 128.86,379.00" /><polygon class="iso-face iso-face--top iso-slab iso-slab--mod" points="0.00,282.60 128.86,357.00 0.00,431.40 -128.86,357.00" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--mod" points="-96.65,339.00 0.00,394.80 0.00,403.80 -96.65,348.00" /><polygon class="iso-face iso-face--right iso-cap iso-cap--mod" points="96.65,339.00 0.00,394.80 0.00,403.80 96.65,348.00" /><polygon class="iso-face iso-face--top iso-cap iso-cap--mod" points="0.00,283.20 96.65,339.00 0.00,394.80 -96.65,339.00" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,0.000,283.200)"><rect x="29.0" y="29.0" width="11.1" height="11.1" rx="1" /><rect x="29.0" y="46.9" width="11.1" height="11.1" rx="1" /><rect x="29.0" y="64.7" width="11.1" height="11.1" rx="1" /><rect x="46.9" y="29.0" width="11.1" height="11.1" rx="1" /><rect x="46.9" y="46.9" width="11.1" height="11.1" rx="1" /><rect x="46.9" y="64.7" width="11.1" height="11.1" rx="1" /><rect x="64.7" y="29.0" width="11.1" height="11.1" rx="1" /><rect x="64.7" y="46.9" width="11.1" height="11.1" rx="1" /><rect x="64.7" y="64.7" width="11.1" height="11.1" rx="1" /></g></g><g class="iso-label" transform="translate(0.00,339.00)"><text class="iso-kicker" x="0" y="-163.0">retrieval</text><text class="iso-title" x="0" y="-141.0">Hybrid search</text><text class="iso-sub" x="0" y="-119.0">BGE + BM25 · rank fusion</text><line class="iso-leader" x1="0" y1="-111.0" x2="0" y2="-95.0" /></g></g><g class="iso-chip iso-chip--core" style="--d:0.24s"><polygon class="iso-shadow" points="259.81,448.00 424.35,543.00 259.81,638.00 95.26,543.00" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="98.73,538.00 259.81,631.00 259.81,636.00 98.73,543.00" /><polygon class="iso-face iso-face--right iso-tray" points="420.89,538.00 259.81,631.00 259.81,636.00 420.89,543.00" /><polygon class="iso-face iso-face--top iso-tray" points="259.81,445.00 420.89,538.00 259.81,631.00 98.73,538.00" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--core" points="130.94,507.00 259.81,581.40 259.81,603.40 130.94,529.00" /><polygon class="iso-face iso-face--right iso-slab iso-slab--core" points="388.67,507.00 259.81,581.40 259.81,603.40 388.67,529.00" /><polygon class="iso-face iso-face--top iso-slab iso-slab--core" points="259.81,432.60 388.67,507.00 259.81,581.40 130.94,507.00" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--core" points="163.16,489.00 259.81,544.80 259.81,553.80 163.16,498.00" /><polygon class="iso-face iso-face--right iso-cap iso-cap--core" points="356.46,489.00 259.81,544.80 259.81,553.80 356.46,498.00" /><polygon class="iso-face iso-face--top iso-cap iso-cap--core" points="259.81,433.20 356.46,489.00 259.81,544.80 163.16,489.00" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,259.808,433.200)"><circle cx="55.8" cy="55.8" r="9.4" /><circle cx="78.1" cy="55.8" r="5.8" /><line x1="55.8" y1="55.8" x2="78.1" y2="55.8" /><circle cx="44.6" cy="75.1" r="5.8" /><line x1="55.8" y1="55.8" x2="44.6" y2="75.1" /><circle cx="44.6" cy="36.5" r="5.8" /><line x1="55.8" y1="55.8" x2="44.6" y2="36.5" /></g></g><g class="iso-label" transform="translate(259.81,489.00)"><text class="iso-kicker" x="0" y="-163.0">agent</text><text class="iso-title" x="0" y="-141.0">Prosecutor</text><text class="iso-sub" x="0" y="-119.0">argues · cites ≤ 2 cases</text><line class="iso-leader" x1="0" y1="-111.0" x2="0" y2="-95.0" /></g></g><g class="iso-chip iso-chip--core" style="--d:0.32s"><polygon class="iso-shadow" points="519.62,598.00 684.16,693.00 519.62,788.00 355.07,693.00" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="358.53,688.00 519.62,781.00 519.62,786.00 358.53,693.00" /><polygon class="iso-face iso-face--right iso-tray" points="680.70,688.00 519.62,781.00 519.62,786.00 680.70,693.00" /><polygon class="iso-face iso-face--top iso-tray" points="519.62,595.00 680.70,688.00 519.62,781.00 358.53,688.00" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--core" points="390.75,657.00 519.62,731.40 519.62,753.40 390.75,679.00" /><polygon class="iso-face iso-face--right iso-slab iso-slab--core" points="648.48,657.00 519.62,731.40 519.62,753.40 648.48,679.00" /><polygon class="iso-face iso-face--top iso-slab iso-slab--core" points="519.62,582.60 648.48,657.00 519.62,731.40 390.75,657.00" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--core" points="422.97,639.00 519.62,694.80 519.62,703.80 422.97,648.00" /><polygon class="iso-face iso-face--right iso-cap iso-cap--core" points="616.26,639.00 519.62,694.80 519.62,703.80 616.26,648.00" /><polygon class="iso-face iso-face--top iso-cap iso-cap--core" points="519.62,583.20 616.26,639.00 519.62,694.80 422.97,639.00" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,519.615,583.200)"><circle cx="55.8" cy="55.8" r="9.4" /><circle cx="78.1" cy="55.8" r="5.8" /><line x1="55.8" y1="55.8" x2="78.1" y2="55.8" /><circle cx="44.6" cy="75.1" r="5.8" /><line x1="55.8" y1="55.8" x2="44.6" y2="75.1" /><circle cx="44.6" cy="36.5" r="5.8" /><line x1="55.8" y1="55.8" x2="44.6" y2="36.5" /></g></g><g class="iso-label" transform="translate(519.62,639.00)"><text class="iso-kicker" x="0" y="-163.0">agent</text><text class="iso-title" x="0" y="-141.0">Defense</text><text class="iso-sub" x="0" y="-119.0">attacks · counter-authority</text><line class="iso-leader" x1="0" y1="-111.0" x2="0" y2="-95.0" /></g></g><g class="iso-chip iso-chip--data" style="--d:0.40s"><polygon class="iso-shadow" points="1039.23,598.00 1203.78,693.00 1039.23,788.00 874.69,693.00" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="878.15,688.00 1039.23,781.00 1039.23,786.00 878.15,693.00" /><polygon class="iso-face iso-face--right iso-tray" points="1200.31,688.00 1039.23,781.00 1039.23,786.00 1200.31,693.00" /><polygon class="iso-face iso-face--top iso-tray" points="1039.23,595.00 1200.31,688.00 1039.23,781.00 878.15,688.00" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--data" points="910.37,657.00 1039.23,731.40 1039.23,753.40 910.37,679.00" /><polygon class="iso-face iso-face--right iso-slab iso-slab--data" points="1168.10,657.00 1039.23,731.40 1039.23,753.40 1168.10,679.00" /><polygon class="iso-face iso-face--top iso-slab iso-slab--data" points="1039.23,582.60 1168.10,657.00 1039.23,731.40 910.37,657.00" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--data" points="942.58,639.00 1039.23,694.80 1039.23,703.80 942.58,648.00" /><polygon class="iso-face iso-face--right iso-cap iso-cap--data" points="1135.88,639.00 1039.23,694.80 1039.23,703.80 1135.88,648.00" /><polygon class="iso-face iso-face--top iso-cap iso-cap--data" points="1039.23,583.20 1135.88,639.00 1039.23,694.80 942.58,639.00" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,1039.230,583.200)"><ellipse cx="55.8" cy="45.8" rx="22.3" ry="10.0" /><ellipse cx="55.8" cy="65.8" rx="22.3" ry="10.0" /></g></g><g class="iso-label" transform="translate(1039.23,639.00)"><text class="iso-kicker" x="0" y="-163.0">store</text><text class="iso-title" x="0" y="-141.0">Case catalog</text><text class="iso-sub" x="0" y="-119.0">reporter cites · opinions</text><line class="iso-leader" x1="0" y1="-111.0" x2="0" y2="-95.0" /></g></g><g class="iso-chip iso-chip--mod" style="--d:0.48s"><polygon class="iso-shadow" points="779.42,748.00 943.97,843.00 779.42,938.00 614.88,843.00" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="618.34,838.00 779.42,931.00 779.42,936.00 618.34,843.00" /><polygon class="iso-face iso-face--right iso-tray" points="940.50,838.00 779.42,931.00 779.42,936.00 940.50,843.00" /><polygon class="iso-face iso-face--top iso-tray" points="779.42,745.00 940.50,838.00 779.42,931.00 618.34,838.00" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--mod" points="650.56,807.00 779.42,881.40 779.42,903.40 650.56,829.00" /><polygon class="iso-face iso-face--right iso-slab iso-slab--mod" points="908.29,807.00 779.42,881.40 779.42,903.40 908.29,829.00" /><polygon class="iso-face iso-face--top iso-slab iso-slab--mod" points="779.42,732.60 908.29,807.00 779.42,881.40 650.56,807.00" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--mod" points="682.77,789.00 779.42,844.80 779.42,853.80 682.77,798.00" /><polygon class="iso-face iso-face--right iso-cap iso-cap--mod" points="876.07,789.00 779.42,844.80 779.42,853.80 876.07,798.00" /><polygon class="iso-face iso-face--top iso-cap iso-cap--mod" points="779.42,733.20 876.07,789.00 779.42,844.80 682.77,789.00" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,779.423,733.200)"><rect x="26.8" y="52.9" width="11.6" height="31.9" rx="1.5" /><rect x="50.0" y="44.2" width="11.6" height="40.6" rx="1.5" /><rect x="73.2" y="35.5" width="11.6" height="49.3" rx="1.5" /></g></g><g class="iso-label" transform="translate(779.42,789.00)"><text class="iso-kicker" x="0" y="-163.0">verification</text><text class="iso-title" x="0" y="-141.0">Citation checker</text><text class="iso-sub" x="0" y="-119.0">exists? · holding supported?</text><line class="iso-leader" x1="0" y1="-111.0" x2="0" y2="-95.0" /></g></g><g class="iso-chip iso-chip--ext" style="--d:0.56s"><polygon class="iso-shadow" points="1039.23,898.00 1203.78,993.00 1039.23,1088.00 874.69,993.00" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="878.15,988.00 1039.23,1081.00 1039.23,1086.00 878.15,993.00" /><polygon class="iso-face iso-face--right iso-tray" points="1200.31,988.00 1039.23,1081.00 1039.23,1086.00 1200.31,993.00" /><polygon class="iso-face iso-face--top iso-tray" points="1039.23,895.00 1200.31,988.00 1039.23,1081.00 878.15,988.00" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--ext" points="910.37,957.00 1039.23,1031.40 1039.23,1053.40 910.37,979.00" /><polygon class="iso-face iso-face--right iso-slab iso-slab--ext" points="1168.10,957.00 1039.23,1031.40 1039.23,1053.40 1168.10,979.00" /><polygon class="iso-face iso-face--top iso-slab iso-slab--ext" points="1039.23,882.60 1168.10,957.00 1039.23,1031.40 910.37,957.00" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--ext" points="942.58,939.00 1039.23,994.80 1039.23,1003.80 942.58,948.00" /><polygon class="iso-face iso-face--right iso-cap iso-cap--ext" points="1135.88,939.00 1039.23,994.80 1039.23,1003.80 1135.88,948.00" /><polygon class="iso-face iso-face--top iso-cap iso-cap--ext" points="1039.23,883.20 1135.88,939.00 1039.23,994.80 942.58,939.00" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,1039.230,883.200)"><polygon points="60.3,33.5 40.2,59.1 54.7,59.1 51.3,78.1 71.4,52.5 56.9,52.5" /></g></g><g class="iso-label" transform="translate(1039.23,939.00)"><text class="iso-kicker" x="0" y="-163.0">controller</text><text class="iso-title" x="0" y="-141.0">Debate controller</text><text class="iso-sub" x="0" y="-119.0">stop, or another round</text><line class="iso-leader" x1="0" y1="-111.0" x2="0" y2="-95.0" /></g></g><g class="iso-chip iso-chip--core" style="--d:0.64s"><polygon class="iso-shadow" points="1299.04,1048.00 1463.58,1143.00 1299.04,1238.00 1134.49,1143.00" /><g class="iso-plate iso-plate--tray"><polygon class="iso-face iso-face--left iso-tray" points="1137.96,1138.00 1299.04,1231.00 1299.04,1236.00 1137.96,1143.00" /><polygon class="iso-face iso-face--right iso-tray" points="1460.12,1138.00 1299.04,1231.00 1299.04,1236.00 1460.12,1143.00" /><polygon class="iso-face iso-face--top iso-tray" points="1299.04,1045.00 1460.12,1138.00 1299.04,1231.00 1137.96,1138.00" /></g><g class="iso-plate iso-plate--slab"><polygon class="iso-face iso-face--left iso-slab iso-slab--core" points="1170.17,1107.00 1299.04,1181.40 1299.04,1203.40 1170.17,1129.00" /><polygon class="iso-face iso-face--right iso-slab iso-slab--core" points="1427.90,1107.00 1299.04,1181.40 1299.04,1203.40 1427.90,1129.00" /><polygon class="iso-face iso-face--top iso-slab iso-slab--core" points="1299.04,1032.60 1427.90,1107.00 1299.04,1181.40 1170.17,1107.00" /></g><g class="iso-plate iso-plate--cap"><polygon class="iso-face iso-face--left iso-cap iso-cap--core" points="1202.39,1089.00 1299.04,1144.80 1299.04,1153.80 1202.39,1098.00" /><polygon class="iso-face iso-face--right iso-cap iso-cap--core" points="1395.69,1089.00 1299.04,1144.80 1299.04,1153.80 1395.69,1098.00" /><polygon class="iso-face iso-face--top iso-cap iso-cap--core" points="1299.04,1033.20 1395.69,1089.00 1299.04,1144.80 1202.39,1089.00" /><g class="iso-glyph" transform="matrix(0.8660,0.5000,-0.8660,0.5000,1299.038,1033.200)"><circle cx="55.8" cy="55.8" r="9.4" /><circle cx="78.1" cy="55.8" r="5.8" /><line x1="55.8" y1="55.8" x2="78.1" y2="55.8" /><circle cx="44.6" cy="75.1" r="5.8" /><line x1="55.8" y1="55.8" x2="44.6" y2="75.1" /><circle cx="44.6" cy="36.5" r="5.8" /><line x1="55.8" y1="55.8" x2="44.6" y2="36.5" /></g></g><g class="iso-label" transform="translate(1299.04,1089.00)"><text class="iso-kicker" x="0" y="-163.0">agent</text><text class="iso-title" x="0" y="-141.0">Judge</text><text class="iso-sub" x="0" y="-119.0">rules on what survived</text><line class="iso-leader" x1="0" y1="-111.0" x2="0" y2="-95.0" /></g></g></svg>
+          </div>
+          <figcaption>
+            Retrieval feeds two adversarial agents. Every citation they make passes
+            through the checker against the case catalog before the controller decides
+            whether the debate is done, and the judge rules only on what was verified.
+            A FastAPI server streams each node to the React front end as Server-Sent
+            Events.
+          </figcaption>
+        </figure>
+        <ul class="arch-grid gb-architecture-cards">
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">E×S</span>
+              <div class="bold-body">
+                <h3>Existence times support</h3>
+                <p>
+                  A citation's confidence is two separate questions multiplied: does
+                  the case exist at that reporter cite, and does its opinion entail the
+                  holding claimed for it? A case name shared with one-line order
+                  entries is resolved to the real opinion first.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">≡</span>
+              <div class="bold-body">
+                <h3>A ledger across rounds</h3>
+                <p>
+                  What each round verified is kept in a ledger, so a later round cannot
+                  quietly lose a citation that already held up, and the controller
+                  stops as soon as a reliable one is in hand.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">⇣</span>
+              <div class="bold-body">
+                <h3>A corpus that survives crashes</h3>
+                <p>
+                  The U.S. Reports are built in three resumable stages: download,
+                  chunk, index. Harvard's Caselaw Access Project supplies volumes
+                  1–572 and the Supreme Court's own PDFs the rest.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section" id="decisions">
+        <div class="section-head">
+          <span class="section-index">04</span>
+          <h2 data-split>The audit</h2>
+        </div>
+        <p class="about-text" data-reveal>
+          The first evaluation found the debate no better than a single agent. A
+          forensic audit showed it could not have found anything else, so the team
+          repaired the system, re-ran everything, and reported the result as it came
+          out.
+        </p>
+        <ul class="decision-grid">
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">#</span>
+              <div class="bold-body">
+                <h3>A cache answering the wrong question</h3>
+                <p>
+                  A verdict cache keyed on embedding similarity had answered 34 of 96
+                  questions with the stored answer to a different question. It is now
+                  keyed on the normalised question itself.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">↯</span>
+              <div class="bold-body">
+                <h3>A retriever trained to retrieve</h3>
+                <p>
+                  Legal-BERT placed the target opinion in its top four for 39 of 96
+                  questions, against 74 for BM25. It was replaced by a retrieval-trained
+                  embedding model and word-token BM25.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">✓</span>
+              <div class="bold-body">
+                <h3>A checker behind a gate</h3>
+                <p>
+                  The entailment model accepted only 22.9% of correct citations. Its
+                  support verdict now takes effect only after it passes a held-out
+                  validation; until then a case is judged on existence alone.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">%</span>
+              <div class="bold-body">
+                <h3>Twice as often on target, in a third of the time</h3>
+                <p>
+                  Answers resting on the target decision rose from 34.4% to 62.5%, and a
+                  debate fell from 116 to 43 seconds. No final answer cites a case that
+                  does not exist.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">−</span>
+              <div class="bold-body">
+                <h3>A negative result, reported as one</h3>
+                <p>
+                  A single agent on the same retriever still reaches 81.6% in three
+                  seconds with a 7B generator. The paper says so, and every number in it
+                  is generated from the saved results.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section" id="stack">
+        <div class="section-head">
+          <span class="section-index">05</span>
+          <h2 data-split>Stack</h2>
+        </div>
+        <ul class="stack-grid">
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">AG</span>
+              <div class="bold-body">
+                <h3>Agents &amp; models</h3>
+                <ul class="stack-chips">
+                  <li>LangGraph</li>
+                  <li>OpenAI-compatible API</li>
+                  <li>Mistral-7B-Instruct</li>
+                  <li>NLI entailment</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">IR</span>
+              <div class="bold-body">
+                <h3>Retrieval</h3>
+                <ul class="stack-chips">
+                  <li>ChromaDB</li>
+                  <li>sentence-transformers</li>
+                  <li>BGE</li>
+                  <li>Legal-BERT</li>
+                  <li>rank-bm25</li>
+                  <li>Rank fusion</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">DB</span>
+              <div class="bold-body">
+                <h3>Corpus</h3>
+                <ul class="stack-chips">
+                  <li>Caselaw Access Project</li>
+                  <li>Supreme Court PDFs</li>
+                  <li>PyMuPDF</li>
+                  <li>Resumable pipeline</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="bold-card" data-reveal>
+            <div class="bold-inner">
+              <span class="bold-badge">UI</span>
+              <div class="bold-body">
+                <h3>Web</h3>
+                <ul class="stack-chips">
+                  <li>FastAPI</li>
+                  <li>Server-Sent Events</li>
+                  <li>React</li>
+                  <li>TypeScript</li>
+                  <li>Tailwind</li>
+                  <li>GSAP</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="case-outro tone-ink" data-tone="ink">
+        <p class="label">LexAgent / Research prototype</p>
+        <h2>Answers that<br />show their work.</h2>
+        <div class="hero-cta">
+          <a class="btn btn-fill" href="https://lexagent.velocitytechnologies.in" target="_blank" rel="noopener noreferrer"
+            >Open live demo ↗</a
+          >
+          <a class="btn" href="https://github.com/AdityaTakuli/LexAgent" target="_blank" rel="noopener noreferrer"
+            >Read the code ↗</a
+          >
+        </div>
+        <a class="next-case" href="notchex.html" data-title="Notchex">
+          <span class="label">Next case study</span>
+          <strong>Notchex</strong>
+          <span aria-hidden="true">→</span>
+        </a>
+        <footer class="site-footer">
+          <p>© 2026 Aditya Pratap Singh Takuli</p>
+          <div class="footer-links">
+            <a class="link" href="../index.html" data-title="Home">Back to portfolio</a>
+            <a class="link" href="#main">Back to top ↑</a>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <script src="../static/js/vendor/gsap.min.js"></script>
+    <script src="../static/js/vendor/ScrollTrigger.min.js"></script>
+    <script src="../static/js/vendor/SplitText.min.js"></script>
+    <script src="../static/js/vendor/ScrambleTextPlugin.min.js"></script>
+    <script src="../static/js/vendor/CustomEase.min.js"></script>
+    <script src="../static/js/vendor/lenis.min.js"></script>
+    <script src="../static/js/theme.js?v=2"></script>
+    <script src="../static/js/motion.js?v=1"></script>
+    <script src="../static/js/ui.js?v=9"></script>
+  </body>
+</html>

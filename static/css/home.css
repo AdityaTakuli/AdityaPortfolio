@@ -203,12 +203,16 @@
    Hero — two extended words around a portrait window
    -------------------------------------------------------------------------- */
 
+/* The portrait owns row 3, the space left between the two words, and takes
+   its size from that row's height. So however the screen's width and height
+   combine, it fits between SOFTWARE and ENGINEER and never runs into them. */
 .hero {
   --pw: clamp(230px, 25vw, 410px);
+  --hero-gap: clamp(0.75rem, 2.5svh, 2rem);
   position: relative;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: auto auto minmax(2rem, 1fr) auto auto;
+  grid-template-rows: auto auto minmax(12rem, 1fr) auto auto;
   column-gap: var(--gutter);
   min-height: 100svh;
   padding: calc(var(--nav-h) + 1rem) var(--gutter) clamp(1.25rem, 3vh, 2rem);
@@ -234,7 +238,9 @@
   font-family: var(--f-display);
   font-stretch: 125%;
   font-weight: 800;
-  font-size: clamp(2.7rem, 11.6vw, 14rem);
+  /* Width sets the size, but height caps it so the words leave room for the
+     portrait on short laptop screens and keep growing on large monitors. */
+  font-size: clamp(2.7rem, min(11.6vw, 19svh), 22rem);
   line-height: 0.82;
   letter-spacing: -0.035em;
   text-transform: uppercase;
@@ -256,11 +262,14 @@
 }
 
 .hero-portrait {
-  position: absolute;
+  position: relative;
   z-index: 1;
-  left: calc(50% - var(--pw) / 2);
-  top: calc(50% - var(--pw) * 0.625);
-  width: var(--pw);
+  grid-column: 1 / -1;
+  grid-row: 3;
+  justify-self: center;
+  align-self: center;
+  height: calc(100% - var(--hero-gap) * 2);
+  max-height: 38rem;
   aspect-ratio: 4 / 5;
   margin: 0;
   overflow: hidden;
@@ -381,11 +390,11 @@
   }
 
   .hero-portrait {
-    position: relative;
-    left: auto;
-    top: auto;
+    width: var(--pw);
+    height: auto;
+    max-height: none;
     align-self: center;
-    margin-block: -0.35em;
+    margin-block: 0.25rem;
   }
 
   .hero-bottom {

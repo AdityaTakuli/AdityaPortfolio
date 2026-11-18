@@ -440,7 +440,107 @@ TRIALMATCH_AGENTS = dict(
            ("a6", "state")],
 )
 
-SPECS = [GOODBOOKIES, TRIALMATCH_ARCH, TRIALMATCH_AGENTS]
+ARCHJOBS = dict(
+    name="archjobs-pipeline",
+    tile=310,
+    cycle=10.0,
+    label="ArchJobs pipeline: Google Jobs, firms' careers feeds and Gmail feed "
+          "scheduled tasks, which normalise, dedupe and label each job with an "
+          "LLM gateway, store it in MySQL and serve it through an Express API "
+          "to the React app and a daily digest email",
+    nodes=[
+        dict(id="serp", t=0, m=0, kicker="source", title="Google Jobs",
+             sub="SerpApi · quota-paced", glyph="grid", tone="ext"),
+        dict(id="feeds", t=0, m=1, kicker="source", title="Careers feeds",
+             sub="Workday · SmartRecruiters", glyph="grid", tone="ext"),
+        dict(id="gmail", t=0, m=2, kicker="source", title="Gmail API",
+             sub="job alerts · replies (read-only)", glyph="window", tone="ext"),
+        dict(id="cron", t=1, m=1, kicker="scheduler", title="node-cron tasks",
+             sub="fetch · read-gmail · archive", glyph="bars", tone="mod"),
+        dict(id="ingest", t=2, m=1, kicker="ingest", title="Normalise + dedupe",
+             sub="company · title · city · link check", glyph="node", tone="core"),
+        dict(id="llm", t=2, m=2, kicker="labelling", title="LLM gateway",
+             sub="Groq · Gemini · rules fallback", glyph="bolt", tone="ext"),
+        dict(id="db", t=3, m=1, kicker="store", title="MySQL",
+             sub="jobs · tracker · ai_usage", glyph="disc", tone="data"),
+        dict(id="api", t=4, m=1, kicker="server", title="Express 5 API",
+             sub="Google OAuth · sessions · CSP", glyph="bolt", tone="core"),
+        dict(id="web", t=4, m=0, kicker="client", title="React app",
+             sub="Jobs · Tracker · Firms", glyph="window", tone="edge"),
+        dict(id="mail", t=4, m=2, kicker="outbound", title="Daily digest",
+             sub="SMTP · per-user time", glyph="window", tone="edge"),
+    ],
+    wires=[("serp", "cron"), ("feeds", "cron"), ("gmail", "cron"),
+           ("cron", "ingest"), ("ingest", "llm"), ("ingest", "db"),
+           ("db", "api"), ("api", "web"), ("api", "mail")],
+)
+
+LEXAGENT = dict(
+    name="lexagent-debate",
+    tile=300,
+    cycle=11.0,
+    label="LexAgent debate: a question goes through hybrid retrieval over the "
+          "U.S. Reports, a prosecutor and a defense argue, a citation checker "
+          "tests every cited case against the case catalog, a controller "
+          "decides whether to run another round, and a judge rules",
+    nodes=[
+        dict(id="q", t=0, m=1, kicker="input", title="Legal question",
+             sub="plain language", glyph="window", tone="edge"),
+        dict(id="retr", t=1, m=1, kicker="retrieval", title="Hybrid search",
+             sub="BGE + BM25 · rank fusion", glyph="grid", tone="mod"),
+        dict(id="corpus", t=1, m=0, kicker="store", title="U.S. Reports",
+             sub="ChromaDB · 528k passages", glyph="disc", tone="data"),
+        dict(id="pros", t=2, m=1, kicker="agent", title="Prosecutor",
+             sub="argues · cites ≤ 2 cases", glyph="node", tone="core"),
+        dict(id="def", t=3, m=1, kicker="agent", title="Defense",
+             sub="attacks · counter-authority", glyph="node", tone="core"),
+        dict(id="cce", t=4, m=1, kicker="verification", title="Citation checker",
+             sub="exists? · holding supported?", glyph="bars", tone="mod"),
+        dict(id="catalog", t=4, m=0, kicker="store", title="Case catalog",
+             sub="reporter cites · opinions", glyph="disc", tone="data"),
+        dict(id="ddc", t=5, m=1, kicker="controller", title="Debate controller",
+             sub="stop, or another round", glyph="bolt", tone="ext"),
+        dict(id="judge", t=6, m=1, kicker="agent", title="Judge",
+             sub="rules on what survived", glyph="node", tone="core"),
+    ],
+    wires=[("q", "retr"), ("corpus", "retr"), ("retr", "pros"), ("pros", "def"),
+           ("def", "cce"), ("catalog", "cce"), ("cce", "ddc"), ("ddc", "judge")],
+)
+
+NOTCHEX = dict(
+    name="notchex-events",
+    tile=310,
+    cycle=10.0,
+    label="Notchex event flow: media, system D-Bus services and calendars push "
+          "signals into one event manager, which decides what the notch shows; "
+          "an out-of-process audio analyser feeds the music bars, and the notch "
+          "opens into the hub and Spotlight",
+    nodes=[
+        dict(id="media", t=0, m=0, kicker="signals", title="MPRIS + mixer",
+             sub="now playing · volume", glyph="bars", tone="ext"),
+        dict(id="dbus", t=0, m=1, kicker="signals", title="System D-Bus",
+             sub="UPower · BlueZ · brightness", glyph="node", tone="ext"),
+        dict(id="cal", t=0, m=2, kicker="signals", title="Calendar + tray",
+             sub="meetings · notifications", glyph="window", tone="ext"),
+        dict(id="events", t=1, m=1, kicker="arbiter", title="Event manager",
+             sub="priority · update in place · ttl", glyph="bolt", tone="core"),
+        dict(id="notch", t=2, m=1, kicker="surface", title="notch.js",
+             sub="geometry · animation · states", glyph="window", tone="core"),
+        dict(id="spectrum", t=2, m=2, kicker="separate process", title="Spectrum helper",
+             sub="GStreamer · speaker output only", glyph="bars", tone="mod"),
+        dict(id="hub", t=3, m=0, kicker="expanded", title="Hub",
+             sub="Now · Calendar · Timer · Notes · System", glyph="grid", tone="edge"),
+        dict(id="search", t=3, m=1, kicker="Super + Space", title="Spotlight",
+             sub="apps · settings · files · maths", glyph="window", tone="edge"),
+        dict(id="dock", t=3, m=2, kicker="desktop", title="Dock + glass",
+             sub="magnify · frosted shader", glyph="grid", tone="edge"),
+    ],
+    wires=[("media", "events"), ("dbus", "events"), ("cal", "events"),
+           ("events", "notch"), ("spectrum", "notch"),
+           ("notch", "hub"), ("notch", "search"), ("notch", "dock")],
+)
+
+SPECS = [GOODBOOKIES, TRIALMATCH_ARCH, TRIALMATCH_AGENTS, ARCHJOBS, LEXAGENT, NOTCHEX]
 
 
 def main():
