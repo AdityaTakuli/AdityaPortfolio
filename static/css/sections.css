@@ -436,7 +436,124 @@
 }
 
 .frame--stage .frame-view {
+  position: relative;
   background: var(--night);
+}
+
+/* "Explore the 3D model": the one thing to do on a patent card, so it is
+   filled in the patent's own colour, rings like a beacon and points the way. */
+.chip--cta {
+  padding: 0.8rem 1.1rem;
+  background: var(--pc);
+  border-color: var(--pc);
+  color: var(--night);
+  font-size: 0.8rem;
+  font-weight: 700;
+  animation: cta-ring 2.2s ease-out infinite;
+}
+
+.chip--cta .cta-arrow {
+  display: inline-block;
+  animation: cta-nudge 1.4s ease-in-out infinite;
+}
+
+.chip--cta:hover,
+.chip--cta:focus-visible {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+  animation: none;
+}
+
+.click-me {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font: 700 0.75rem / 1 var(--f-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.click-me-arrow {
+  display: inline-block;
+  color: var(--pc);
+  font-size: 1.1em;
+  animation: click-me-point 1.4s ease-in-out infinite;
+}
+
+/* The same invitation on the render itself. */
+.stage-hint {
+  position: absolute;
+  left: clamp(0.75rem, 2vw, 1.25rem);
+  bottom: clamp(0.75rem, 2vw, 1.25rem);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.9rem 0.55rem 0.7rem;
+  border: 1px solid var(--pc);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--night) 78%, transparent);
+  backdrop-filter: blur(6px);
+  color: var(--night-fg);
+  font: 600 0.72rem / 1 var(--f-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.stage-ping {
+  position: relative;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--pc);
+}
+
+.stage-ping::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--pc);
+  animation: stage-ping 1.8s ease-out infinite;
+}
+
+.stack-card:hover .stage-hint {
+  background: var(--pc);
+  color: var(--night);
+}
+
+.stack-card:hover .stage-ping {
+  background: var(--night);
+}
+
+@keyframes cta-ring {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pc) 60%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 14px color-mix(in srgb, var(--pc) 0%, transparent); }
+}
+
+@keyframes cta-nudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+@keyframes click-me-point {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
+}
+
+@keyframes stage-ping {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip--cta,
+  .chip--cta .cta-arrow,
+  .click-me-arrow,
+  .stage-ping::after { animation: none; }
 }
 
 .frame--stage .frame-view img {
