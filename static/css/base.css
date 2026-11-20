@@ -1134,12 +1134,3 @@ html.js:not(.intro-ready) [data-intro] {
   margin-right: 0.6em;
   vertical-align: -0.22em;
 }
-
-/* Inside the case-study wordmark SVG the mark is a <g>, sized by its transform. */
-.aj-mark--banner .lm-inner {
-  stroke: var(--ink);
-}
-
-.aj-mark--banner .lm-outer {
-  stroke: var(--accent);
-}
