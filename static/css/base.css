@@ -1089,48 +1089,88 @@ html.js:not(.intro-ready) [data-intro] {
 }
 
 /* --------------------------------------------------------------------------
-   ArchJobs mark — the app's nested-arch logo (JobHunt web/src/components/
-   Logo.jsx), shown beside the name wherever ArchJobs is listed. Outer arch in
-   the app's blue, inner arch in the surrounding text colour, same stroke
-   weights as the app. It sits on the baseline at about cap height.
+   Project marks — each project's own logo, shown in front of its name on the
+   home cards, the case-study outro label and the next-case links. They sit
+   on the baseline at about cap height; --pm-r is each mark's width/height.
+     ArchJobs     nested arches (JobHunt web/src/components/Logo.jsx)
+     LexAgent     scales of justice (the app's favicon, Lucide "Scale")
+     Good Bookies green GB tile (the site header and favicon)
+     Notchex      rounded tile with the notch cut out (notchex.ico)
    -------------------------------------------------------------------------- */
 
-.aj-mark {
-  --aj-blue: #2563eb;
+.pmark {
+  --pm-h: 0.76em;
+  --pm-r: 1;
   display: inline-block;
-  width: 0.66em;
-  height: 0.76em;
+  width: calc(var(--pm-h) * var(--pm-r));
+  height: var(--pm-h);
   margin-right: 0.28em;
   vertical-align: baseline;
   overflow: visible;
   fill: none;
 }
 
-[data-theme="dark"] .aj-mark,
-.tone-ink .aj-mark,
-[data-tone="ink"] .aj-mark {
+/* Small mono labels: a bigger mark, so it stays legible at 12px. */
+.label .pmark {
+  --pm-h: 1.38em;
+  margin-right: 0.6em;
+  vertical-align: -0.22em;
+}
+
+/* ArchJobs: outer arch in the app's blue, inner arch in the text colour. */
+.pmark--aj {
+  --pm-r: 0.875;
+  --aj-blue: #2563eb;
+}
+
+[data-theme="dark"] .pmark--aj,
+.tone-ink .pmark--aj,
+[data-tone="ink"] .pmark--aj {
   --aj-blue: #4f8cff;
 }
 
-.aj-mark path {
+.pmark--aj path {
   stroke-linecap: butt;
   stroke-linejoin: round;
 }
 
-.aj-mark .lm-outer {
+.pmark--aj .lm-outer {
   stroke: var(--aj-blue);
   stroke-width: 4.5;
 }
 
-.aj-mark .lm-inner {
+.pmark--aj .lm-inner {
   stroke: currentColor;
   stroke-width: 3;
 }
 
-/* Small mono labels: a bigger mark, so the arches stay legible at 12px. */
-.label .aj-mark {
-  width: 1.2em;
-  height: 1.38em;
-  margin-right: 0.6em;
-  vertical-align: -0.22em;
+/* LexAgent: a line icon in the text colour. */
+.pmark--lex {
+  --pm-h: 0.86em;
+  vertical-align: -0.06em;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.label .pmark--lex {
+  stroke-width: 2.2;
+}
+
+/* Good Bookies: the green tile with black initials. */
+.pmark--gb rect {
+  fill: #4ade80;
+}
+
+.pmark--gb text {
+  fill: #000;
+  font: 700 15px / 1 Helvetica, Arial, system-ui, sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Notchex: the tile in the text colour, the notch a hole onto the page. */
+.pmark--nx {
+  fill: currentColor;
 }
