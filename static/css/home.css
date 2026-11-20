@@ -14,15 +14,17 @@
   z-index: 120;
   display: none;
   overflow: hidden;
-  /* Follows the theme: paper and ink by default (light), the night palette
-     in dark mode, where --paper/--ink become #0d0c0a/#f2ece2. */
-  --door-hl: var(--accent);
-  background: var(--paper);
-  color: var(--ink);
-}
-
-[data-theme="dark"] .loader {
-  --door-hl: var(--amber);
+  /* Always black, whatever the theme: the night palette is pinned here so
+     every child that reads --paper/--ink/--line/--accent-ink gets it too. */
+  --paper: #0d0c0a;
+  --ink: #f2ece2;
+  --line: rgba(242, 236, 226, 0.14);
+  --accent: #e0a267;
+  --accent-ink: #e0a267;
+  --door-hl: #e0a267;
+  background: #0d0c0a;
+  color: #f2ece2;
+  color-scheme: dark;
 }
 
 .is-loading .loader,
@@ -204,31 +206,6 @@
   .loader-bar {
     display: none;
   }
-}
-
-/* In the light theme the counter, status and bar sit on paper on one side and
-   on the black shirt on the other (all of it on phones). Painting them in the
-   paper colour with "difference" turns them dark over paper and light over the
-   shirt, so they read on both. Dark mode already has light ink on night. */
-:root:not([data-theme="dark"]) .loader-foot {
-  color: #dcdad4;
-  mix-blend-mode: difference;
-}
-
-:root:not([data-theme="dark"]) .loader-ticker {
-  color: #dcdad4;
-}
-
-:root:not([data-theme="dark"]) .loader-bar::before {
-  background: rgba(220, 218, 212, 0.4);
-}
-
-:root:not([data-theme="dark"]) .loader-bar span {
-  background: rgba(220, 218, 212, 0.25);
-}
-
-:root:not([data-theme="dark"]) .loader-bar i {
-  background: #dcdad4;
 }
 
 /* --------------------------------------------------------------------------
