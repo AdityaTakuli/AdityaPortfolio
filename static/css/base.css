@@ -1087,3 +1087,59 @@ html.js:not(.intro-ready) [data-intro] {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   ArchJobs mark — the app's nested-arch logo (JobHunt web/src/components/
+   Logo.jsx), shown beside the name wherever ArchJobs is listed. Outer arch in
+   the app's blue, inner arch in the surrounding text colour, same stroke
+   weights as the app. It sits on the baseline at about cap height.
+   -------------------------------------------------------------------------- */
+
+.aj-mark {
+  --aj-blue: #2563eb;
+  display: inline-block;
+  width: 0.66em;
+  height: 0.76em;
+  margin-right: 0.28em;
+  vertical-align: baseline;
+  overflow: visible;
+  fill: none;
+}
+
+[data-theme="dark"] .aj-mark,
+.tone-ink .aj-mark,
+[data-tone="ink"] .aj-mark {
+  --aj-blue: #4f8cff;
+}
+
+.aj-mark path {
+  stroke-linecap: butt;
+  stroke-linejoin: round;
+}
+
+.aj-mark .lm-outer {
+  stroke: var(--aj-blue);
+  stroke-width: 4.5;
+}
+
+.aj-mark .lm-inner {
+  stroke: currentColor;
+  stroke-width: 3;
+}
+
+/* Small mono labels: a bigger mark, so the arches stay legible at 12px. */
+.label .aj-mark {
+  width: 1.2em;
+  height: 1.38em;
+  margin-right: 0.6em;
+  vertical-align: -0.22em;
+}
+
+/* Inside the case-study wordmark SVG the mark is a <g>, sized by its transform. */
+.aj-mark--banner .lm-inner {
+  stroke: var(--ink);
+}
+
+.aj-mark--banner .lm-outer {
+  stroke: var(--accent);
+}
